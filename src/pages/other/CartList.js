@@ -44,7 +44,6 @@ class CartList extends React.Component {
     axiosConfig
       .get(`/user/getoneCart/${id}`)
       .then(response => {
-        console.log("getonecart", response.data.data);
         this.setState({
           dataCart: response.data.data,
         });
@@ -243,7 +242,7 @@ class CartList extends React.Component {
               </Col>
             </Row>
             <Row>
-              <DemoChat />
+              <DemoChat payment={this.state.dataCart?.total_amt} />
             </Row>
           </Container>
         </section>

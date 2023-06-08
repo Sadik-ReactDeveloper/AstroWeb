@@ -165,7 +165,7 @@ const IconGroup = ({
                   </Link>
                 </li>
                 <li>
-                  <a href="http://astro.astrologically.in/#/pages/login">
+                  <a href="http://65.1.134.210/#/pages/login">
                     Astrologer login
                   </a>
                 </li>

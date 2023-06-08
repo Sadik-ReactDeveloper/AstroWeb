@@ -2,15 +2,13 @@ import React, { useCallback, useEffect } from "react";
 import useRazorpay from "react-razorpay";
 import { Button } from "reactstrap";
 
-function DemoChat() {
+function DemoChat(props) {
+  console.log(props);
   const Razorpay = useRazorpay();
   useEffect(() => {
     localStorage.getItem("");
   }, []);
   const handlePayment = useCallback(() => {
-    // const order = await createOrder(params);
-
-    // const options: RazorpayOptions = {
     const options = {
       key: "rzp_test_8Q9MGMi8hVqdfZ",
       amount: "100",
@@ -24,7 +22,7 @@ function DemoChat() {
         console.log(res);
       },
       prefill: {
-        name: "Sadik",
+        name: "",
         email: "youremail@example.com",
         contact: "9999999999",
       },

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import swal from "sweetalert";
 import Stepper from "bs-stepper";
 import axiosConfig from "../../axiosConfig";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bs-stepper/dist/css/bs-stepper.min.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 import { Container, Row, Col, Input, Form, Button, Label } from "reactstrap";
 import Avilitiy from "./astrologerpages/Avilitiy";
@@ -11,21 +13,13 @@ class AstrologerSignup extends React.Component {
   constructor() {
     super();
     this.state = {
-      fullname: "",
+      otp: "",
       email: "",
       mobile: "",
-      otp: "",
+    };
+    this.state = {
       gender: "",
       dob: "",
-      Monday: "",
-      Tuesday: "",
-      Wednesday: "",
-      Thursday: "",
-      Friday: "",
-      Saturday: "",
-      Sunday: "",
-      min_amount: "",
-      max_amount: "",
       primary_skills: "",
       all_skills: "",
       language: "",
@@ -52,13 +46,25 @@ class AstrologerSignup extends React.Component {
       long_bio: "",
       status: "Active",
       callCharge: "",
-      img: "",
-      selectedName: "",
-      selectedFile: null,
-      userId: "",
-      __v: 0,
+      fullname: "",
+      img: {},
+      min_amount: "",
+      max_amount: "",
+
+      Monday: "",
+      Tuesday: "",
+      Wednesday: "",
+      Thursday: "",
+      Friday: "",
+      Saturday: "",
+      Sunday: "",
+      password: "",
+      cnfmPassword: "",
+
       approvedstatus: "false",
       otpverify: "true",
+      selectedName: "",
+      selectedFile: {},
     };
   }
   //Image Submit Handler
@@ -76,6 +82,7 @@ class AstrologerSignup extends React.Component {
   }
 
   handlechange = e => {
+    console.log("SignUp", e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -104,62 +111,15 @@ class AstrologerSignup extends React.Component {
 
   submitHandler = e => {
     e.preventDefault();
-    console.log("@@@@@");
-    let obj = {
-      min_amount: this.state.min_amount,
-      sunday: this.state.sunday,
-      monday: this.state.monday,
-      tuesday: this.state.tuesday,
-      wednesday: this.state.wednesday,
-      thursday: this.state.thursday,
-      friday: this.state.friday,
-      saturday: this.state.saturday,
-      max_amount: this.state.max_amount,
-      fullname: this.state.fullname,
-      email: this.state.email,
-      mobile: this.state.mobile,
-      otpverify: this.state.otpverify,
-      // approvedstatus: this.state.approvedstatus,
-      all_skills: this.state.all_skills,
-      anybody_prefer: this.state.anybody_prefer,
-      callCharge: this.state.callCharge,
-      img: this.state.selectedFile !== null ? this.state.selectedName : "",
-      clg_scl_name: this.state.clg_scl_name,
-      conrubute_hrs: this.state.conrubute_hrs,
-      crnt_city: this.state.crnt_city,
-      degree_deploma: this.state.degree_deploma,
-      dob: this.state.dob,
-      exp_in_years: this.state.exp_in_years,
-      fb_link: this.state.fb_link,
-      gender: this.state.gender,
-      hear_abt_astrology: this.state.hear_abt_astrology,
-      highest_qualification: this.state.highest_qualification,
-      income_src: this.state.income_src,
-      insta_link: this.state.insta_link,
-      language: this.state.language,
-      linkedln_link: this.state.linkedln_link,
-      long_bio: this.state.long_bio,
-      lrn_abt_astrology: this.state.lrn_abt_astrology,
-      max_earning_expe: this.state.max_earning_expe,
-      min_earning_expe: this.state.min_earning_expe,
-      other_online_platform: this.state.other_online_platform,
-      primary_skills: this.state.primary_skills,
-      status: this.state.status,
-      suitable_tym_interview: this.state.suitable_tym_interview,
-      website_link: this.state.website_link,
-      why_onboard_you: this.state.why_onboard_you,
-      youtube_link: this.state.youtube_link,
-    };
+    let astroId = localStorage.getItem("astroId");
+    // console.log("astroId", astroId);
     const data = new FormData();
-    data.append("_id", this.state.userId);
-    data.append("fullname", this.state.fullname);
-    data.append("email", this.state.email);
-    data.append("mobile", this.state.mobile);
+    data.append("_id", astroId);
     data.append("gender", this.state.gender);
     data.append("dob", this.state.dob);
     data.append("primary_skills", this.state.primary_skills);
-    data.append("all_skills", this.state.all_skills);
     data.append("language", this.state.language);
+    data.append("all_skills", this.state.all_skills);
     data.append("exp_in_years", this.state.exp_in_years);
     data.append("conrubute_hrs", this.state.conrubute_hrs);
     data.append("hear_abt_astrology", this.state.hear_abt_astrology);
@@ -170,6 +130,7 @@ class AstrologerSignup extends React.Component {
     data.append("income_src", this.state.income_src);
     data.append("highest_qualification", this.state.highest_qualification);
     data.append("degree_deploma", this.state.degree_deploma);
+    data.append("clg_scl_name", this.state.clg_scl_name);
     data.append("lrn_abt_astrology", this.state.lrn_abt_astrology);
     data.append("insta_link", this.state.insta_link);
     data.append("fb_link", this.state.fb_link);
@@ -182,29 +143,29 @@ class AstrologerSignup extends React.Component {
     data.append("long_bio", this.state.long_bio);
     data.append("status", this.state.status);
     data.append("callCharge", this.state.callCharge);
-    data.append("sunday", this.state.sunday);
-    data.append("monday", this.state.monday);
-    data.append("tuesday", this.state.tuesday);
-    data.append("wednesday", this.state.wednesday);
-    data.append("thursday", this.state.thursday);
-    data.append("friday", this.state.friday);
-    data.append("saturday", this.state.saturday);
+    data.append("fullname", this.state.fullname);
+    // data.append("availability", this.state.availability);
+    data.append("max_amount", this.state.max_amount);
+    data.append("min_amount", this.state.min_amount);
+    data.append("password", this.state.password);
+    data.append("cnfmPassword", this.state.cnfmPassword);
+    // data.append("sunday", this.state.Sunday);
+    // data.append("monday", this.state.Monday);
+    // data.append("tuesday", this.state.Tuesday);
+    // data.append("wednesday", this.state.Wednesday);
+    // data.append("thursday", this.state.Thursday);
+    // data.append("friday", this.state.Friday);
+    // data.append("saturday", this.state.Saturday);
+
+    // data.append("email", this.state.email);
+    // data.append("mobile", this.state.mobile);
     if (this.state.selectedFile !== null) {
-      data.append("img", this.state.selectedFile, this.state.selectedName);
+      data.append("img", this.state.selectedFile);
     }
-
-    // for (var value of data.values()) {
-    //   console.log(value);
-    // }
-
-    // for (var key of data.keys()) {
-    //   console.log(key);
-    // }
-
     axiosConfig
-      .post(`/user/editAstroDetails/${this.state.userId}`, obj)
+      .post(`/user/editAstroDetails/${this.state.userId}`, data)
       .then(response => {
-        console.log(response.data.message);
+        console.log(response.data);
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/");
       })
@@ -213,36 +174,36 @@ class AstrologerSignup extends React.Component {
         console.log(error.response);
       });
   };
-
   stepperFirst = () => {
     const { email, mobile, fullname } = this.state;
-    axiosConfig
-      .post("/user/signup", {
-        mobile: parseInt(mobile) != NaN ? parseInt(mobile) : "null",
-        email: email,
-        fullname: fullname,
-        moblie: mobile,
-      })
-      .then(response => {
-        this.stepper.next();
-        console.log("@@@####", response.data);
-        let userInfo = response.data.user;
-        localStorage.setItem("user_id", response.data._id);
-        // localStorage.setItem("auth-token", response.data.token);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-      })
-      .catch(error => {
-        console.log(error);
-        console.log(error.response);
-        swal("Error!", " Wrong UserName or Password", "error");
-      });
+    if (email && mobile && fullname) {
+      axiosConfig
+        .post("/user/signup", {
+          mobile: parseInt(mobile) !== isNaN ? parseInt(mobile) : "null",
+          email: email,
+          fullname: fullname,
+          moblie: mobile,
+        })
+        .then(response => {
+          this.stepper.next();
+          console.log("@@@####", response.data);
+          let userInfo = response.data.user;
+          localStorage.setItem("user_id", response.data._id);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+          swal("Error!", " Wrong UserName or Password", "error");
+        });
+    }
   };
   stepperSecond = () => {
     const { otp, mobile } = this.state;
     axiosConfig
       .post("/user/verifyotp", {
-        otp: parseInt(otp, mobile) != NaN ? parseInt(otp) : "null",
-        otp: otp,
+        otp: parseInt(otp, mobile) !== isNaN ? parseInt(otp) : "null",
+
         mobile: mobile,
       })
       .then(response => {
@@ -251,7 +212,6 @@ class AstrologerSignup extends React.Component {
         let userInfo = response.data.user;
         this.setState({ userId: response.data._id });
         localStorage.setItem("user_id", response.data._id);
-        // localStorage.setItem("auth-token", response.data.token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
       })
       .catch(error => {
@@ -262,27 +222,6 @@ class AstrologerSignup extends React.Component {
   };
 
   render() {
-    // const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
-
-    // // handle input change
-    // const handleInputChange = (e, index) => {
-    //   const { name, value } = e.target;
-    //   const list = [...inputList];
-    //   list[index][name] = value;
-    //   setInputList(list);
-    // };
-
-    // // handle click event of the Remove button
-    // const handleRemoveClick = index => {
-    //   const list = [...inputList];
-    //   list.splice(index, 1);
-    //   setInputList(list);
-    // };
-
-    // // handle click event of the Add button
-    // const handleAddClick = () => {
-    //   setInputList([...inputList, { firstName: "", lastName: "" }]);
-    // };
     return (
       <section
         className=""
@@ -347,7 +286,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="fullname"
                               required
-                              placeholder="Enter Your Fullname"
+                              placeholder="Enter Your FullName"
                               value={this.state.fullname}
                               onChange={this.changeHandler}
                             />
@@ -355,12 +294,12 @@ class AstrologerSignup extends React.Component {
                         </Col>
                         <Col md="6">
                           <div className="form-group mtb-10">
-                            <Label>Email address*</Label>
+                            <Label>Email Address*</Label>
                             <Input
                               type="email"
                               name="email"
                               required
-                              placeholder="Enter Your email"
+                              placeholder="Enter Your Email"
                               value={this.state.email}
                               onChange={this.changeHandler}
                             />
@@ -369,14 +308,21 @@ class AstrologerSignup extends React.Component {
                         <Col md="6">
                           <div className="form-group mtb-10">
                             <Label>Mobile Number*</Label>
-                            <Input
-                              type="text"
-                              name="mobile"
-                              required
-                              placeholder="Enter Your Number"
+
+                            <PhoneInput
+                              countryCodeEditable={false}
+                              // className="mob-int"
+                              country={"in"}
                               value={this.state.mobile}
-                              onChange={this.changeHandler}
+                              onChange={mobile => {
+                                this.setState({ mobile: mobile });
+                              }}
                             />
+                            {this.state.mobileError !== "" ? (
+                              <span style={{ color: "red" }}>
+                                {this.state.mobileError}
+                              </span>
+                            ) : null}
                           </div>
                         </Col>
                       </Row>
@@ -393,10 +339,12 @@ class AstrologerSignup extends React.Component {
                           <div className="form-group mtb-10">
                             <Label>OTP*</Label>
                             <Input
-                              type="text"
+                              type="number"
                               required
                               name="otp"
                               value={this.state.otp}
+                              placeholder="Enter OTP"
+                              maxLength={6}
                               onChange={this.changeHandler}
                             />
                           </div>
@@ -463,11 +411,37 @@ class AstrologerSignup extends React.Component {
                             />
                           </div>
                         </Col>
+
+                        <Col md="6">
+                          <div className="form-group mtb-10">
+                            <Label>Minimum Amount*</Label>
+                            <Input
+                              placeholder="Enter Amount"
+                              name="min_amount"
+                              type="number"
+                              value={this.state.min_amount}
+                              onChange={this.changeHandler}
+                            />
+                          </div>
+                        </Col>
+
+                        <Col md="6">
+                          <div className="form-group mtb-10">
+                            <Label>Maximum Amount*</Label>
+                            <Input
+                              placeholder="Enter Amount"
+                              name="max_amount"
+                              type="number"
+                              value={this.state.max_amount}
+                              onChange={this.changeHandler}
+                            />
+                          </div>
+                        </Col>
                         <Col md="6">
                           <div className="form-group mtb-10">
                             <Label>Language*</Label>
                             <Input
-                              placeholder="language"
+                              placeholder="Language"
                               name="language"
                               type="text"
                               value={this.state.language}
@@ -477,61 +451,10 @@ class AstrologerSignup extends React.Component {
                         </Col>
                         <Col md="6">
                           <div className="form-group mtb-10">
-                            <Label>Minimum Amount*</Label>
-                            <Input
-                              placeholder="Enter Amount"
-                              name="min_amount"
-                              type="text"
-                              value={this.state.min_amount}
-                              onChange={this.changeHandler}
-                            />
-                          </div>
-                        </Col>
-                        {/* <h5>Availability</h5>
-                        <Col md="3">
-                          <div className="form-group mtb-10">
-                            <Label>Day</Label>
-                            <Input
-                              placeholder="Availability Day"
-                              name="day"
-                              type="text"
-                              value={this.state.availability}
-                              onChange={this.changeHandler}
-                            />
-                          </div>
-
-                        </Col>
-                        <Col md="3">
-                          <div class="form-group mtb-10">
-                            <Label>Time</Label>
-                            <Select
-                              isMulti
-                              name="time"
-                              required
-                              // className="basic-multi-select"
-                              classNamePrefix="select"
-                              onChange={this.changeHandler}
-                            />
-                          </div>
-                        </Col> */}
-
-                        <Col md="6">
-                          <div className="form-group mtb-10">
-                            <Label>Maximum Amount*</Label>
-                            <Input
-                              placeholder="Enter Amount"
-                              name="max_amount"
-                              type="text"
-                              value={this.state.max_amount}
-                              onChange={this.changeHandler}
-                            />
-                          </div>
-                        </Col>
-                        <Col md="6">
-                          <div className="form-group mtb-10">
                             <Label>Experience in years*</Label>
                             <Input
-                              type="text"
+                              type="number"
+                              placeholder="Experience years"
                               name="exp_in_years"
                               required
                               value={this.state.exp_in_years}
@@ -545,8 +468,9 @@ class AstrologerSignup extends React.Component {
                               How many hours you can contribute daily?*
                             </Label>
                             <Input
-                              type="text"
+                              type="number"
                               name="conrubute_hrs"
+                              placeholder="Daily Hours"
                               required
                               value={this.state.conrubute_hrs}
                               onChange={this.changeHandler}
@@ -558,7 +482,9 @@ class AstrologerSignup extends React.Component {
                             <Label>Where did you hear about Astrotalk?*</Label>
                             <Input
                               type="text"
+                              required
                               name="hear_abt_astrology"
+                              placeholder="About Astrotalk"
                               value={this.state.hear_abt_astrology}
                               onChange={this.changeHandler}
                             />
@@ -574,18 +500,19 @@ class AstrologerSignup extends React.Component {
                                 <Label>Name of platform</Label>
                                 <Input
                                   type="text"
+                                  placeholder="Name of platform"
                                   name="other_online_platform"
                                   value={this.state.other_online_platform}
                                   onChange={this.changeHandler}
                                 />
                               </div>
                             </Col>
-                            <Col md="6">
+                            {/* <Col md="6">
                               <div className="form-group mtb-10">
                                 <Label>Monthly Earning</Label>
                                 <Input type="text" />
                               </div>
-                            </Col>
+                            </Col> */}
                           </Row>
                         </Col>
                       </Row>
@@ -606,6 +533,7 @@ class AstrologerSignup extends React.Component {
                             <Input
                               type="text"
                               required
+                              placeholder="Right your opinion"
                               name="why_onboard_you"
                               value={this.state.why_onboard_you}
                               onChange={this.changeHandler}
@@ -620,6 +548,7 @@ class AstrologerSignup extends React.Component {
                             <Input
                               type="text"
                               required
+                              placeholder="Enter Interview Time"
                               name="suitable_tym_interview"
                               value={this.state.suitable_tym_interview}
                               onChange={this.changeHandler}
@@ -633,6 +562,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               required
                               name="crnt_city"
+                              placeholder="Curretly Your Live Location City"
                               value={this.state.crnt_city}
                               onChange={this.changeHandler}
                             />
@@ -642,8 +572,9 @@ class AstrologerSignup extends React.Component {
                           <div className="form-group mtb-10">
                             <Label>Call Charge</Label>
                             <Input
-                              type="text"
+                              type="number"
                               required
+                              placeholder="Call Charge"
                               name="callCharge"
                               value={this.state.callCharge}
                               onChange={this.changeHandler}
@@ -653,11 +584,12 @@ class AstrologerSignup extends React.Component {
                         <Col md="6">
                           <div className="form-group mtb-10">
                             <Label>
-                              Main source of business (other than astrology)*
+                              Main Source Of Business (Other Than Astrology)*
                             </Label>
                             <Input
-                              placeholder="source of business"
+                              placeholder="Source Of Business"
                               name="income_src"
+                              required
                               type="text"
                               value={this.state.income_src}
                               onChange={this.changeHandler}
@@ -666,11 +598,12 @@ class AstrologerSignup extends React.Component {
                         </Col>
                         <Col md="6">
                           <div className="form-group mtb-10">
-                            <Label>Select your highest qualification*</Label>
+                            <Label>Select Your Highest Qualification*</Label>
                             <Input
-                              placeholder="qualification"
+                              placeholder="Qualification"
                               name="highest_qualification"
                               type="text"
+                              required
                               value={this.state.highest_qualification}
                               onChange={this.changeHandler}
                             />
@@ -683,6 +616,7 @@ class AstrologerSignup extends React.Component {
                               placeholder="Degree/Diploma"
                               name="degree_deploma"
                               type="text"
+                              required
                               value={this.state.degree_deploma}
                               onChange={this.changeHandler}
                             />
@@ -695,6 +629,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="clg_scl_name"
                               required
+                              placeholder="College/School/University"
                               value={this.state.clg_scl_name}
                               onChange={this.changeHandler}
                             />
@@ -707,6 +642,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="lrn_abt_astrology"
                               required
+                              placeholder="Your Learn Plateform"
                               value={this.state.lrn_abt_astrology}
                               onChange={this.changeHandler}
                             />
@@ -728,6 +664,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="insta_link"
                               required
+                              placeholder="Instagram profile link"
                               value={this.state.insta_link}
                               onChange={this.changeHandler}
                             />
@@ -740,6 +677,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="fb_link"
                               required
+                              placeholder="Facebook profile link"
                               value={this.state.fb_link}
                               onChange={this.changeHandler}
                             />
@@ -747,11 +685,12 @@ class AstrologerSignup extends React.Component {
                         </Col>
                         <Col md="6">
                           <div className="form-group mtb-10">
-                            <Label>LinkedIn profile link</Label>
+                            <Label>LinkedIn Profile Link</Label>
                             <Input
                               type="text"
                               name="linkedln_link"
                               required
+                              placeholder="LinkedIn Profile Link"
                               value={this.state.linkedln_link}
                               onChange={this.changeHandler}
                             />
@@ -764,6 +703,7 @@ class AstrologerSignup extends React.Component {
                               type="text"
                               name="youtube_link"
                               required
+                              placeholder="Youtube channel link"
                               value={this.state.youtube_link}
                               onChange={this.changeHandler}
                             />
@@ -787,7 +727,7 @@ class AstrologerSignup extends React.Component {
                               Minimum Earning Expectation from Astrogyata*
                             </Label>
                             <Input
-                              type="text"
+                              type="number"
                               name="min_earning_expe"
                               required
                               value={this.state.min_earning_expe}
@@ -801,7 +741,7 @@ class AstrologerSignup extends React.Component {
                               Maximum Earning Expectation from Astrogyata*
                             </Label>
                             <Input
-                              type="text"
+                              type="number"
                               name="max_earning_expe"
                               required
                               value={this.state.max_earning_expe}
@@ -841,45 +781,15 @@ class AstrologerSignup extends React.Component {
                         support team at onboarding@Astrogyata.com in case of any
                         issues or queries.
                       </p>
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => this.stepper.next()}
-                      >
-                        Next
-                      </button>
-                    </div>
-                    <div id="test-l-4" className="content">
-                      {/* <div>
-                        {inputList.map((x, i) => {
-                          return (
-                            <div className="box">
-                              <input
-                                name="firstName"
-                                placeholder="Enter First Name"
-                                value={x.firstName}
-                                onChange={e => handleInputChange(e, i)}
-                              />
-                              <input
-                                className="ml10"
-                                name="lastName"
-                                placeholder="Enter Last Name"
-                                value={x.lastName}
-                                onChange={e => handleInputChange(e, i)}
-                              />
-                              <div className="btn-box">
-                                {inputList.length !== 1 && <button
-                                  className="mr10"
-                                  onClick={() => handleRemoveClick(i)}>Remove</button>}
-                                {inputList.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div> */}
-                      <Avilitiy />
                       <Button type="submit" className="btn btn-primary mt-5">
                         Submit
                       </Button>
+                    </div>
+                    <div id="test-l-4" className="content">
+                      {/* <Avilitiy /> */}
+                      {/* <Button type="submit" className="btn btn-primary mt-5">
+                        Submit
+                      </Button> */}
                     </div>
                   </Form>
                 </div>

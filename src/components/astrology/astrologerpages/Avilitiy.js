@@ -10,7 +10,7 @@ function Avilitiy() {
     list[index][name] = value;
     setInputList(list);
   };
-  console.log("check2", inputList);
+  // console.log("check2", inputList);
   // handle click event of the Remove button
   const handleRemoveClick = index => {
     const list = [...inputList];
