@@ -23,7 +23,6 @@ class AllAstrologerList extends React.Component {
     super(props);
 
     this.state = {
-      // data: {},
       fullname: "",
       email: "",
       mobile: "",
@@ -68,7 +67,6 @@ class AllAstrologerList extends React.Component {
   };
 
   submitHandler = e => {
-    console.log("ddfffdfd", this.state.data);
     const data = new FormData();
     data.append("fullname", this.state.fullname);
     data.append("email", this.state.email);
@@ -88,7 +86,6 @@ class AllAstrologerList extends React.Component {
     axiosConfig
       .post(`/user/userlogin`, obj)
       .then(response => {
-        console.log("@@@####", response.data);
         this.setState({ otpMsg: response.data.msg });
         if (response.data.msg === "otp Send Successfully") {
           swal("otp Send Successfully");
@@ -104,8 +101,6 @@ class AllAstrologerList extends React.Component {
   //Image Submit Handler
   onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
   };
   otpHandler = e => {
     e.preventDefault();
@@ -117,7 +112,6 @@ class AllAstrologerList extends React.Component {
       })
       .then(response => {
         console.log("@@@####", response.data);
-        // let id = response.data.user;
         if (response.data.status === true) {
           this.setState({ otpMsg: response.data.msg });
           localStorage.setItem(
@@ -135,7 +129,6 @@ class AllAstrologerList extends React.Component {
           );
           if (response.data.msg === "otp verified") {
             swal("otp verified");
-            // window.location.replace('/')
             this.props.history.push("/");
           }
         }
@@ -161,7 +154,6 @@ class AllAstrologerList extends React.Component {
       })
       .catch(error => {
         console.log(error);
-        console.log(error.response);
       });
 
     axiosConfig
@@ -181,23 +173,15 @@ class AllAstrologerList extends React.Component {
   };
 
   submitHandler = (e, astroid, mobile, data, index) => {
-    // this.setState({ modalone: true });
     let mobileNo = localStorage.getItem("user_mobile_no");
     let userId = JSON.parse(localStorage.getItem("user_id"));
 
     localStorage.setItem("astroId", astroid);
-    console.log(e);
-    console.log("astroid", astroid);
-    console.log("mobile", mobile);
-    console.log("data", data);
-    console.log("index", index);
-    console.log("mobileNo", mobileNo);
-    console.log("userId", userId);
+
     localStorage.setItem("astroname", data?.fullname);
     this.setState({ indexnow: index });
 
     e.preventDefault();
-    // let astrologerList = localStorage.getItem('astrologerList')
 
     let astroId = astroid;
     let obj = {
@@ -518,8 +502,6 @@ class AllAstrologerList extends React.Component {
                                           </button>
                                         </>
                                       )}
-
-                                      {/* </Link> */}
                                     </div>
                                   </div>
                                 </div>
@@ -540,7 +522,6 @@ class AllAstrologerList extends React.Component {
               size="lg"
               isOpen={this.state.modal}
               toggle={this.toggle}
-              // className={(this.props.className)}
             >
               <ModalHeader toggle={this.toggle}>Filters Now</ModalHeader>
               <ModalBody>
@@ -608,9 +589,8 @@ class AllAstrologerList extends React.Component {
               size="lg"
               isOpen={this.state.modalone}
               toggle={this.toggleone}
-              // className={(this.props.className)}
             >
-              <ModalHeader toggle={this.toggleone}>Logindfsd</ModalHeader>
+              <ModalHeader toggle={this.toggleone}>Login</ModalHeader>
               <ModalBody>dsffsssfsd</ModalBody>
             </Modal>
           </div>
