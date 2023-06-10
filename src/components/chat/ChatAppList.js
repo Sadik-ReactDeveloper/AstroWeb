@@ -60,9 +60,7 @@ class ChatAppList extends React.Component {
                 <b>Current Astro</b>
               </h4>
             </div>
-            <ul
-            //  onClick={this.handlechat}
-            >
+            <ul>
               <li
                 className="astrolistmain"
                 onClick={() => {
@@ -93,18 +91,9 @@ class ChatAppList extends React.Component {
                       alt="astroimg"
                     />
                   </div>
-                  <div
-                    // onClick={() => this.props.getChatRoomId(user)}
-                    className="lst-con"
-                  >
-                    <h5
-                    // onClick={() => this.props.getChatRoomId(user)}
-                    >
-                      {this.state.Activeastro?.fullname}
-                    </h5>
-                    <p
-                    // onClick={() => this.props.getChatRoomId(user)}
-                    ></p>
+                  <div className="lst-con">
+                    <h5>{this.state.Activeastro?.fullname}</h5>
+                    <p></p>
                   </div>
                 </div>
               </li>
@@ -148,18 +137,13 @@ class ChatAppList extends React.Component {
                           alt="astroimg"
                         />
                       </div>
-                      <div
-                        onClick={() => this.props.getChatRoomId(user)}
-                        className="lst-con"
-                      >
-                        <h5 onClick={() => this.props.getChatRoomId(user)}>
+                      <div className="lst-con">
+                        <h5>
                           {user.astroid?.fullname
                             ? user.astroid?.fullname
                             : "No Name"}
                         </h5>
-                        <p onClick={() => this.props.getChatRoomId(user)}>
-                          {user.msg}
-                        </p>
+                        <p>{user.msg}</p>
                       </div>
                     </div>
                   </li>

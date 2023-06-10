@@ -248,14 +248,13 @@ class ChatApp extends React.Component {
     this.setState({ sendbutton: user.astroid?._id });
     this.setState({ Index: index });
     localStorage.setItem("videoCallAstro_id", user?.astroid?._id);
-    console.log("userdata", user);
-    // console.log("userdata", user?.astroid?.status);
+    console.log("userdata", user, index);
 
     this.setState({ astroId: user?.astroid?._id, roomId: user?.roomid });
     await axiosConfig
       .get(`/user/allchatwithuser/${user?.roomid}`)
       .then(response => {
-        console.log(response?.data?.data);
+        // console.log(response?.data?.data);
         if (response.data.status === true) {
           this.setState({ roomChatData: response?.data.data });
         }

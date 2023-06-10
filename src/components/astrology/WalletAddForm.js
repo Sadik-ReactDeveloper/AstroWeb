@@ -32,10 +32,10 @@ class WalletAddForm extends React.Component {
       modal: !this.state.modal,
     });
   }
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  submitHandler = (e) => {
+  submitHandler = e => {
     e.preventDefault();
     // let { id } = this.props.match.params
     // console.log(id)
@@ -48,14 +48,13 @@ class WalletAddForm extends React.Component {
 
     axiosConfig
       .post(`/user/add_custome_amt`, obj)
-      .then((response) => {
+      .then(response => {
         console.log("@@@@@", response.data.data);
-        //localStorage.setItem('shipping_id', response?.data?.data[0]?._id)
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/demoChat");
+        this.props.history.push("/allastrologerlist");
       })
 
-      .catch((error) => {
+      .catch(error => {
         swal("Error!", "You clicked the button!", "error");
         console.log(error);
       });
