@@ -4,7 +4,6 @@ import "../../assets/scss/chat.scss";
 import LayoutOne from "../../layouts/LayoutOne";
 import Buyimg from "../../../src/assets/img/boy-img.png";
 import { Link } from "react-router-dom";
-
 import ChatAppList from "./ChatAppList";
 import ChatAppMassage from "./ChatAppMassage";
 import axiosConfig from "../../axiosConfig";
@@ -30,9 +29,6 @@ class ChatApp extends React.Component {
       astroId: "",
       msg: "",
       roomId: "",
-      time: {},
-      seconds: 60 * 15,
-      minutes: 15,
     };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
@@ -72,7 +68,6 @@ class ChatApp extends React.Component {
         userId: userId,
         astroId: astroId,
         status: true,
-        // duration: this.formatTime(this.state.setTimer),
       };
       axiosConfig
         .post(`/user/addCallDuration`, payload)
@@ -192,7 +187,7 @@ class ChatApp extends React.Component {
   }
   getChatRoom = (data, status) => {
     this.setState({ Historydata: status });
-
+    this.alluserMessage();
     let userid = JSON.parse(localStorage.getItem("user_id"));
     let obj = {
       astroid: data?._id,
@@ -218,6 +213,7 @@ class ChatApp extends React.Component {
         .then(response => {
           console.log("chat", response.data);
           this.setState({ CurrentRoomid: response?.data?.data?.roomid });
+          sessionStorage.setItem("roomId", response?.data?.data?.roomid);
           console.log("chat", response?.data?.data?.roomid);
           if (response.data.status === true) {
             this.setState({ msg: "" });
@@ -242,6 +238,24 @@ class ChatApp extends React.Component {
         });
     }
   };
+  alluserMessage = () => {
+    setInterval(() => {
+      const roomId = sessionStorage.getItem("roomId");
+      axiosConfig
+        .get(`/user/allchatwithuser/${roomId}`)
+        .then(respons => {
+          // this.handleStart();
+          console.log("ccccc>>>>>>", respons?.data?.data);
+          // console.log(respons?.data?.status);
+          if (respons.data.status === true) {
+            this.setState({ roomChatData: respons?.data.data });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, 5000);
+  };
 
   getChatRoomId = async (user, index) => {
     this.setState({ Historydata: true });
@@ -251,10 +265,11 @@ class ChatApp extends React.Component {
     console.log("userdata", user, index);
 
     this.setState({ astroId: user?.astroid?._id, roomId: user?.roomid });
+    sessionStorage.setItem("roomId", user?.roomid);
     await axiosConfig
       .get(`/user/allchatwithuser/${user?.roomid}`)
       .then(response => {
-        // console.log(response?.data?.data);
+        console.log(response?.data?.data);
         if (response.data.status === true) {
           this.setState({ roomChatData: response?.data.data });
         }
