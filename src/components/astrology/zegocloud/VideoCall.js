@@ -26,10 +26,7 @@ export function getUrlParams(url = window.location.href) {
 export default function App() {
   // const [astroData, setAstroData] = useState("");
   const roomID = getUrlParams().get("roomID") || randomID(5);
-  // useEffect(() => {
-  //   setAstroData(localStorage.getItem("astroId"));
-  //   console.log(astroData);
-  // });
+
   let myMeeting = async element => {
     // generate Kit Token
     const appID = 1011009319;
@@ -45,6 +42,7 @@ export default function App() {
 
     // Create instance object from Kit Token.
     const zp = ZegoUIKitPrebuilt.create(kitToken);
+    let userID = JSON.parse(localStorage.getItem("user_id"));
     // start the call
     zp.joinRoom({
       container: element,
@@ -67,10 +65,16 @@ export default function App() {
       onJoinRoom: () => {
         // loca
         let obj = {
-          astroid: "641849569c86e60b9b9d3d37",
-          // astroid: localStorage.getItem("astroID"),
-          videoLink: "http://localhost:3001/#/VideoCall/?roomID=9e2k4",
-          userid: "6446865446e04118c6b1efa3",
+          astroid: localStorage.getItem("astroId"),
+          videoLink:
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            "/#/VideoCall" +
+            window.location.pathname +
+            "?roomID=" +
+            roomID,
+          userid: userID,
         };
         axiosConfig
           .post("user/send_VideoLink", obj)

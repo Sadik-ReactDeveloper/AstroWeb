@@ -68,12 +68,12 @@ class AstrologerDetail extends React.Component {
     } else swal("Astro is offline ");
   };
   handleVideocall = () => {
-    console.log(this.state.fullname);
+    // console.log(this.state.fullname);
   };
 
   componentDidMount = () => {
     let { id } = this.props.match.params;
-    console.log(id);
+    // console.log(id);
     localStorage.setItem("astroId", id);
     localStorage.setItem("videoCallAstro_id", id);
     axiosConfig
@@ -97,7 +97,7 @@ class AstrologerDetail extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
-        console.log("ViewOne Astro>>>>", response.data?.data);
+        // console.log("ViewOne Astro>>>>", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
         localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({

@@ -159,7 +159,7 @@ class AllAstrologerList extends React.Component {
     axiosConfig
       .get("/user/price_high_to_low")
       .then(response => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         if (response.data.status === true) {
           this.setState({
             price_high_to_low: response.data.data,

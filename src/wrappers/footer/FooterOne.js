@@ -26,7 +26,7 @@ const FooterOne = ({
       .get(`/admin/getallCategory`)
       .then(response => {
         setCategoryList(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       })
       .catch(error => {
         console.log(error);
