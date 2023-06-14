@@ -60,7 +60,6 @@ class AstrologerSignup extends React.Component {
       Sunday: "",
       password: "",
       cnfmPassword: "",
-
       approvedstatus: "false",
       otpverify: "true",
       selectedName: "",
@@ -112,7 +111,6 @@ class AstrologerSignup extends React.Component {
   submitHandler = e => {
     e.preventDefault();
     let astroId = localStorage.getItem("astroId");
-    // console.log("astroId", astroId);
     const data = new FormData();
     data.append("_id", astroId);
     data.append("gender", this.state.gender);
@@ -156,7 +154,6 @@ class AstrologerSignup extends React.Component {
     // data.append("thursday", this.state.Thursday);
     // data.append("friday", this.state.Friday);
     // data.append("saturday", this.state.Saturday);
-
     // data.append("email", this.state.email);
     // data.append("mobile", this.state.mobile);
     if (this.state.selectedFile !== null) {
@@ -366,6 +363,8 @@ class AstrologerSignup extends React.Component {
                               className="form-control"
                               value={this.state.gender}
                               onChange={this.changeHandler}
+                              required
+                              placeholder
                               name="gender"
                             >
                               <option selected>--select--</option>
@@ -391,9 +390,10 @@ class AstrologerSignup extends React.Component {
                           <div className="form-group mtb-10">
                             <Label>Primary Skills*</Label>
                             <Input
+                              type="text"
                               placeholder="Primary Skills"
                               name="primary_skills"
-                              type="text"
+                              required
                               value={this.state.primary_skills}
                               onChange={this.changeHandler}
                             />
@@ -405,6 +405,7 @@ class AstrologerSignup extends React.Component {
                             <Input
                               placeholder="All Skills"
                               name="all_skills"
+                              required
                               type="text"
                               value={this.state.all_skills}
                               onChange={this.changeHandler}
@@ -418,6 +419,7 @@ class AstrologerSignup extends React.Component {
                             <Input
                               placeholder="Enter Amount"
                               name="min_amount"
+                              required
                               type="number"
                               value={this.state.min_amount}
                               onChange={this.changeHandler}
@@ -430,6 +432,7 @@ class AstrologerSignup extends React.Component {
                             <Label>Maximum Amount*</Label>
                             <Input
                               placeholder="Enter Amount"
+                              required
                               name="max_amount"
                               type="number"
                               value={this.state.max_amount}
@@ -442,6 +445,7 @@ class AstrologerSignup extends React.Component {
                             <Label>Language*</Label>
                             <Input
                               placeholder="Language"
+                              required
                               name="language"
                               type="text"
                               value={this.state.language}
@@ -501,6 +505,7 @@ class AstrologerSignup extends React.Component {
                                 <Input
                                   type="text"
                                   placeholder="Name of platform"
+                                  required
                                   name="other_online_platform"
                                   value={this.state.other_online_platform}
                                   onChange={this.changeHandler}

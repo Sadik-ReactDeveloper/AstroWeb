@@ -22,7 +22,6 @@ class UserChatHistoryList extends React.Component {
     super(props);
 
     this.state = {
-      // data: {},
       userChatList: [],
     };
   }
@@ -55,10 +54,6 @@ class UserChatHistoryList extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: "#FFD59E",
-              // width: "100%",
-              // padding: "70px 0px",
-              // backgroundSize: "cover",
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -89,9 +84,6 @@ class UserChatHistoryList extends React.Component {
           <Container>
             <Row>
               <Col lg="12">
-                {/* {userChatList.length
-                  ? userChatList.map((user, index) => {
-                      return ( */}
                 <div className="">
                   <Table striped className="">
                     <thead>
@@ -130,67 +122,6 @@ class UserChatHistoryList extends React.Component {
                                   </Link>
                                 </td>
                               </tr>
-
-                              {/* <tr>
-                                <th scope="row">2</th>
-                                <td>Chat With Monish For 2 Minutes</td>
-                                <td>doc</td>
-                                <td>30.00</td>
-                                <td>sept 05, 2022 11:32AM</td>
-                                <td>
-                                  <Link className="Tansdel">
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </Link>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Chat With Monish For 2 Minutes</td>
-                                <td>doc</td>
-                                <td>30.00</td>
-                                <td>sept 05, 2022 11:32AM</td>
-                                <td>
-                                  <Link className="Tansdel">
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </Link>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">4</th>
-                                <td>Chat With Monish For 2 Minutes</td>
-                                <td>doc</td>
-                                <td>30.00</td>
-                                <td>sept 05, 2022 11:32AM</td>
-                                <td>
-                                  <Link className="Tansdel">
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </Link>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">5</th>
-                                <td>Chat With Monish For 2 Minutes</td>
-                                <td>doc</td>
-                                <td>30.00</td>
-                                <td>sept 05, 2022 11:32AM</td>
-                                <td>
-                                  <Link className="Tansdel">
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </Link>
-                                </td>
-                              </tr> */}
                             </tbody>
                           );
                         })

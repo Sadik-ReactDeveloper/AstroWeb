@@ -449,7 +449,10 @@ class AllAstrologerList extends React.Component {
                                         </Link>
                                       </p>
                                       <h4 className="card-title">
-                                        {astrologer?.fullname}
+                                        {astrologer?.fullname
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                          astrologer?.fullname.slice(1)}
                                       </h4>
                                       <ul className="mb-3">
                                         <li>

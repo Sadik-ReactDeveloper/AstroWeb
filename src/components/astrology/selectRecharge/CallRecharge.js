@@ -41,22 +41,18 @@ class CallRecharge extends React.Component {
         console.log(error.response);
       });
   };
-  submitHandler = async (id, astroid, userId, recharge_planid) => {
-    // console.log("plannnnn", id);
+  submitHandler = async () => {
     let userID = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-    // e.preventDefault();
-    // let { id } = this.props.match.params;
 
     let obj = {
       astroid: astroId,
       userid: userID,
-      //   recharge_planid: id,
     };
     await axiosConfig
       .post("/user/addCallWallet", obj)
       .then(response => {
-        // console.log("AddCallWallet>>>>", response.data);
+        console.log("AddCallWallet>>>>", response);
         if (response.data.status === true) {
           this.props.history.push("/CallListData");
           // this.setState({});
@@ -79,10 +75,6 @@ class CallRecharge extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: "#FFD59E",
-              // width: "100%",
-              // padding: "70px 0px",
-              // backgroundSize: "cover",
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -102,9 +94,9 @@ class CallRecharge extends React.Component {
                 <Col md="12">
                   <div className="leftcont text-left">
                     <h1>Select Minute Now</h1>
-                    <h3>
+                    {/* <h3>
                       Available Minute : <span>{this.state.minute}</span>
-                    </h3>
+                    </h3> */}
                   </div>
                 </Col>
               </Row>
@@ -119,7 +111,7 @@ class CallRecharge extends React.Component {
                     return (
                       <Col xl="3" lg="3" md="3" sm="6" xs="6" key={index}>
                         <Link
-                          onClick={() => this.submitHandler(allmin._id)}
+                          onClick={() => this.submitHandler()}
                           // onClick={() => {
                           //   localStorage.setItem("minute", allmin.minute);
                           //   this.props.history.push('/chatApp')

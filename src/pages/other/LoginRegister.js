@@ -35,11 +35,9 @@ export default class LoginRegister extends Component {
   onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
   };
   otpHandler = e => {
     e.preventDefault();
-    console.log("dddddhh", this.state);
     axiosConfig
       .post(`/user/userVryfyotp`, {
         mobile: parseInt(this.state.mobile),
@@ -103,36 +101,44 @@ export default class LoginRegister extends Component {
   };
   submitHandler = e => {
     e.preventDefault();
-    console.log(this.state.data);
-    const data = new FormData();
-    data.append("fullname", this.state.fullname);
-    data.append("email", this.state.email);
-    data.append("mobile", this.state.mobile);
-    data.append("gender", this.state.gender);
-    data.append("city", this.state.city);
-    data.append("dob", this.state.dob);
-    data.append("password", this.state.password);
-    data.append("cnfmPassword", this.state.cnfmPassword);
-    if (this.state.selectedFile !== null) {
-      data.append("userimg", this.state.selectedFile, this.state.selectedName);
-    }
+    if (this.state.password === this.state.cnfmPassword) {
+      // console.log(this.state.data);
+      const data = new FormData();
+      data.append("fullname", this.state.fullname);
+      data.append("email", this.state.email);
+      data.append("mobile", this.state.mobile);
+      data.append("gender", this.state.gender);
+      data.append("city", this.state.city);
+      data.append("dob", this.state.dob);
+      data.append("password", this.state.password);
+      data.append("cnfmPassword", this.state.cnfmPassword);
+      if (this.state.selectedFile !== null) {
+        data.append(
+          "userimg",
+          this.state.selectedFile,
+          this.state.selectedName
+        );
+      }
 
-    axiosConfig
-      .post(`/user/usersignup`, data)
-      .then(response => {
-        console.log(response.data.msg);
-        localStorage.setItem("auth-token", response.data.token);
-        this.setState({
-          // token: response.data.token,
-          otpMsg: response.data.otp,
+      axiosConfig
+        .post(`/user/usersignup`, data)
+        .then(response => {
+          console.log(response.data.msg);
+          localStorage.setItem("auth-token", response.data.token);
+          this.setState({
+            // token: response.data.token,
+            otpMsg: response.data.otp,
+          });
+          swal("Success!", " Register Successful Done!", "success");
+          this.props.history.push("/");
+        })
+        .catch(error => {
+          console.log(error.response);
+          swal("Error!", "Something went wrong", "error");
         });
-        swal("Success!", " Register Successful Done!", "success");
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        console.log(error.response);
-        swal("Error!", "Something went wrong", "error");
-      });
+    } else {
+      swal("Error!", "Password Did not Match", "error");
+    }
   };
   render() {
     return (
@@ -294,6 +300,8 @@ export default class LoginRegister extends Component {
                                       type="password"
                                       name="password"
                                       maxLength="12"
+                                      // valid={true}
+                                      // invalid={false}
                                       required
                                       placeholder="Enter Your password"
                                       value={this.state.password}
@@ -302,13 +310,14 @@ export default class LoginRegister extends Component {
                                     />
                                   </Col>
                                   <Col md="6">
-                                    {" "}
                                     <Input
                                       type="password"
                                       name="cnfmPassword"
+                                      // valid={true}
+                                      // invalid={true}
                                       maxLength="12"
                                       required
-                                      placeholder="Enter Your Confirm password"
+                                      placeholder="Enter Your Confirm Password"
                                       value={this.state.cnfmPassword}
                                       onChange={this.changeHandler}
                                       className="form-controller"
