@@ -74,7 +74,7 @@ class ChatApp extends React.Component {
       axiosConfig
         .post(`/user/addCallDuration`, payload)
         .then(res => {
-          console.log("callduration", res.data);
+          // console.log("callduration", res.data);
           Fetchuserdetail();
         })
         .catch(err => {
