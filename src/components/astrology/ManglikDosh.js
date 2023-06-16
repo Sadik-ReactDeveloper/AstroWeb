@@ -743,7 +743,7 @@ class ManglikDosh extends React.Component {
                         </Form>
                       </Col>
                       <Col md="4">
-                        <h3>Saved Manglik Dosh Matches</h3>
+                        <h3>Saved Manglik Dosh</h3>
                         <div className="form-m">
                           <Row>
                             <Col>

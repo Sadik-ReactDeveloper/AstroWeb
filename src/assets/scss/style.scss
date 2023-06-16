@@ -41,7 +41,13 @@
 @import "../scss/astroteam.scss";
 
 // rohit css
-
+.check.col-md-4.col-lg-12 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  color: red;
+}
 // iframe css
 iframe {
   // position: fixed;
@@ -57,6 +63,9 @@ iframe {
 // .swiper-slide.v-bx {
 //   width: unset;
 // }
+.footer-title {
+  padding-top: 10px;
+}
 .swiper-slide.v-bx {
   width: 300px !important;
   margin: 0 4px;

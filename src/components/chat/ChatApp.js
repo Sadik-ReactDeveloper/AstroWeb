@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container } from "reactstrap";
+import { Button, Container, Form, FormFeedback, Input } from "reactstrap";
 import "../../assets/scss/chat.scss";
 import LayoutOne from "../../layouts/LayoutOne";
 import Buyimg from "../../../src/assets/img/boy-img.png";
@@ -29,6 +29,8 @@ class ChatApp extends React.Component {
       astroId: "",
       msg: "",
       roomId: "",
+      createNewValidation: true,
+      newWorkspace: false,
     };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
@@ -379,14 +381,25 @@ class ChatApp extends React.Component {
                           <input
                             type="text"
                             placeholder="Send a message"
+                            // valid={this.state.createNewValidation}
+                            // invalid={!this.state.createNewValidation}
                             onChange={e => {
                               this.handleChange(e);
                             }}
                             value={this.state.msg}
                             defaultValue={""}
                           />
-
+                          {/* <FormFeedback valid={this.state.createNewValidation}>
+                            {this.state.createNewValidation
+                              ? "Sweet! That name is available."
+                              : "Oh no! That name is already taken."}
+                          </FormFeedback> */}
                           <button
+                            disabled={
+                              // onClick={() => setNewWorkspace(!newWorkspace)}
+                              !this.state.createNewValidation ||
+                              !this.state.newWorkspaceTitle
+                            }
                             onClick={e => {
                               this.submitHandler(
                                 e,

@@ -429,90 +429,91 @@ class AllAstrologerList extends React.Component {
               </Col>
               <Col md="9">
                 <Row className="mt-2">
-                  {astrologerList.length
-                    ? astrologerList.map((astrologer, index) => {
-                        return (
-                          <Col md="4" key={index}>
-                            <div className="image-flip">
-                              <div className="mainflip flip-0">
-                                <div className="frontside">
-                                  <div className="card">
-                                    <div className="card-body text-center">
-                                      <p>
-                                        <Link
-                                          to={
-                                            "/astrologerdetail/" +
-                                            astrologer._id
+                  {astrologerList.length ? (
+                    astrologerList.map((astrologer, index) => {
+                      return (
+                        <Col md="4" key={index}>
+                          <div className="image-flip">
+                            <div className="mainflip flip-0">
+                              <div className="frontside">
+                                <div className="card">
+                                  <div className="card-body text-center">
+                                    <p>
+                                      <Link
+                                        to={
+                                          "/astrologerdetail/" + astrologer._id
+                                        }
+                                      >
+                                        <img src={astrologer?.img} alt="" />
+                                      </Link>
+                                    </p>
+                                    <h4 className="card-title">
+                                      {astrologer?.fullname
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                        astrologer?.fullname.slice(1)}
+                                    </h4>
+                                    <ul className="mb-3">
+                                      <li>
+                                        Specility:
+                                        <span>{astrologer?.all_skills}</span>
+                                      </li>
+                                      <li>
+                                        Language:
+                                        <span>{astrologer?.language}</span>
+                                      </li>
+                                      <li>
+                                        Experience:
+                                        <span>{astrologer?.exp_in_years}</span>
+                                      </li>
+                                      <li>
+                                        Call Rate:
+                                        <span>
+                                          {astrologer?.callCharge}/
+                                          {astrologer?.conrubute_hrs}
+                                        </span>
+                                      </li>
+                                    </ul>
+
+                                    {astrologer.waiting_queue === 0 ? (
+                                      <>
+                                        <span
+                                          onClick={e =>
+                                            this.submitHandler(
+                                              e,
+                                              astrologer?._id,
+                                              astrologer?.mobile,
+                                              astrologer,
+                                              index
+                                            )
                                           }
                                         >
-                                          <img src={astrologer?.img} alt="" />
-                                        </Link>
-                                      </p>
-                                      <h4 className="card-title">
-                                        {astrologer?.fullname
-                                          .charAt(0)
-                                          .toUpperCase() +
-                                          astrologer?.fullname.slice(1)}
-                                      </h4>
-                                      <ul className="mb-3">
-                                        <li>
-                                          Specility:
-                                          <span>{astrologer?.all_skills}</span>
-                                        </li>
-                                        <li>
-                                          Language:
-                                          <span>{astrologer?.language}</span>
-                                        </li>
-                                        <li>
-                                          Experience:
-                                          <span>
-                                            {astrologer?.exp_in_years}
-                                          </span>
-                                        </li>
-                                        <li>
-                                          Call Rate:
-                                          <span>
-                                            {astrologer?.callCharge}/
-                                            {astrologer?.conrubute_hrs}
-                                          </span>
-                                        </li>
-                                      </ul>
-
-                                      {astrologer.waiting_queue === 0 ? (
-                                        <>
-                                          <span
-                                            onClick={e =>
-                                              this.submitHandler(
-                                                e,
-                                                astrologer?._id,
-                                                astrologer?.mobile,
-                                                astrologer,
-                                                index
-                                              )
-                                            }
-                                          >
-                                            <div className="btn btn-success btn-sm sc">
-                                              <i class="fa fa-phone"></i>
-                                              -Call
-                                            </div>
-                                          </span>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <button className="btn btn-denger wr">
-                                            <i class="fa fa-phone">Wait</i>
-                                          </button>
-                                        </>
-                                      )}
-                                    </div>
+                                          <div className="btn btn-success btn-sm sc">
+                                            <i class="fa fa-phone"></i>
+                                            -Call
+                                          </div>
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <button className="btn btn-denger wr">
+                                          <i class="fa fa-phone">Wait</i>
+                                        </button>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </Col>
-                        );
-                      })
-                    : null}
+                          </div>
+                        </Col>
+                      );
+                    })
+                  ) : (
+                    <Col lg="12" md="4" className="check">
+                      No Astrologer Available
+                    </Col>
+                  )}
                 </Row>
               </Col>
             </Row>

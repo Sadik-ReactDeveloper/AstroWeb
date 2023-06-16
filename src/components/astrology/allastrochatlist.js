@@ -219,96 +219,98 @@ class allastrochatlist extends React.Component {
               </Col>
               <Col md="9">
                 <Row>
-                  {astrologerList.length
-                    ? astrologerList.map((astrologer, index) => {
-                        return (
-                          <Col md="4" key={index}>
-                            <div className="image-flip">
-                              <div className="mainflip flip-0">
-                                <div className="frontside">
-                                  <Link
-                                    // to={"/astrologerdetail/" + astrologer._id}
-                                    className=""
-                                  >
-                                    <div className="card">
-                                      <div className="card-body text-center">
-                                        <p>
-                                          <img src={astrologer?.img} alt="" />
-                                        </p>
-                                        <h4 className="card-title">
-                                          {astrologer?.fullname}
-                                        </h4>
-                                        <ul className="mb-3">
-                                          <li>
-                                            Specility:{" "}
-                                            <span>
-                                              {astrologer?.all_skills}
-                                            </span>
-                                          </li>
-                                          <li>
-                                            Language:{" "}
-                                            <span>{astrologer?.language}</span>
-                                          </li>
-                                          <li>
-                                            Experience:{" "}
-                                            <span>
-                                              {astrologer?.exp_in_years}
-                                            </span>
-                                          </li>
-                                          <li>
-                                            Call Rate:{" "}
-                                            <span>
-                                              {astrologer?.callCharge}/
-                                              {astrologer?.conrubute_hrs}
-                                            </span>
-                                          </li>
-                                        </ul>
-                                        {astrologer.waiting_queue === 0 ? (
-                                          <>
-                                            <Link
-                                              className="btn btn-primary btn-sm sc"
-                                              to={
-                                                "/astrologerdetail/" +
-                                                astrologer._id
-                                              }
-                                            >
-                                              <span className="sr-btn">
-                                                <i
-                                                  class="fa fa-commenting"
-                                                  aria-hidden="true"
-                                                >
-                                                  Chat
-                                                </i>
-                                              </span>
-                                            </Link>
-                                          </>
-                                        ) : (
-                                          <>
-                                            <button className="btn btn-denger wr">
+                  {astrologerList.length ? (
+                    astrologerList.map((astrologer, index) => {
+                      return (
+                        <Col md="4" key={index}>
+                          <div className="image-flip">
+                            <div className="mainflip flip-0">
+                              <div className="frontside">
+                                <Link
+                                  // to={"/astrologerdetail/" + astrologer._id}
+                                  className=""
+                                >
+                                  <div className="card">
+                                    <div className="card-body text-center">
+                                      <p>
+                                        <img src={astrologer?.img} alt="" />
+                                      </p>
+                                      <h4 className="card-title">
+                                        {astrologer?.fullname}
+                                      </h4>
+                                      <ul className="mb-3">
+                                        <li>
+                                          Specility:
+                                          <span>{astrologer?.all_skills}</span>
+                                        </li>
+                                        <li>
+                                          Language:{" "}
+                                          <span>{astrologer?.language}</span>
+                                        </li>
+                                        <li>
+                                          Experience:{" "}
+                                          <span>
+                                            {astrologer?.exp_in_years}
+                                          </span>
+                                        </li>
+                                        <li>
+                                          Call Rate:{" "}
+                                          <span>
+                                            {astrologer?.callCharge}/
+                                            {astrologer?.conrubute_hrs}
+                                          </span>
+                                        </li>
+                                      </ul>
+                                      {astrologer.waiting_queue === 0 ? (
+                                        <>
+                                          <Link
+                                            className="btn btn-primary btn-sm sc"
+                                            to={
+                                              "/astrologerdetail/" +
+                                              astrologer._id
+                                            }
+                                          >
+                                            <span className="sr-btn">
                                               <i
                                                 class="fa fa-commenting"
                                                 aria-hidden="true"
-                                              />
-                                              Wait
-                                            </button>
-                                          </>
-                                        )}
-                                        <br />
-                                        <span value={this.state.waiting_queue}>
-                                          {" "}
-                                          Wait ~ {astrologer.waiting_queue}Min
-                                        </span>
-                                        {/* <span> Wait ~ 5m</span> */}
-                                      </div>
+                                              >
+                                                Chat
+                                              </i>
+                                            </span>
+                                          </Link>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <button className="btn btn-denger wr">
+                                            <i
+                                              class="fa fa-commenting"
+                                              aria-hidden="true"
+                                            />
+                                            Wait
+                                          </button>
+                                        </>
+                                      )}
+                                      <br />
+                                      <span value={this.state.waiting_queue}>
+                                        {" "}
+                                        Wait ~ {astrologer.waiting_queue}Min
+                                      </span>
+                                      {/* <span> Wait ~ 5m</span> */}
                                     </div>
-                                  </Link>
-                                </div>
+                                  </div>
+                                </Link>
                               </div>
                             </div>
-                          </Col>
-                        );
-                      })
-                    : "No Astrologer Available"}
+                          </div>
+                        </Col>
+                      );
+                    })
+                  ) : (
+                    <Col lg="12" md="4" className="check">
+                      No Astrologer Available
+                    </Col>
+                  )}
                 </Row>
               </Col>
             </Row>
