@@ -1,7 +1,5 @@
-// import * as React from "react";
 import React, { useState, useRef } from "react";
 import axiosConfig from "../../../axiosConfig";
-// import './style.css';
 import { getUserID } from "../astrologerdetail";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
