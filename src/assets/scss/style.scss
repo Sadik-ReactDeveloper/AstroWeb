@@ -299,6 +299,7 @@ section.stt-1 {
 // astrologer detail css
 img.pic-as {
   border-radius: 100%;
+  object-fit: cover;
   width: 250px;
   height: 250px;
 }
@@ -800,6 +801,7 @@ a.Tansdel i {
   img {
     width: 150px;
     height: 150px;
+    object-fit: cover;
     border-radius: 100%;
     margin: 0 80px;
   }

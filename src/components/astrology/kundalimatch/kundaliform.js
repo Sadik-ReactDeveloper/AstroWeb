@@ -249,7 +249,7 @@ class KundaliForm extends React.Component {
                                     onChange={this.changeHandler}
                                   >
                                     <option>--Select--</option>
-                                    <option>0</option>
+                                    {/* <option>0</option> */}
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -441,7 +441,7 @@ class KundaliForm extends React.Component {
                                     <option>21</option>
                                     <option>22</option>
                                     <option>23</option>
-                                    <option>24</option>
+                                    <option>00</option>
                                   </select>
                                 </Col>
                                 <Col md="6">
@@ -512,7 +512,7 @@ class KundaliForm extends React.Component {
                                     <option>57</option>
                                     <option>58</option>
                                     <option>59</option>
-                                    <option>60</option>
+                                    <option>00</option>
                                   </select>
                                 </Col>
                                 <Col md="6">
@@ -645,7 +645,7 @@ class KundaliForm extends React.Component {
                                     onChange={this.changeHandler}
                                   >
                                     <option>--Select--</option>
-                                    <option>0</option>
+                                    {/* <option>0</option> */}
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -908,7 +908,7 @@ class KundaliForm extends React.Component {
                                     <option>57</option>
                                     <option>58</option>
                                     <option>59</option>
-                                    <option>60</option>
+                                    <option>00</option>
                                   </select>
                                 </Col>
                                 {/* <Col md="4">

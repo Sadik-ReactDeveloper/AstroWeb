@@ -327,20 +327,7 @@ class AstrologerDetail extends React.Component {
                     style={{ border: "1px solid#ccc", padding: "20px 10px" }}
                   >
                     <h3>AboutUs</h3>
-                    <p>
-                      {this.state.long_bio}
-                      {/* Sree Sanjib ji is KP astrologer from Kolkata,
-                              India. He has 15 years of experience in KP
-                              astrology and Vedic Astrology. You can consult him
-                              in Hindi, English and Bengali Language. He has Won
-                              Jyotish Gyan Ratna, Jyotish Gyan Bharti and
-                              Jyotish Shiromani awards from Word Astrologers
-                              Society. He is expert in Nadi Astrology, KP
-                              astrology, Numerology, Palmistry and Vastu. You
-                              can consult him for business related issues,
-                              marriage, financial issues, property or legal
-                              issues and much more. */}
-                    </p>
+                    <p>{this.state.long_bio}</p>
                   </div>
                   {/* {/ about us close  /} */}
                   {/* {/ review section start /} */}
@@ -883,7 +870,6 @@ class AstrologerDetail extends React.Component {
                                           {this.state.sunday?.map(value => (
                                             <span key={value?._id}>
                                               {value}
-                                              {"  "}
                                             </span>
                                           ))}
                                         </p>

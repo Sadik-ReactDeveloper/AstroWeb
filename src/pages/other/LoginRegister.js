@@ -64,6 +64,7 @@ export default class LoginRegister extends Component {
             // window.location.replace('/')
             this.props.history.push("/");
           }
+        } else {
         }
       })
       .catch(error => {
@@ -78,12 +79,13 @@ export default class LoginRegister extends Component {
       axiosConfig
         .post(`/user/userlogin`, obj)
         .then(response => {
-          console.log("@@@####", response.data);
           this.setState({ otpMsg: response.data.msg });
           if (response.data.msg === "otp Send Successfully") {
             localStorage.setItem("mobileNumber", this.state.mobile);
             swal("OTP Send Successfully");
             // this.props.history.push('/')
+          } else {
+            swal("OTP Send Successfully");
           }
         })
         .catch(error => {
@@ -133,11 +135,8 @@ export default class LoginRegister extends Component {
           this.props.history.push("/");
         })
         .catch(error => {
-          console.log(error.response);
-          swal("Error!", "Something went wrong", "error");
+          swal("Error!", "Already Registered", "error");
         });
-    } else {
-      swal("Error!", "Password Did not Match", "error");
     }
   };
   render() {

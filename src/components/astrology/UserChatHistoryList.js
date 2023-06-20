@@ -9,11 +9,13 @@ import {
   Form,
   Button,
 } from "reactstrap";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 
 import LayoutOne from "../../layouts/LayoutOne";
 import "../../assets/scss/astroteam.scss";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+// import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Table } from "reactstrap";
 import axiosConfig from "../../axiosConfig";
 
@@ -24,6 +26,66 @@ class UserChatHistoryList extends React.Component {
     this.state = {
       userChatList: [],
     };
+    // this.state = {
+    //   TablerowData: [],
+    //   columns: [
+    //     {
+    //       headerName: "ConversationID",
+    //       field: "transaction_id",
+    //       sortable: true,
+    //       filter: true,
+    //     },
+    //     {
+    //       headerName: "Astrologer Name",
+    //       field: "beforeAmt",
+    //       sortable: true,
+    //       filter: true,
+    //     },
+    //     {
+    //       headerName: "Conversation Type",
+    //       field: "amount",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+
+    //     {
+    //       headerName: "Rate",
+    //       field: "finalAmt",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //     {
+    //       headerName: "Duration",
+    //       field: "createdAt",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //     {
+    //       headerName: "	Amount",
+    //       field: "tran_Type",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //     {
+    //       headerName: "	Deducation",
+    //       field: "tran_Type",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //     {
+    //       headerName: "	Date/Time",
+    //       field: "tran_Type",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //     {
+    //       headerName: "Action",
+    //       field: "tran_Type",
+    //       sortable: true,
+    //       filter: "agNumberColumnFilter",
+    //     },
+    //   ],
+    // };
   }
   componentDidMount() {
     // let { id } = this.props.match.params;
@@ -36,6 +98,7 @@ class UserChatHistoryList extends React.Component {
         console.log("userChatList", response.data.data);
         if (response.data.status === true) {
           this.setState({
+            WalletTransacList: response.data.data,
             userChatList: response.data.data,
           });
         }
@@ -47,7 +110,7 @@ class UserChatHistoryList extends React.Component {
 
   render() {
     const { userChatList } = this.state;
-
+    const { WalletTransacList } = this.state;
     return (
       <LayoutOne headerTop="visible">
         <section className="pt-0 pb-0">
@@ -83,6 +146,14 @@ class UserChatHistoryList extends React.Component {
         <section>
           <Container>
             <Row>
+              {/* <Col lg="12">
+                <AgGridReact
+                  columnDefs={this.state?.columns}
+                  rowData={WalletTransacList}
+                  pagination={true}
+                  paginationPageSize={30}
+                />
+              </Col> */}
               <Col lg="12">
                 <div className="">
                   <Table striped className="">
@@ -90,18 +161,17 @@ class UserChatHistoryList extends React.Component {
                       <tr>
                         <th>#Conversation ID</th>
                         <th>Astrologer Name</th>
-
                         <th>Conversation Type</th>
                         <th>Rate</th>
                         <th>Duration</th>
-                        <th>Amount</th>
+                        {/* <th>Amount</th> */}
                         <th>Deducation</th>
                         <th>Date/Time</th>
                         <th>Action</th>
                       </tr>
                     </thead>
-                    {userChatList.length
-                      ? userChatList.map((user, index) => {
+                    {userChatList?.length
+                      ? userChatList?.map((user, index) => {
                           return (
                             <tbody>
                               <tr>

@@ -123,9 +123,6 @@ class WalletTransacList extends React.Component {
           </div>
         </section>
         <section>
-          {/* <Container>
-            <Row > */}
-
           <div
             className="ag-theme-balham"
             style={{
@@ -140,8 +137,6 @@ class WalletTransacList extends React.Component {
               paginationPageSize={50}
             />
           </div>
-          {/* </Row>
-          </Container> */}
         </section>
       </LayoutOne>
     );

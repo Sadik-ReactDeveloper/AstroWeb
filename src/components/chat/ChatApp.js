@@ -100,7 +100,6 @@ class ChatApp extends React.Component {
   handlePause = () => {
     clearInterval(this.countRef.current);
     clearInterval(this.apicall.current);
-    // this.setState({ setIsPaused: false });
   };
 
   handlestop = () => {
@@ -124,9 +123,6 @@ class ChatApp extends React.Component {
   };
 
   componentDidMount = () => {
-    // this.handleStart();
-    //this.startTimer()
-    //alert(JSON.parse(localStorage.getItem('minute')))
     const astroId = localStorage.getItem("astroId");
 
     axiosConfig

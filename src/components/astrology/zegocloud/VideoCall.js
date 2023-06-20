@@ -1,5 +1,5 @@
 // import * as React from "react";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axiosConfig from "../../../axiosConfig";
 // import './style.css';
 import { getUserID } from "../astrologerdetail";
@@ -23,9 +23,49 @@ export function getUrlParams(url = window.location.href) {
   return new URLSearchParams(urlStr);
 }
 
+//  handlestartinterval = () => {
+//    this.apicall.current = setInterval(() => {
+//      let userId = JSON.parse(localStorage.getItem("user_id"));
+//      let astroId = localStorage.getItem("videoCallAstro_id");
+//      sessionStorage.setItem("typeofcall", "Chat");
+
+//      let payload = {
+//        userId: userId,
+//        astroId: astroId,
+//        status: true,
+//      };
+//      axiosConfig
+//        .post(`/user/addCallDuration`, payload)
+//        .then(res => {
+//          // console.log("callduration", res.data);
+//          Fetchuserdetail();
+//        })
+//        .catch(err => {
+//          console.log(err.response.data.message);
+//          if (
+//            err.response.data.message === "Insufficient balance for the call"
+//          ) {
+//            this.handlestop();
+//            this.props.history.push("/allastrologerlist");
+//            swal("You have Low Balance");
+//          }
+//        });
+//    }, 60000);
+//  };
+
 export default function App() {
   // const [astroData, setAstroData] = useState("");
+  const [timer, setTimer] = useState(0);
   const roomID = getUrlParams().get("roomID") || randomID(5);
+  let liRef = useRef(null);
+
+  const handleStart = () => {
+    const Ref = setInterval(() => {
+      // this.setState({ setTimer: this.state.setTimer + 1 });
+      setTimer(timer + 1);
+    }, 1000);
+    // this.handlestartinterval();
+  };
 
   let myMeeting = async element => {
     // generate Kit Token
@@ -63,7 +103,8 @@ export default function App() {
         mode: ZegoUIKitPrebuilt.VideoConference,
       },
       onJoinRoom: () => {
-        // loca
+        handleStart();
+
         let obj = {
           astroid: localStorage.getItem("astroId"),
           videoLink:
