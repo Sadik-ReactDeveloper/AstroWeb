@@ -52,6 +52,7 @@ class AstrologerDetail extends React.Component {
 
     this.state = {
       modal: false,
+      follow: false,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -63,17 +64,47 @@ class AstrologerDetail extends React.Component {
     });
   }
   handleStartChat = () => {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    if (userId !== "" && userId !== null) {
+      if (this.state.status === "Online") {
+        this.props.history.push("/ChatListData");
+        // console.log(userId, id);
+      } else swal("Astro is offline ");
+    } else {
+      swal("Need To Login First");
+    }
+  };
+
+  handleStartCall = () => {
     if (this.state.status === "Online") {
-      this.props.history.push("/ChatListData");
+      let userId = JSON.parse(localStorage.getItem("user_id"));
+      let { id } = this.props.match.params;
+      console.log(userId, id);
+      if (userId !== "" && userId !== null) {
+        this.props.history.push("/CallListData");
+      } else {
+        swal("Need To Login First");
+      }
     } else swal("Astro is offline ");
   };
+
   handleVideocall = () => {
-    // console.log(this.state.fullname);
+    if (this.state.status === "Online") {
+      let userId = JSON.parse(localStorage.getItem("user_id"));
+      let { id } = this.props.match.params;
+      console.log(userId, id);
+      if (userId !== "" && userId !== null) {
+        this.props.history.push("/VideoListData");
+      } else {
+        swal("Need To Login First");
+      }
+    } else swal("Astro is offline ");
   };
 
   componentDidMount = () => {
     let { id } = this.props.match.params;
-    // console.log(id);
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+
     localStorage.setItem("astroId", id);
     localStorage.setItem("videoCallAstro_id", id);
     axiosConfig
@@ -82,6 +113,17 @@ class AstrologerDetail extends React.Component {
         this.setState({ GtRating: res.data.data });
       })
       .catch(err => console.log(err));
+
+    axiosConfig
+      .get(`/user/getone_followers/${userId}/${id}`)
+      .then(resl => {
+        this.setState({ follow: resl.data.data.follow });
+        console.log("followOne", resl.data.data);
+      })
+      .catch(err => {
+        console.log("eeeeeee", err.response);
+      });
+
     // axiosConfig
     //   .get("/user/all_min_recharge")
     //   .then(response => {
@@ -97,7 +139,6 @@ class AstrologerDetail extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
-        // console.log("ViewOne Astro>>>>", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
         localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({
@@ -118,10 +159,8 @@ class AstrologerDetail extends React.Component {
           monday: response.data.data.monday,
           friday: response.data.data.friday,
           tuesday: response.data.data.tuesday,
-
           thursday: response.data.data.thursday,
           saturday: response.data.data.saturday,
-
           wednesday: response.data.data.wednesday,
         });
       })
@@ -157,6 +196,39 @@ class AstrologerDetail extends React.Component {
     } else {
       swal("Need to Login first");
       // this.setState({ modal: true });
+    }
+  };
+  handleFollow = () => {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    let { id } = this.props.match.params;
+
+    if (this.state.follow !== true) {
+      this.setState({ follow: false });
+      let followData = {
+        astroid: id,
+        userid: userId,
+        follow: true,
+      };
+      axiosConfig
+        .post(`/user/addAstroFollowers`, followData)
+        .then(resp => {
+          this.setState({ follow: resp.data.data.follow });
+          console.log("ressss", resp.data.data.follow);
+        })
+        .catch(error => {
+          console.log("Error", error);
+        });
+    } else {
+      // this.setState({ follow: true });
+      axiosConfig
+        .get(`/user/unfollow_astrologer/${userId}/${id}`)
+        .then(result => {
+          console.log(result);
+          this.setState({ follow: result });
+        })
+        .catch(error => {
+          console.log("error", error);
+        });
     }
   };
   render() {
@@ -209,7 +281,12 @@ class AstrologerDetail extends React.Component {
                   <Row>
                     <Row>
                       <div className="d-flex justify-content-end mr-2">
-                        <Button className="btn-as st">Follow</Button>
+                        <Button
+                          onClick={() => this.handleFollow()}
+                          className="btn-as st"
+                        >
+                          {this.state.follow === true ? "Following" : "Follow"}
+                        </Button>
                       </div>
                     </Row>
                     <Col md="3">
@@ -267,50 +344,46 @@ class AstrologerDetail extends React.Component {
                               className="fa fa-commenting"
                               aria-hidden="true"
                             ></i>
-                            Start Chat
+
+                            <span className="m-1"> Start Chat</span>
                           </Button>
                           {/* </Link> */}
                         </Col>
                         <Col md="3" className="mt-30">
                           {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           {/* <Link to="/Call"> */}
-                          <Link to="/callRecharge">
-                            {/* <Link to="/UserRequestFormCall"> */}
-                            <Button
-                              className="btn-as st"
-                              onClick={this.toggle}
-                              // onClick={(e) =>
-                              //   this.submitHandler(
-                              //     e,
-                              //     this.state.astroId,
-                              //     this.state.astroMobile
-                              //   )
-                              // }
-                            >
-                              <i className="fa fa-phone" aria-hidden="true"></i>
-                              Start Call
-                            </Button>
-                          </Link>
+                          {/* <Link to="/callRecharge"> */}
+                          {/* <Link to="/CallListData"> */}
+                          <Button
+                            className="btn-as st"
+                            // onClick={this.toggle}
+                            onClick={() => this.handleStartCall()}
+                          >
+                            <i className="fa fa-phone" aria-hidden="true"></i>
+                            <span className="m-2">Start Call</span>
+                          </Button>
+                          {/* </Link> */}
                         </Col>
                         <Col
                           // onClick={() => this.handleVideocall}
                           md="3"
                           className="mt-30"
                         >
-                          <Link to="/VideoListData">
-                            {/* <Link to="/UserRequestFormVideoCall"> */}
-                            <Button
-                              className="btn-as st"
-                              // onClick={() => this.handleBalacecheck()}
-                              //  onClick={this.toggle}
-                            >
-                              <i
-                                class="fa fa-video-camera"
-                                aria-hidden="true"
-                              ></i>
-                              Start Video
-                            </Button>
-                          </Link>
+                          {/* <Link to="/VideoListData"> */}
+                          {/* <Link to="/UserRequestFormVideoCall"> */}
+                          <Button
+                            className="btn-as st"
+                            onClick={() => this.handleVideocall()}
+                            //  onClick={this.toggle}
+                          >
+                            <i
+                              class="fa fa-video-camera"
+                              aria-hidden="true"
+                            ></i>
+
+                            <span className="m-1"> Start Video</span>
+                          </Button>
+                          {/* </Link> */}
                         </Col>
                       </Row>
                     </Col>
@@ -398,7 +471,7 @@ class AstrologerDetail extends React.Component {
                           ) : null}
                         </div>
                       </div>
-                      {/* {/ avai /} */}
+
                       <div className="col-md-6">
                         <div className="avai-box text-center">
                           <h3>Availability</h3>

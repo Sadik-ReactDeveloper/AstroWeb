@@ -5,8 +5,6 @@ import axios from "axios";
 
 import ReactHtmlParser from "react-html-parser";
 
-// import Moment from "react-moment";
-// import "moment-timezone";
 import HtmlParser from "react-html-parser";
 import LayoutOne from "../../layouts/LayoutOne";
 

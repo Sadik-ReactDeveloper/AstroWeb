@@ -53,7 +53,8 @@ export function getUrlParams(url = window.location.href) {
 
 export default function App() {
   // const [astroData, setAstroData] = useState("");
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState();
+  const [current, setCurrent] = useState(0);
   const roomID = getUrlParams().get("roomID") || randomID(5);
   let liRef = useRef(null);
 
@@ -82,6 +83,7 @@ export default function App() {
     const zp = ZegoUIKitPrebuilt.create(kitToken);
     let userID = JSON.parse(localStorage.getItem("user_id"));
     // start the call
+
     zp.joinRoom({
       container: element,
       sharedLinks: [
@@ -99,6 +101,9 @@ export default function App() {
       ],
       scenario: {
         mode: ZegoUIKitPrebuilt.VideoConference,
+      },
+      preJoinViewConfig: {
+        title: "csdcscs", // The title of the prejoin view. Uses "enter Room" by default.
       },
       onJoinRoom: () => {
         handleStart();
@@ -118,7 +123,16 @@ export default function App() {
         axiosConfig
           .post("user/send_VideoLink", obj)
           .then(response => {
-            console.log("PostVideo Callll>>>>", response.data.data);
+            console.log("PostVideo Callll>>>>", response.data.data.createdAt);
+
+            console.log(
+              "time",
+              new Date(response.data.data.createdAt).getTime()
+            );
+
+            // var timestamp = 1480687432 * 1000;
+            // console.log(new Date(timestamp).toTimeString());
+            // console.log(new Date(timestamp).toLocaleTimeString());
           })
           .catch(error => {
             console.log(error);

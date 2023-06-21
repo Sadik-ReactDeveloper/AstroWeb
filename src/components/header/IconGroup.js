@@ -2,8 +2,11 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
+// import "../../../public/assets/img/usedemo.jpg"
+import Buyimg from "../../../src/assets/img/boy-img.png";
 import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart } from "../../redux/actions/cartActions";
+
 import Axios from "axios";
 import axiosConfig from "../../axiosConfig";
 
@@ -135,15 +138,29 @@ const IconGroup = ({
         >
           {customer?.userimg ? (
             <>
-              <span className="username">{customer?.fullname}</span>
+              <span className="username">
+                {customer?.fullname.charAt(0).toUpperCase() +
+                  customer?.fullname.slice(1)}
+              </span>
+
               <span data-tour="user">
-                <img
-                  src={customer?.userimg[0]}
-                  className="round ftt"
-                  height="40"
-                  width="40"
-                  alt="Login"
-                />
+                {customer.userimg[0] ? (
+                  <img
+                    src={customer?.userimg[0]}
+                    className="round ftt"
+                    height="40"
+                    width="40"
+                    alt="Login"
+                  />
+                ) : (
+                  <img
+                    src={Buyimg}
+                    className="round ftt"
+                    height="40"
+                    width="40"
+                    alt="Login"
+                  />
+                )}
               </span>
             </>
           ) : (
@@ -165,9 +182,7 @@ const IconGroup = ({
                   </Link>
                 </li>
                 <li>
-                  <a href="http://65.1.134.210/#/pages/login">
-                    Astrologer login
-                  </a>
+                  <a href="http://3.6.219.3/#/pages/login">Astrologer login</a>
                 </li>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/astrologersignup"}>

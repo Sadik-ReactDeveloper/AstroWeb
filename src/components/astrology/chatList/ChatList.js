@@ -122,7 +122,8 @@ class ChatList extends React.Component {
       });
   };
   handleChating = selectedId => {
-    this.props.history.push("/chatApp");
+    this.handleBalacecheck();
+
     // let userId = JSON.parse(localStorage.getItem("user_id"));
     // let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
     // console.log("USer", mobileNo);
@@ -168,7 +169,8 @@ class ChatList extends React.Component {
         .then(response => {
           console.log(response.data);
           if (response.data.status === true) {
-            this.props.history.push("/UserRequestFormVideoCall");
+            this.props.history.push("/chatApp");
+            // this.props.history.push("/UserRequestFormVideoCall");
             //
           } else swal("Recharge", "you don't have enough Balance");
         })
@@ -310,7 +312,7 @@ class ChatList extends React.Component {
                                     <button
                                       className="btn btn-denger wr"
                                       onClick={() =>
-                                        this.handleChating(list._id)
+                                        this.handleBalacecheck(list._id)
                                       }
                                     >
                                       Start Chat

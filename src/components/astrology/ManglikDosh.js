@@ -373,7 +373,6 @@ class ManglikDosh extends React.Component {
                                   onChange={this.changeHandler}
                                 >
                                   <option>--Select--</option>
-                                  <option>0</option>
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -565,7 +564,7 @@ class ManglikDosh extends React.Component {
                                   <option>21</option>
                                   <option>22</option>
                                   <option>23</option>
-                                  <option>24</option>
+                                  <option>00</option>
                                 </Input>
                               </Col>
                               <Col md="2">
@@ -637,7 +636,7 @@ class ManglikDosh extends React.Component {
                                   <option>57</option>
                                   <option>58</option>
                                   <option>59</option>
-                                  <option>60</option>
+                                  <option>00</option>
                                 </Input>
                               </Col>
                             </Row>

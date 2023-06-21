@@ -21,6 +21,24 @@ const FooterOne = ({
   const [top, setTop] = useState(0);
   const [categoryList, setCategoryList] = useState([]);
 
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    getPages();
+  }, []);
+
+  const getPages = () => {
+    axiosConfig
+      .get(`/admin/getPages`)
+      .then(res => {
+        console.log(res.data.data);
+        setPages(res.data.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     axiosConfig
       .get(`/admin/getallCategory`)
@@ -87,26 +105,6 @@ const FooterOne = ({
                 <ul>
                   <li>
                     <ul className="submenu">
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/heroscopestwo3"}>
-                          Tomorrow
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/heroscopestwo"}>
-                          Daily
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/heroscopestwo1"}>
-                          Weekly
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/heroscopestwo2"}>
-                          Monthly
-                        </Link>
-                      </li> */}
                       {categoryList?.map((item, i) => {
                         return (
                           <li className="">
@@ -116,27 +114,6 @@ const FooterOne = ({
                           </li>
                         );
                       })}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/zodicPage"}>
-                          Zodiac Signs
-                        </Link>
-                      </li> */}
-
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/loveAstrologer"}>
-                          Love & Astrologer12
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/numerology"}>
-                          Numerology
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/tarot"}>
-                          Tarot Reading Predictions
-                        </Link>
-                      </li> */}
                     </ul>
                   </li>
                 </ul>
@@ -156,72 +133,11 @@ const FooterOne = ({
                   : "footer-widget mb-30 ml-75"
               }`}
             >
-              {/* <div className="footer-title">
-                <h3>Dosh</h3>
-              </div> */}
               <div className="footer-list">
                 <ul>
                   <li>
-                    {/* <h3>Dosh</h3> */}
-                    <ul className="submenu">
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/ManglikDosh"}>
-                          Manglik Dosh
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/pitraDosh"}>
-                          Pitra Dosh
-                        </Link>
-                      </li> */}
-                      {/* <li className="">
-                        <Link to={process.env.PUBLIC_URL + "/kalsharpDosh"}>
-                          Kalsharvp Dosh
-                        </Link>
-                      </li> */}
-
-                      {/* {categoryList?.map((cat) => (
-                        <li className="" key={cat._id}>
-                          <Link to={process.env.PUBLIC_URL + "/heroscopesall"}>
-                            {cat?.title}
-                          </Link>
-                        </li>
-                      ))} */}
-                    </ul>
+                    <ul className="submenu"></ul>
                   </li>
-                  {/* <li>
-                      <Link to="/heroscopesall">Health Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Career Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Finance Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Education Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Chinese Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Lal Kitab Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Numerology Horoscope 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Tarot Reading Predictions 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Festival 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Planetary Transit 2022</Link>
-                  </li>
-                  <li>
-                      <Link to="/">Planetary Transit 2022</Link>
-                  </li> */}
                 </ul>
               </div>
               <div className="footer-title">
@@ -252,10 +168,46 @@ const FooterOne = ({
                           Book Online Puja
                         </Link>
                       </li>
-                      <div className="footer-title mt-3">
-                        <h3>Others</h3>
-                      </div>
+                      {pages[0]?.other === true ? (
+                        <>
+                          <div className="footer-title mt-3">
+                            <h3>Others</h3>
+                          </div>
+                        </>
+                      ) : null}
+
                       <div className="footer-list">
+                        <ul>
+                          <li>
+                            <ul className="submenu">
+                              {pages.length > 0 ? (
+                                <>
+                                  {pages?.map(ele => {
+                                    if (ele?.status === true) {
+                                      return (
+                                        <li key={ele?._id} className="">
+                                          <Link
+                                            to={
+                                              process.env.PUBLIC_URL +
+                                              `/otherpage/${ele?._id}`
+                                            }
+                                          >
+                                            {ele?.pageName}
+                                          </Link>
+                                        </li>
+                                      );
+                                    }
+                                  })}
+                                </>
+                              ) : null}
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                      {/* <div className="footer-title mt-3">
+                        <h3>Others</h3>
+                      </div> */}
+                      {/* <div className="footer-list">
                         <ul>
                           <li>
                             <ul className="submenu">
@@ -290,7 +242,7 @@ const FooterOne = ({
                             </ul>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                     </ul>
                   </li>
                 </ul>
