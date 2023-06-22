@@ -106,6 +106,8 @@ class AstrologerDetail extends React.Component {
 
     localStorage.setItem("astroId", id);
     localStorage.setItem("videoCallAstro_id", id);
+    this.handleStartViewOneAstro();
+
     axiosConfig
       .get(`/user/allRevieAstro/${id}`)
       .then(res => {
@@ -179,25 +181,6 @@ class AstrologerDetail extends React.Component {
       if (this.state.status === "Online") {
         this.props.history.push("/ChatListData");
       } else swal("Astro is offline ");
-
-      // const data = {
-      //   userid: userId,
-      //   astroid: id,
-      // };
-
-      // axiosConfig
-      //   .post(`/user/addCallWallet`, data)
-      //   .then(response => {
-      //     console.log(response.data);
-      //     if (response.data.status === true) {
-      //       this.props.history.push("/UserRequestFormVideoCall");
-      //       //
-      //     } else swal("Recharge", "you don't have enough Balance");
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     // swal('Error!', 'Invalid!', 'error')
-      //   });
     } else {
       swal("Need to Login first");
     }
@@ -237,6 +220,50 @@ class AstrologerDetail extends React.Component {
     } else {
       swal("Alert", "Need To Login First");
     }
+  };
+  handleStartViewOneAstro = () => {
+    setInterval(() => {
+      const { id } = this.props.match.params;
+      axiosConfig
+        .get(`/admin/getoneAstro/${id}`)
+        .then(response => {
+          console.log("getoneastro", response.data?.data);
+          if (response.data.data?.callingStatus === "Busy") {
+            console.log("Busy");
+          }
+          localStorage.setItem("astroname", response?.data?.data?.fullname);
+          localStorage.setItem(
+            "channelName",
+            response?.data?.data?.channelName
+          );
+          this.setState({ astroData: response.data.data });
+          this.setState({
+            all_skills: response.data.data.all_skills,
+            language: response.data.data.language,
+            img: response.data.data.img[0],
+            avg_rating: response.data.data.avg_rating,
+            Exp: response.data.data.Exp,
+            callCharge: response.data.data.callCharge,
+            long_bio: response.data.data.long_bio,
+            msg: response.data.data.msg,
+            astroMobile: response?.data?.data?.mobile,
+            status: response?.data?.data?.status,
+            exp_in_years: response.data.data.exp_in_years,
+            astroId: response?.data?.data?._id,
+            sunday: response.data.data.sunday,
+            monday: response.data.data.monday,
+            friday: response.data.data.friday,
+            tuesday: response.data.data.tuesday,
+            thursday: response.data.data.thursday,
+            saturday: response.data.data.saturday,
+
+            wednesday: response.data.data.wednesday,
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, 3000);
   };
   render() {
     // const { allminrechargeList } = this.state;
@@ -327,7 +354,34 @@ class AstrologerDetail extends React.Component {
                             Experience: <span>{this.state.exp_in_years}</span>
                           </li>
                           <li>
-                            Call Rate: <span>{this.state.callCharge}</span>
+                            Call Rate: <span>{this.state.callCharge}/Min</span>
+                          </li>
+                          <li>
+                            Availability :
+                            <span style={{ color: "green" }}>
+                              <b> {this.state.astroData?.callingStatus} </b>
+                            </span>
+                          </li>
+                          <li>
+                            Waiting Time :
+                            <span style={{ color: "green" }}>
+                              <b> {this.state.astroData?.waiting_tym} Min </b>
+                            </span>
+                          </li>
+                          <li>
+                            {this.state.status === "Online" ? (
+                              <>
+                                <span style={{ color: "green" }} className="">
+                                  <b> {this.state.astroData?.status}</b>
+                                </span>{" "}
+                              </>
+                            ) : (
+                              <>
+                                <span style={{ color: "red" }} className="">
+                                  <b> {this.state.astroData?.status}</b>
+                                </span>{" "}
+                              </>
+                            )}
                           </li>
                           <li>
                             <span className="">

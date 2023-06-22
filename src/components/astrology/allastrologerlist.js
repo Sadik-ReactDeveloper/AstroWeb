@@ -65,78 +65,104 @@ class AllAstrologerList extends React.Component {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  submitHandler = e => {
-    const data = new FormData();
-    data.append("fullname", this.state.fullname);
-    data.append("email", this.state.email);
-    data.append("mobile", this.state.mobile);
-    data.append("gender", this.state.gender);
-    data.append("city", this.state.city);
-    data.append("dob", this.state.dob);
-    if (this.state.selectedFile !== null) {
-      data.append("userimg", this.state.selectedFile, this.state.selectedName);
-    }
-  };
-  loginHandler = e => {
-    e.preventDefault();
-    let obj = {
-      mobile: parseInt(this.state.mobile),
+  handleCalling = selectedId => {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
+    console.log("USer", mobileNo);
+    let object = {
+      chatIntekId: selectedId,
+      userId: userId,
+      astroId: this.state.astroId,
     };
+    let obj = {
+      userid: userId,
+      astroid: this.state.astroId,
+      From: this.state.mobile, //astro no
+      To: mobileNo, //user no
+    };
+    console.log("obj", obj);
     axiosConfig
-      .post(`/user/userlogin`, obj)
-      .then(response => {
-        this.setState({ otpMsg: response.data.msg });
-        if (response.data.msg === "otp Send Successfully") {
-          swal("otp Send Successfully");
+      .post(`/user/selectIntakeForm`, object)
+      .then(ress => {
+        if (ress.data.status === true) {
+          axiosConfig
+            .post(`/user/make_call`, obj)
+            .then(response => {
+              console.log("Calling", response.data);
+              swal("Call Connected", "SuccessFully");
+            })
+            .catch(error => {
+              console.log(error);
+            });
         }
+        console.log("asss", ress.data.status);
       })
-      .catch(error => {
-        console.log(error);
-        console.log(error.response);
-        swal("Error!", "User doesn't Exist", "error");
+      // console.log("sleelll", ress.data.status);
+      // })
+      .catch(err => {
+        console.log("err", err);
       });
   };
+
+  // loginHandler = e => {
+  //   e.preventDefault();
+  //   let obj = {
+  //     mobile: parseInt(this.state.mobile),
+  //   };
+  //   axiosConfig
+  //     .post(`/user/userlogin`, obj)
+  //     .then(response => {
+  //       this.setState({ otpMsg: response.data.msg });
+  //       if (response.data.msg === "otp Send Successfully") {
+  //         swal("otp Send Successfully");
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       console.log(error.response);
+  //       swal("Error!", "User doesn't Exist", "error");
+  //     });
+  // };
 
   //Image Submit Handler
   onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
   };
-  otpHandler = e => {
-    e.preventDefault();
-    console.log(this.state);
-    axiosConfig
-      .post(`/user/userVryfyotp`, {
-        mobile: parseInt(this.state.mobile),
-        otp: parseInt(this.state.otp),
-      })
-      .then(response => {
-        console.log("@@@####", response.data);
-        if (response.data.status === true) {
-          this.setState({ otpMsg: response.data.msg });
-          localStorage.setItem(
-            "userData",
-            JSON.stringify(response?.data?.data)
-          );
-          localStorage.setItem("token", JSON.stringify(response?.data?.token));
-          localStorage.setItem(
-            "user_id",
-            JSON.stringify(response?.data?.data?._id)
-          );
-          localStorage.setItem(
-            "user_mobile_no",
-            JSON.stringify(response?.data?.data?.mobile)
-          );
-          if (response.data.msg === "otp verified") {
-            swal("otp verified");
-            this.props.history.push("/");
-          }
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  // otpHandler = e => {
+  //   e.preventDefault();
+  //   console.log(this.state);
+  //   axiosConfig
+  //     .post(`/user/userVryfyotp`, {
+  //       mobile: parseInt(this.state.mobile),
+  //       otp: parseInt(this.state.otp),
+  //     })
+  //     .then(response => {
+  //       console.log("@@@####", response.data);
+  //       if (response.data.status === true) {
+  //         this.setState({ otpMsg: response.data.msg });
+  //         localStorage.setItem(
+  //           "userData",
+  //           JSON.stringify(response?.data?.data)
+  //         );
+  //         localStorage.setItem("token", JSON.stringify(response?.data?.token));
+  //         localStorage.setItem(
+  //           "user_id",
+  //           JSON.stringify(response?.data?.data?._id)
+  //         );
+  //         localStorage.setItem(
+  //           "user_mobile_no",
+  //           JSON.stringify(response?.data?.data?.mobile)
+  //         );
+  //         if (response.data.msg === "otp verified") {
+  //           swal("otp verified");
+  //           this.props.history.push("/");
+  //         }
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   handlechange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -175,9 +201,7 @@ class AllAstrologerList extends React.Component {
   submitHandler = (e, astroid, mobile, data, index) => {
     let mobileNo = localStorage.getItem("user_mobile_no");
     let userId = JSON.parse(localStorage.getItem("user_id"));
-
     localStorage.setItem("astroId", astroid);
-
     localStorage.setItem("astroname", data?.fullname);
     this.setState({ indexnow: index });
 
@@ -205,7 +229,7 @@ class AllAstrologerList extends React.Component {
               .post(`/user/make_call`, obj)
               .then(response => {
                 console.log("Calling", response.data);
-                // swal("Call Connecting", "SuccessFully");
+                swal("Call Connecting", "SuccessFully");
               })
               .catch(error => {
                 console.log(error?.response?.data?.error);
@@ -217,6 +241,7 @@ class AllAstrologerList extends React.Component {
           }
         })
         .catch(error => {
+          swal("Alert", "Insufficient Balance");
           console.log(error);
         });
     } else {
@@ -464,13 +489,15 @@ class AllAstrologerList extends React.Component {
                                       </li>
                                       <li>
                                         Experience:
-                                        <span>{astrologer?.exp_in_years}</span>
+                                        <span>
+                                          {astrologer?.exp_in_years}years
+                                        </span>
                                       </li>
                                       <li>
                                         Call Rate:
                                         <span>
-                                          {astrologer?.callCharge}/
-                                          {astrologer?.conrubute_hrs}
+                                          {astrologer?.callCharge}/Min
+                                          {/* {astrologer?.conrubute_hrs} */}
                                         </span>
                                       </li>
                                     </ul>
