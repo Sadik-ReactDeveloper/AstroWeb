@@ -68,7 +68,6 @@ class AstrologerDetail extends React.Component {
     if (userId !== "" && userId !== null) {
       if (this.state.status === "Online") {
         this.props.history.push("/ChatListData");
-        // console.log(userId, id);
       } else swal("Astro is offline ");
     } else {
       swal("Need To Login First");
@@ -171,64 +170,72 @@ class AstrologerDetail extends React.Component {
 
   handleBalacecheck = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
+
     let { id } = this.props.match.params;
+    console.log("astro", id);
     console.log(userId, id);
 
     if (userId !== "" && userId !== null) {
-      const data = {
-        userid: userId,
-        astroid: id,
-      };
+      if (this.state.status === "Online") {
+        this.props.history.push("/ChatListData");
+      } else swal("Astro is offline ");
 
-      axiosConfig
-        .post(`/user/addCallWallet`, data)
-        .then(response => {
-          console.log(response.data);
-          if (response.data.status === true) {
-            this.props.history.push("/UserRequestFormVideoCall");
-            //
-          } else swal("Recharge", "you don't have enough Balance");
-        })
-        .catch(error => {
-          console.log(error);
-          // swal('Error!', 'Invalid!', 'error')
-        });
+      // const data = {
+      //   userid: userId,
+      //   astroid: id,
+      // };
+
+      // axiosConfig
+      //   .post(`/user/addCallWallet`, data)
+      //   .then(response => {
+      //     console.log(response.data);
+      //     if (response.data.status === true) {
+      //       this.props.history.push("/UserRequestFormVideoCall");
+      //       //
+      //     } else swal("Recharge", "you don't have enough Balance");
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     // swal('Error!', 'Invalid!', 'error')
+      //   });
     } else {
       swal("Need to Login first");
-      // this.setState({ modal: true });
     }
   };
   handleFollow = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let { id } = this.props.match.params;
 
-    if (this.state.follow !== true) {
-      this.setState({ follow: false });
-      let followData = {
-        astroid: id,
-        userid: userId,
-        follow: true,
-      };
-      axiosConfig
-        .post(`/user/addAstroFollowers`, followData)
-        .then(resp => {
-          this.setState({ follow: resp.data.data.follow });
-          console.log("ressss", resp.data.data.follow);
-        })
-        .catch(error => {
-          console.log("Error", error);
-        });
+    if (userId) {
+      if (this.state.follow !== true) {
+        this.setState({ follow: false });
+        let followData = {
+          astroid: id,
+          userid: userId,
+          follow: true,
+        };
+        axiosConfig
+          .post(`/user/addAstroFollowers`, followData)
+          .then(resp => {
+            this.setState({ follow: resp.data.data.follow });
+            console.log("ressss", resp.data.data.follow);
+          })
+          .catch(error => {
+            console.log("Error", error);
+          });
+      } else {
+        axiosConfig
+          .get(`/user/unfollow_astrologer/${userId}/${id}`)
+          .then(result => {
+            console.log(result);
+            this.setState({ follow: result });
+          })
+          .catch(error => {
+            console.log("error", error);
+          });
+      }
     } else {
-      // this.setState({ follow: true });
-      axiosConfig
-        .get(`/user/unfollow_astrologer/${userId}/${id}`)
-        .then(result => {
-          console.log(result);
-          this.setState({ follow: result });
-        })
-        .catch(error => {
-          console.log("error", error);
-        });
+      swal("Alert", "Need To Login First");
     }
   };
   render() {
@@ -338,7 +345,7 @@ class AstrologerDetail extends React.Component {
                           {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           <Button
                             className="btn-as st"
-                            onClick={this.handleStartChat}
+                            onClick={this.handleBalacecheck}
                           >
                             <i
                               className="fa fa-commenting"

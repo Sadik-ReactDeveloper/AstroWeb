@@ -63,21 +63,17 @@ const HeaderOne = ({
               {/* header logo */}
               <div className="logoo">
                 <Logo imageUrl={logoastro} />
-
-                {/* <h3 className="stltext">Astro Vipra </h3> */}
               </div>
             </div>
             <div className="col-xl-8 col-lg-8 d-none d-lg-block">
-              {/* Nav menu */}
               <NavMenu />
             </div>
             <div className="col-xl-2 col-lg-2 col-md-2 col-8">
-              {/* Icon group */}
               <IconGroup />
             </div>
           </div>
         </div>
-        {/* mobile menu */}
+
         <MobileMenu />
       </div>
     </header>

@@ -71,40 +71,7 @@ class ChatList extends React.Component {
   componentDidMount = () => {
     this.getuserList();
 
-    let astroId = localStorage.getItem("astroId");
-
-    // axiosConfig
-    //   .get(`/admin/getoneAstro/${astroId}`)
-    //   .then(response => {
-    //     localStorage.setItem("astroname", response?.data?.data?.fullname);
-    //     localStorage.setItem("channelName", response?.data?.data?.channelName);
-    //     this.setState({
-    //       fullname: response.data.data.fullname,
-    //       all_skills: response.data.data.all_skills,
-    //       language: response.data.data.language,
-    //       img: response.data.data.img[0],
-    //       avg_rating: response.data.data.avg_rating,
-    //       Exp: response.data.data.Exp,
-    //       callCharge: response.data.data.callCharge,
-    //       long_bio: response.data.data.long_bio,
-    //       msg: response.data.data.msg,
-    //       astroMobile: response?.data?.data?.mobile,
-    //       status: response?.data?.data?.status,
-    //       exp_in_years: response.data.data.exp_in_years,
-    //       astroId: response?.data?.data?._id,
-    //       sunday: response.data.data.sunday,
-    //       monday: response.data.data.monday,
-    //       friday: response.data.data.friday,
-    //       tuesday: response.data.data.tuesday,
-    //       thursday: response.data.data.thursday,
-    //       saturday: response.data.data.saturday,
-    //       wednesday: response.data.data.wednesday,
-    //       mobile: response.data.data.mobile,
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    // let astroId = localStorage.getItem("astroId");
   };
   getuserList = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
@@ -155,31 +122,27 @@ class ChatList extends React.Component {
 
   handleBalacecheck = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
-    let { id } = this.props.match.params;
-    console.log(userId, id);
+    // let { id } = this.props.match.params;
+    let astroId = localStorage.getItem("astroId");
+    console.log("astroId", astroId);
 
-    if (userId !== "" && userId !== null) {
-      const data = {
-        userid: userId,
-        astroid: id,
-      };
+    // if (userId !== "" && userId !== null) {
+    const data = {
+      userid: userId,
+      astroid: astroId,
+    };
 
-      axiosConfig
-        .post(`/user/addCallWallet`, data)
-        .then(response => {
-          console.log(response.data);
-          if (response.data.status === true) {
-            this.props.history.push("/chatApp");
-            // this.props.history.push("/UserRequestFormVideoCall");
-            //
-          } else swal("Recharge", "you don't have enough Balance");
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      swal("Need to Login first");
-    }
+    axiosConfig
+      .post(`/user/addCallWallet`, data)
+      .then(response => {
+        console.log(response.data);
+        if (response.data.status === true) {
+          this.props.history.push("/chatApp");
+        } else swal("Recharge", "you don't have enough Balance");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   render() {
     const { allUserList } = this.state;
@@ -307,7 +270,6 @@ class ChatList extends React.Component {
                                     </li>
                                   ) : null}
 
-                                  {/* <Link to="#"> */}
                                   <div style={{ float: "right" }}>
                                     <button
                                       className="btn btn-denger wr"
@@ -318,7 +280,6 @@ class ChatList extends React.Component {
                                       Start Chat
                                     </button>
                                   </div>
-                                  {/* </Link> */}
                                 </ul>
                               </div>
                             </div>
