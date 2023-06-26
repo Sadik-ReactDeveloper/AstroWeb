@@ -28,8 +28,7 @@ class LiveAstrologer extends React.Component {
 
   handleastrolive = data => {
     this.props.history.push({
-      pathname: "/livestreaming",
-      // pathname: "/YourliveStreamming",
+      pathname: "/live",
       state: data,
     });
   };
@@ -117,61 +116,43 @@ class LiveAstrologer extends React.Component {
                       lg="3"
                       md="3"
                     >
-                      <a
+                      {/* <a
                         href={
-                          window.location.protocol +
-                          "//" +
-                          window.location.host +
-                          window.location.pathname +
+                          // window.location.protocol +
+                          // "//" +
+                          // window.location.host +
+                          // window.location.pathname +
                           value.astroid?.videoliveStream
                         }
-                      >
-                        <div className="ast-list">
-                          <div
-                            onClick={() => this.handleastrolive(value)}
-                            className="liveimg"
-                          >
-                            <img
-                              src={value.astroid.img[0]}
-                              alt=""
-                              height={220}
-                              width={100}
-                            />
-                          </div>
-                          <div className="livecont">
-                            <span>
-                              <div class="zoom-in-zoom-out">
-                                <span style={{ marginLeft: 20 }}>Live</span>
-                              </div>
-                              <h3 className="astrologerName">
-                                {value?.astroid?.fullname}
-                              </h3>
-                            </span>
-                          </div>
+                      > */}
+                      <div className="ast-list">
+                        <div
+                          onClick={() => this.handleastrolive(value)}
+                          className="liveimg"
+                        >
+                          <img
+                            src={value.astroid.img[0]}
+                            alt=""
+                            height={220}
+                            width={100}
+                          />
                         </div>
-                      </a>
+                        <div className="livecont">
+                          <span>
+                            <div class="zoom-in-zoom-out">
+                              <span style={{ marginLeft: 20 }}>Live</span>
+                            </div>
+                            <h3 className="astrologerName">
+                              {value?.astroid?.fullname}
+                            </h3>
+                          </span>
+                        </div>
+                      </div>
+                      {/* </a> */}
                     </Col>
                   ))}
                 </>
               ) : null}
-
-              {/* <Col lg="3" md="3">
-                <div className="ast-list">
-                  <Link to={"/"}>
-                    <div className="liveimg">
-                      <img src={LiveAstro} alt="" width={100} />
-                    </div>
-                    <div className="livecont">
-                      <span>
-                        <div class="zoom-in-zoom-out">
-                          <span style={{ marginLeft: 20 }}>Live</span>
-                        </div>
-                        <h3>lorem</h3>
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-              </Col>  */}
             </Row>
             <Row className="mb-40 mt-30">
               <h3>Chat with Astrologers Live</h3>

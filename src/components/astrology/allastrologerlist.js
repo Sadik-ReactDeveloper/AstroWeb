@@ -1,7 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, ModalHeader, ModalBody, Modal } from "reactstrap";
+import classnames from "classnames";
+import {
+  Container,
+  Row,
+  Col,
+  ModalHeader,
+  ModalBody,
+  Modal,
+  Label,
+  FormGroup,
+  Input,
+} from "reactstrap";
 import Nav from "react-bootstrap/Nav";
+import {
+  AstroSkills,
+  AstroStatus,
+  Language,
+  Specialisation,
+} from "./skills/AstroSkills.js";
 import {
   NavItem,
   TabContent,
@@ -44,6 +61,11 @@ class AllAstrologerList extends React.Component {
       modal: false,
       modalone: false,
       price_high_to_low: [],
+      activeTab: 1,
+      AstroStatus: "",
+      Astrolanguage: "",
+      astroSpecialzation: "",
+      Skilldata: "",
     };
 
     this.toggle = this.toggle.bind(this);
@@ -55,6 +77,32 @@ class AllAstrologerList extends React.Component {
       modal: !this.state.modal,
     });
   }
+  FilterAstro = e => {
+    e.preventDefault();
+    console.log(
+      this.state.Skilldata,
+      this.state.AstroStatus,
+      this.state.Astrolanguage,
+      this.state.astroSpecialzation
+    );
+    this.toggle();
+    // this.handlestartInterval();
+    let skil = this.state.Skilldata;
+    let status = this.state.AstroStatus;
+    let Astrolangua = this.state.Astrolanguage;
+    let astroSpecialzat = this.state.astroSpecialzation;
+    axiosConfig
+      .get(
+        `/user/getAstroFilter?language=${Astrolangua}&all_skills=${skil}&status=${status}&specification=${astroSpecialzat}`
+      )
+      .then(res => {
+        console.log(res?.data);
+        this.setState({ astrologerList: res?.data.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   toggleone() {
     this.setState({
       modalone: !this.state.modalone,
@@ -104,68 +152,16 @@ class AllAstrologerList extends React.Component {
       });
   };
 
-  // loginHandler = e => {
-  //   e.preventDefault();
-  //   let obj = {
-  //     mobile: parseInt(this.state.mobile),
-  //   };
-  //   axiosConfig
-  //     .post(`/user/userlogin`, obj)
-  //     .then(response => {
-  //       this.setState({ otpMsg: response.data.msg });
-  //       if (response.data.msg === "otp Send Successfully") {
-  //         swal("otp Send Successfully");
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       console.log(error.response);
-  //       swal("Error!", "User doesn't Exist", "error");
-  //     });
-  // };
-
   //Image Submit Handler
   onChangeHandler = event => {
     this.setState({ selectedFile: event.target.files[0] });
   };
-  // otpHandler = e => {
-  //   e.preventDefault();
-  //   console.log(this.state);
-  //   axiosConfig
-  //     .post(`/user/userVryfyotp`, {
-  //       mobile: parseInt(this.state.mobile),
-  //       otp: parseInt(this.state.otp),
-  //     })
-  //     .then(response => {
-  //       console.log("@@@####", response.data);
-  //       if (response.data.status === true) {
-  //         this.setState({ otpMsg: response.data.msg });
-  //         localStorage.setItem(
-  //           "userData",
-  //           JSON.stringify(response?.data?.data)
-  //         );
-  //         localStorage.setItem("token", JSON.stringify(response?.data?.token));
-  //         localStorage.setItem(
-  //           "user_id",
-  //           JSON.stringify(response?.data?.data?._id)
-  //         );
-  //         localStorage.setItem(
-  //           "user_mobile_no",
-  //           JSON.stringify(response?.data?.data?.mobile)
-  //         );
-  //         if (response.data.msg === "otp verified") {
-  //           swal("otp verified");
-  //           this.props.history.push("/");
-  //         }
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
 
   handlechange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+  togglefilter = tab => {
+    if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
   };
 
   componentDidMount = () => {
@@ -185,7 +181,6 @@ class AllAstrologerList extends React.Component {
     axiosConfig
       .get("/user/price_high_to_low")
       .then(response => {
-        // console.log(response.data.data);
         if (response.data.status === true) {
           this.setState({
             price_high_to_low: response.data.data,
@@ -199,14 +194,12 @@ class AllAstrologerList extends React.Component {
   };
 
   submitHandler = (e, astroid, mobile, data, index) => {
+    console.log(index, "indexxxxxx");
     let mobileNo = localStorage.getItem("user_mobile_no");
     let userId = JSON.parse(localStorage.getItem("user_id"));
     localStorage.setItem("astroId", astroid);
     localStorage.setItem("astroname", data?.fullname);
     this.setState({ indexnow: index });
-
-    e.preventDefault();
-
     let astroId = astroid;
     let obj = {
       userid: userId,
@@ -220,7 +213,6 @@ class AllAstrologerList extends React.Component {
         astroid: astroId,
       };
 
-      this.setState({ callingmode: true });
       axiosConfig
         .post(`/user/addCallWallet`, data)
         .then(response => {
@@ -230,19 +222,18 @@ class AllAstrologerList extends React.Component {
               .then(response => {
                 console.log("Calling", response.data);
                 swal("Call Connecting", "SuccessFully");
+                this.setState({ callingmode: true });
               })
               .catch(error => {
                 console.log(error?.response?.data?.error);
-                if (error?.response?.data?.error) {
-                  swal("Try again after some Time ", "Internal server");
-                  this.setState({ callingmode: false });
-                }
+                swal("Try again after some Time ", "Internal server");
               });
+          } else {
+            swal("Alert", "Insufficient Balance");
           }
         })
         .catch(error => {
           swal("Alert", "Insufficient Balance");
-          console.log(error);
         });
     } else {
       swal("Need to Login first");
@@ -390,72 +381,50 @@ class AllAstrologerList extends React.Component {
                       </li>
                       {/* filter */}
                       <hr />
-                      <h3 className="mb-3 mt-1">
-                        <Button className="filtericon" onClick={this.toggle}>
-                          Filter <i class="fa fa-filter" aria-hidden="true"></i>
-                        </Button>
-                      </h3>
-
-                      <li>
-                        <span>
-                          <Form.Check
-                            type="radio"
-                            aria-label="radio 6"
-                            name="id"
-                            onChange={() =>
-                              this.filterMethod("rating_low_to_high")
-                            }
-                          />
-                        </span>
-                        Skills
-                      </li>
-                      <li>
-                        <span>
-                          <Form.Check
-                            type="radio"
-                            aria-label="radio 6"
-                            name="id"
-                            onChange={() =>
-                              this.filterMethod("rating_low_to_high")
-                            }
-                          />
-                        </span>
-                        Area of Specialisation
-                      </li>
-                      <li>
-                        <span>
-                          <Form.Check
-                            type="radio"
-                            aria-label="radio 6"
-                            name="id"
-                            onChange={() =>
-                              this.filterMethod("rating_low_to_high")
-                            }
-                          />
-                        </span>
-                        Language
-                      </li>
-                      <li>
-                        <span>
-                          <Form.Check
-                            type="radio"
-                            aria-label="radio 6"
-                            name="id"
-                            onChange={() =>
-                              this.filterMethod("rating_low_to_high")
-                            }
-                          />
-                        </span>
-                        Active/Non Active
-                      </li>
+                      <div>
+                        <Row>
+                          <Col lg="5" md="5" sm="5">
+                            <h3 className="mb-3 mt-1">
+                              <Button
+                                className="filtericon"
+                                onClick={() => this.toggle()}
+                              >
+                                Filter{" "}
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                              </Button>
+                            </h3>
+                          </Col>
+                          {this.state.Skilldata?.length ||
+                          this.state.AstroStatus?.length ||
+                          this.state.Astrolanguage?.length ||
+                          this.state.astroSpecialzation?.length ? (
+                            <>
+                              <Col>
+                                <h3 className="mb-3 mt-1">
+                                  <Button
+                                    className="filtericon"
+                                    onClick={this.componentDidMount}
+                                  >
+                                    ClearFilter
+                                    <i
+                                      class="fa fa-filter"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Button>
+                                </h3>
+                              </Col>
+                            </>
+                          ) : null}
+                        </Row>
+                      </div>
                     </ul>
                   </form>
                 </div>
               </Col>
               <Col md="9">
                 <Row className="mt-2">
-                  {astrologerList.length ? (
-                    astrologerList.map((astrologer, index) => {
+                  {astrologerList?.length ? (
+                    astrologerList?.map((astrologer, index) => {
                       return (
                         <Col md="4" key={index}>
                           <div className="image-flip">
@@ -481,7 +450,20 @@ class AllAstrologerList extends React.Component {
                                     <ul className="mb-3">
                                       <li>
                                         Specility:
-                                        <span>{astrologer?.all_skills}</span>
+                                        <span>
+                                          {astrologer?.all_skills.length > 5
+                                            ? astrologer?.all_skills.substring(
+                                                0,
+                                                22
+                                              )
+                                            : astrologer?.all_skills.length}
+                                          {/* {astrologer?.all_skills.length > 4
+                                            ? astrologer?.all_skills.substring(
+                                                0,
+                                                25
+                                              )
+                                            : astrologer?.all_skills.length} */}
+                                        </span>
                                       </li>
                                       <li>
                                         Language:
@@ -515,10 +497,18 @@ class AllAstrologerList extends React.Component {
                                             )
                                           }
                                         >
-                                          <div className="btn btn-success btn-sm sc">
-                                            <i class="fa fa-phone"></i>
-                                            -Call
-                                          </div>
+                                          {this.state.indexnow === index &&
+                                          this.state.callingmode !== true ? (
+                                            <div className="btn btn-success btn-sm sc">
+                                              <i class="fa fa-phone"></i>
+                                              -Calling
+                                            </div>
+                                          ) : (
+                                            <div className="btn btn-primary btn-sm sc">
+                                              <i class="fa fa-phone"></i>
+                                              -Call
+                                            </div>
+                                          )}
                                         </span>
                                       </>
                                     ) : (
@@ -548,80 +538,225 @@ class AllAstrologerList extends React.Component {
 
           <div>
             <Modal
-              style={{ maxWidth: "700px" }}
+              style={{ maxWidth: "900px" }}
               size="lg"
               isOpen={this.state.modal}
               toggle={this.toggle}
+              // className={this.props.className}
             >
-              <ModalHeader toggle={this.toggle}>Filters Now</ModalHeader>
+              <ModalHeader toggle={this.toggle}>Filters</ModalHeader>
               <ModalBody>
-                <div className="login-register-area pt-50 pb-50">
+                <div className="">
                   <div className="container">
                     <div>
-                      <Nav vertical>
-                        <NavItem>
-                          <NavLink
-                            className="active"
-                            onClick={function noRefCheck() {}}
+                      {/* <Nav tabs vertical> */}
+                      <Row>
+                        <Row>
+                          <Col
+                            className="tabcontentheadings"
+                            lg="3"
+                            md="3"
+                            sm="3"
                           >
-                            Tab1
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className=""
-                            onClick={function noRefCheck() {}}
-                          >
-                            More Tabs
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
-                      <TabContent activeTab="1">
-                        <TabPane tabId="1">
-                          <Row>
-                            <Col sm="12">
-                              <h4>Tab 1 Contents</h4>
-                            </Col>
-                          </Row>
-                        </TabPane>
-                        <TabPane tabId="2">
-                          <Row>
-                            <Col sm="6">
-                              <Card body>
-                                <CardTitle>Special Title Treatment</CardTitle>
-                                <CardText>
-                                  With supporting text below as a natural
-                                  lead-in to additional content.
-                                </CardText>
-                                <Button>Go somewhere</Button>
-                              </Card>
-                            </Col>
-                            <Col sm="6">
-                              <Card body>
-                                <CardTitle>Special Title Treatment</CardTitle>
-                                <CardText>
-                                  With supporting text below as a natural
-                                  lead-in to additional content.
-                                </CardText>
-                                <Button>Go somewhere</Button>
-                              </Card>
-                            </Col>
-                          </Row>
-                        </TabPane>
-                      </TabContent>
+                            <Row>
+                              <NavItem className="mb-1 mt-1 navList">
+                                <a
+                                  className={classnames({
+                                    active: this.state.activeTab === "1",
+                                  })}
+                                  onClick={() => {
+                                    this.togglefilter("1");
+                                  }}
+                                >
+                                  <Button
+                                    style={{
+                                      background: `${
+                                        this.state.activeTab === "1"
+                                          ? "#e3ac2e"
+                                          : "none"
+                                      }`,
+                                    }}
+                                    className="filtericon"
+                                  >
+                                    <span
+                                      className="filtertext"
+                                      style={{ color: "black" }}
+                                    >
+                                      {" "}
+                                      Skills
+                                    </span>
+                                  </Button>
+                                </a>
+                              </NavItem>
+                            </Row>
+                            <Row>
+                              <NavItem className="mb-1 mt-1 navList">
+                                <a
+                                  className={classnames({
+                                    active: this.state.activeTab === "2",
+                                  })}
+                                  onClick={() => {
+                                    this.togglefilter("2");
+                                  }}
+                                >
+                                  <Button className="filtericon">
+                                    <span
+                                      className="filtertext"
+                                      style={{ color: "black" }}
+                                    >
+                                      Specialisation
+                                    </span>
+                                  </Button>
+                                </a>
+                              </NavItem>
+                            </Row>
+                            <Row>
+                              <NavItem className="mb-1 mt-1 navList">
+                                <a
+                                  className={classnames({
+                                    active: this.state.activeTab === "3",
+                                  })}
+                                  onClick={() => {
+                                    this.togglefilter("3");
+                                  }}
+                                >
+                                  <Button className="filtericon">
+                                    <span
+                                      className="filtertext"
+                                      style={{ color: "black" }}
+                                    >
+                                      Language
+                                    </span>
+                                  </Button>
+                                </a>
+                              </NavItem>
+                            </Row>
+                            <Row>
+                              <NavItem className="mb-1 mt-1 navList">
+                                <a
+                                  className={classnames({
+                                    active: this.state.activeTab === "4",
+                                  })}
+                                  onClick={() => {
+                                    this.togglefilter("4");
+                                  }}
+                                >
+                                  <Button className="filtericon">
+                                    <span
+                                      className="filtertext"
+                                      style={{ color: "black" }}
+                                    >
+                                      Active/Non Active
+                                    </span>
+                                  </Button>
+                                </a>
+                              </NavItem>
+                            </Row>
+                          </Col>
+                          <Col className="tabcontentheadings">
+                            <div className="tabcontentheading">
+                              <TabContent activeTab={this.state.activeTab}>
+                                <TabPane className="tabidone" tabId="1">
+                                  {AstroSkills &&
+                                    AstroSkills?.map(value => (
+                                      <FormGroup key={value.id} check>
+                                        <Input
+                                          onClick={e => {
+                                            console.log(e.target.value);
+                                            this.setState({
+                                              Skilldata: e.target.value,
+                                            });
+                                          }}
+                                          name="radio1"
+                                          type="radio"
+                                          value={value?.value}
+                                        />
+                                        <Label check>{value?.value}</Label>
+                                      </FormGroup>
+                                    ))}
+                                </TabPane>
+                                <TabPane className="tabidone" tabId="2">
+                                  {Specialisation?.map(value => (
+                                    <FormGroup key={value.id} check>
+                                      <Input
+                                        onClick={e =>
+                                          this.setState({
+                                            astroSpecialzation: e.target.value,
+                                          })
+                                        }
+                                        name="radio2"
+                                        type="radio"
+                                        value={value?.value}
+                                      />{" "}
+                                      <Label check>{value?.value}</Label>
+                                    </FormGroup>
+                                  ))}
+                                </TabPane>
+                                <TabPane className="tabidone" tabId="3">
+                                  {Language?.map(value => (
+                                    <FormGroup key={value.id} check>
+                                      <Input
+                                        onClick={e =>
+                                          this.setState({
+                                            Astrolanguage: e.target.value,
+                                          })
+                                        }
+                                        name="radio3"
+                                        type="radio"
+                                        value={value?.value}
+                                      />
+                                      <Label check>{value?.value}</Label>
+                                    </FormGroup>
+                                  ))}
+                                </TabPane>
+                                <TabPane className="tabidone" tabId="4">
+                                  {AstroStatus?.map(value => (
+                                    <FormGroup key={value.id} check>
+                                      <Input
+                                        onClick={e =>
+                                          this.setState({
+                                            AstroStatus: e.target.value,
+                                          })
+                                        }
+                                        name="radio4"
+                                        type="radio"
+                                        value={value?.value}
+                                      />
+                                      <Label check>{value?.value}</Label>
+                                    </FormGroup>
+                                  ))}
+                                </TabPane>
+                              </TabContent>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Row>
+                      {/* </Nav> */}
                     </div>
                   </div>
                 </div>
+                <Row>
+                  <Col lg="12">
+                    <div className="d-flex justify-content-center">
+                      <Button
+                        disabled={
+                          this.state.Skilldata?.length ||
+                          this.state.AstroStatus?.length ||
+                          this.state.Astrolanguage?.length ||
+                          this.state.astroSpecialzation?.length
+                            ? false
+                            : true
+                        }
+                        className="mt-2"
+                        onClick={e => this.FilterAstro(e)}
+                        color="primary"
+                      >
+                        Filter Now
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
               </ModalBody>
-            </Modal>
-            <Modal
-              style={{ maxWidth: "700px" }}
-              size="lg"
-              isOpen={this.state.modalone}
-              toggle={this.toggleone}
-            >
-              <ModalHeader toggle={this.toggleone}>Login</ModalHeader>
-              <ModalBody>dsffsssfsd</ModalBody>
             </Modal>
           </div>
         </section>

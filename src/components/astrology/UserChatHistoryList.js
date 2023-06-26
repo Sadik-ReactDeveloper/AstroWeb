@@ -1,23 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  InputGroup,
-  Form,
-  Button,
-} from "reactstrap";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/dist/styles/ag-grid.css";
+
+import { Container, Row, Col } from "reactstrap";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 
 import LayoutOne from "../../layouts/LayoutOne";
 import "../../assets/scss/astroteam.scss";
-// import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Table } from "reactstrap";
+
 import axiosConfig from "../../axiosConfig";
+
+import UserChatHistory from "../chat/UserChatHistory.js";
 
 class UserChatHistoryList extends React.Component {
   constructor(props) {
@@ -26,69 +17,9 @@ class UserChatHistoryList extends React.Component {
     this.state = {
       userChatList: [],
     };
-    // this.state = {
-    //   TablerowData: [],
-    //   columns: [
-    //     {
-    //       headerName: "ConversationID",
-    //       field: "transaction_id",
-    //       sortable: true,
-    //       filter: true,
-    //     },
-    //     {
-    //       headerName: "Astrologer Name",
-    //       field: "beforeAmt",
-    //       sortable: true,
-    //       filter: true,
-    //     },
-    //     {
-    //       headerName: "Conversation Type",
-    //       field: "amount",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-
-    //     {
-    //       headerName: "Rate",
-    //       field: "finalAmt",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //     {
-    //       headerName: "Duration",
-    //       field: "createdAt",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //     {
-    //       headerName: "	Amount",
-    //       field: "tran_Type",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //     {
-    //       headerName: "	Deducation",
-    //       field: "tran_Type",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //     {
-    //       headerName: "	Date/Time",
-    //       field: "tran_Type",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //     {
-    //       headerName: "Action",
-    //       field: "tran_Type",
-    //       sortable: true,
-    //       filter: "agNumberColumnFilter",
-    //     },
-    //   ],
-    // };
   }
   componentDidMount() {
-    // let { id } = this.props.match.params;
+    let { id } = this.props.match.params;
     let userId = JSON.parse(localStorage.getItem("user_id"));
 
     console.log(userId);
@@ -98,7 +29,6 @@ class UserChatHistoryList extends React.Component {
         console.log("userChatList", response.data.data);
         if (response.data.status === true) {
           this.setState({
-            WalletTransacList: response.data.data,
             userChatList: response.data.data,
           });
         }
@@ -110,7 +40,7 @@ class UserChatHistoryList extends React.Component {
 
   render() {
     const { userChatList } = this.state;
-    const { WalletTransacList } = this.state;
+
     return (
       <LayoutOne headerTop="visible">
         <section className="pt-0 pb-0">
@@ -142,18 +72,16 @@ class UserChatHistoryList extends React.Component {
             </Container>
           </div>
         </section>
-
-        <section>
+        <section style={{ marginTop: "52px" }} className="userchathistory">
+          <Container>
+            <div className="container mt-3">
+              <UserChatHistory />
+            </div>
+          </Container>
+        </section>
+        {/* <section>
           <Container>
             <Row>
-              {/* <Col lg="12">
-                <AgGridReact
-                  columnDefs={this.state?.columns}
-                  rowData={WalletTransacList}
-                  pagination={true}
-                  paginationPageSize={30}
-                />
-              </Col> */}
               <Col lg="12">
                 <div className="">
                   <Table striped className="">
@@ -161,17 +89,18 @@ class UserChatHistoryList extends React.Component {
                       <tr>
                         <th>#Conversation ID</th>
                         <th>Astrologer Name</th>
+
                         <th>Conversation Type</th>
                         <th>Rate</th>
                         <th>Duration</th>
-                        {/* <th>Amount</th> */}
+                        <th>Amount</th>
                         <th>Deducation</th>
                         <th>Date/Time</th>
                         <th>Action</th>
                       </tr>
                     </thead>
-                    {userChatList?.length
-                      ? userChatList?.map((user, index) => {
+                    {userChatList.length
+                      ? userChatList.map((user, index) => {
                           return (
                             <tbody>
                               <tr>
@@ -180,8 +109,9 @@ class UserChatHistoryList extends React.Component {
 
                                 <td>{user?.type}</td>
                                 <td>{user?.astroid?.callCharge}/Min.</td>
+                                
                                 <td>{user?.userid?.amount}Rs.</td>
-                                <td>{user?.deductedAmt}Rs.</td>
+                                <td>{user?.userid?.deductedAmt}Rs.</td>
                                 <td>{user?.createdAt}</td>
                                 <td>
                                   <Link className="Tansdel">
@@ -192,6 +122,8 @@ class UserChatHistoryList extends React.Component {
                                   </Link>
                                 </td>
                               </tr>
+
+                             
                             </tbody>
                           );
                         })
@@ -201,7 +133,7 @@ class UserChatHistoryList extends React.Component {
               </Col>
             </Row>
           </Container>
-        </section>
+        </section> */}
       </LayoutOne>
     );
   }

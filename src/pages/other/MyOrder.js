@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
-// import { Button } from "reactstrap";
+
 import { Link } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
-import MetaTags from "react-meta-tags";
+
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
-// import { getDiscountPrice } from "../../helpers/product";
+
 import {
   addToWishlist,
   deleteFromWishlist,
@@ -17,56 +16,31 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axiosConfig from "../../axiosConfig";
 
-const MyOrder = ({
-  location,
-  // cartItems,
-  // currency,
-  // addToCart,
-  // wishlistItems,
-  // deleteFromWishlist,
-  // deleteAllFromWishlist,
-}) => {
-  // const { addToast } = useToasts();
+const MyOrder = ({ location }) => {
   const { pathname } = location;
   const [order, setOrder] = useState([]);
-  const fetchOrder = async (token) => {
-    const { data } = await axiosConfig.get(
-      "/user/myOrders/6337e74d44f94658451dc973",
-      // {
-      //   headers: {
-      //     "auth-token": localStorage.getItem("auth-token"),
-      //   },
-      // }
-    );
-
+  const fetchOrder = async () => {
+    let userid = JSON.parse(localStorage.getItem("user_id"));
+    const { data } = await axiosConfig.get(`/user/myOrders/${userid}`);
     const order = data.data;
     setOrder(order);
     console.log(order);
   };
 
   useEffect(() => {
-    // if (localStorage.getItem("auth-token")) {
-    //   fetchOrder();
-    // }
+    if (localStorage.getItem("user_id")) {
+      fetchOrder();
+    }
   }, []);
 
   return (
     <Fragment>
-      <MetaTags>
-        <title>Flone | MyOrder</title>
-        <meta
-          name="description"
-          content="Wishlist page of flone react minimalist eCommerce template."
-        />
-      </MetaTags>
-
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         My Order
       </BreadcrumbsItem>
 
       <LayoutOne headerTop="visible">
-        {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
@@ -82,11 +56,13 @@ const MyOrder = ({
                             <th>ORDER ID</th>
                             <th>Image</th>
                             <th>Product Name</th>
-                            <th>QUANTITY</th>
+                            <th>Purchasing Date</th>
+
                             <th>AMOUNT</th>
-                            {/* <th>Unit Price</th> */}
-                            <th>Order Status</th>
-                            <th>action</th>
+
+                            <th>GST</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -95,122 +71,55 @@ const MyOrder = ({
                               <tr key={key}>
                                 <td className="product-price-cart">
                                   <span className="amount">
-                                    {orders?.cus_orderId}
+                                    {orders?.orderId}
                                   </span>
                                 </td>
                                 <td className="product-thumbnail">
                                   <Link to="#">
                                     <img
+                                      width="80px"
+                                      height="80px"
                                       className="img-fluid"
-                                      src={
-                                        process.env.PUBLIC_URL +
-                                        orders.product.product_img[0]
-                                      }
+                                      src={orders?.product?.product?.image[0]}
                                       alt=""
                                     />
                                   </Link>
                                 </td>
 
                                 <td className="product-name text-center">
-                                  <Link
-                                    to={
-                                      process.env.PUBLIC_URL +
-                                      "/product-sticky/"
-                                      // orders.prodct._id
-                                    }
-                                  >
-                                    {orders.product.product_name}
+                                  <Link>
+                                    {orders?.product?.product?.productname}
                                   </Link>
                                   <br />
-                                  COLOR: {orders?.color}
-                                  <br />
-                                  SIZE: {orders?.size}
-                                </td>
 
-                                <td className="product-price-cart">
-                                  <span className="amount">
-                                    {orders?.product_qty}
-                                  </span>
+                                  {orders?.product?.product?.qsCount ? (
+                                    <>
+                                      Question Count:{" "}
+                                      {orders?.product?.product?.qsCount}
+                                    </>
+                                  ) : null}
                                 </td>
 
                                 <td className="product-price-cart">
                                   <span className="amount"></span>
-                                  {orders?.product_price}
+                                  {orders?.createdAt?.split("T")[0]}
+                                </td>
+                                <td className="product-price-cart">
+                                  <span className="amount"></span>
+                                  {orders?.cartId?.productid?.price}
+                                </td>
+                                <td className="product-price-cart">
+                                  <span className="amount"></span>
+                                  {orders?.cartId.gst}
+                                </td>
+                                <td className="product-price-cart">
+                                  <span className="amount"></span>
+                                  {orders?.cartId?.total_amt}
                                 </td>
                                 <td className="product-price-cart">
                                   <span className="amount"></span>
                                   {orders?.status}
                                 </td>
-
-                                {/* <td className="product-wishlist-cart">
-                                  <div className="pro-details-cart btn-hover">
-                                    <Button
-                                      color="primary"
-                                      onClick={() => {
-                                        Axios.post(
-                                          "http://13.235.180.192/api/admin/add_ToCart",
-                                          {
-                                            product: orders.product._id,
-                                            product_qty: orders.qty,
-                                            product_price: orders.price,
-                                            color: orders.color,
-                                            size: orders.size,
-                                          },
-                                          {
-                                            headers: {
-                                              "auth-token":
-                                                localStorage.getItem(
-                                                  "auth-token"
-                                                ),
-                                            },
-                                          }
-                                        )
-                                          .then((response) => {
-                                            alert("Added To Cart");
-                                            console.log(response);
-                                            console.log(orders.product._id);
-                                            //pahucha dena
-                                            Axios.get(
-                                              `http://13.235.180.192/api/admin/delonewishlist/${orders.product._id}`,
-                                              {
-                                                headers: {
-                                                  "auth-token":
-                                                    localStorage.getItem(
-                                                      "auth-token"
-                                                    ),
-                                                },
-                                              }
-                                            )
-                                              .then((data) => fetchWish(data))
-                                              .catch((err) =>
-                                                console.log(err.response)
-                                              );
-                                          })
-                                          .catch(function (error) {
-                                            console.log(error.response);
-                                          });
-                                      }}
-                                    >
-                                      Add To Cart
-                                    </Button>
-                                  </div>
-                                </td> */}
-
-                                {/* <td className="product-remove">
-                                  <button
-                                    onClick={(e) =>
-                                      //console.log(orders._id)
-                                      removeitemfromwishlist(
-                                        orders.product._id
-                                      )(
-                                        //  deleteFromWishlist(orders, addToast)
-                                        window.location.reload(false)
-                                      )
-                                    }
-                                  >
-                                    <i className="fa fa-times"></i>
-                                  </button>
-                                </td> */}
                               </tr>
                             );
                           })}
@@ -229,7 +138,9 @@ const MyOrder = ({
                     </div>
                     <div className="item-empty-area__text">
                       No Product Found <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/"}>Shop Now</Link>
+                      <Link to={process.env.PUBLIC_URL + "/astromallList"}>
+                        Shop Now
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -252,7 +163,7 @@ MyOrder.propTypes = {
   wishlistItems: PropTypes.array,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     cartItems: state.cartData,
     wishlistItems: state.wishlistData,
@@ -260,7 +171,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
@@ -271,7 +182,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteFromWishlist: (item, addToast, quantityCount) => {
       dispatch(deleteFromWishlist(item, addToast, quantityCount));
     },
-    deleteAllFromWishlist: (addToast) => {
+    deleteAllFromWishlist: addToast => {
       dispatch(deleteAllFromWishlist(addToast));
     },
   };

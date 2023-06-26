@@ -31,7 +31,7 @@ const FooterOne = ({
     axiosConfig
       .get(`/admin/getPages`)
       .then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setPages(res.data.data);
       })
       .catch(err => {

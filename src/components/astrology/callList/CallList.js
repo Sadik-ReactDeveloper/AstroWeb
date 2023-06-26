@@ -130,12 +130,12 @@ class CallList extends React.Component {
   handleCalling = selectedId => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
-    console.log("USer", mobileNo);
-    let object = {
-      chatIntekId: selectedId,
-      userId: userId,
-      astroId: this.state.astroId,
-    };
+    // console.log("USer", mobileNo);
+    // let object = {
+    //   chatIntekId: selectedId,
+    //   userId: userId,
+    //   astroId: this.state.astroId,
+    // };
     let obj = {
       userid: userId,
       astroid: this.state.astroId,
@@ -144,7 +144,8 @@ class CallList extends React.Component {
     };
     console.log("obj", obj);
     axiosConfig
-      .post(`/user/selectIntakeForm`, object)
+      // .post(`/user/selectIntakeForm`, object)
+      .post(`/user/addCallWallet`, obj)
       .then(ress => {
         if (ress.data.status === true) {
           axiosConfig
@@ -153,16 +154,18 @@ class CallList extends React.Component {
               console.log("Calling", response.data);
               swal("Call Connected", "SuccessFully");
             })
+
             .catch(error => {
               console.log(error);
             });
+        } else {
+          swal("Alert", "Insufficient Balance");
         }
-        console.log("asss", ress.data.status);
+        // console.log("asss", ress.data.status);
       })
-      // console.log("sleelll", ress.data.status);
-      // })
       .catch(err => {
         console.log("err", err);
+        swal("Error", err);
       });
   };
 

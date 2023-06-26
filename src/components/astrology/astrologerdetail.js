@@ -141,7 +141,7 @@ class AstrologerDetail extends React.Component {
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
         localStorage.setItem("astroname", response?.data?.data?.fullname);
-        localStorage.setItem("channelName", response?.data?.data?.channelName);
+        // localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({
           fullname: response.data.data.fullname,
           all_skills: response.data.data.all_skills,
@@ -232,10 +232,7 @@ class AstrologerDetail extends React.Component {
             console.log("Busy");
           }
           localStorage.setItem("astroname", response?.data?.data?.fullname);
-          localStorage.setItem(
-            "channelName",
-            response?.data?.data?.channelName
-          );
+
           this.setState({ astroData: response.data.data });
           this.setState({
             all_skills: response.data.data.all_skills,
@@ -373,13 +370,13 @@ class AstrologerDetail extends React.Component {
                               <>
                                 <span style={{ color: "green" }} className="">
                                   <b> {this.state.astroData?.status}</b>
-                                </span>{" "}
+                                </span>
                               </>
                             ) : (
                               <>
                                 <span style={{ color: "red" }} className="">
                                   <b> {this.state.astroData?.status}</b>
-                                </span>{" "}
+                                </span>
                               </>
                             )}
                           </li>
@@ -412,9 +409,6 @@ class AstrologerDetail extends React.Component {
                         </Col>
                         <Col md="3" className="mt-30">
                           {/* <Button className="btn-as st" onClick={this.toggle}> */}
-                          {/* <Link to="/Call"> */}
-                          {/* <Link to="/callRecharge"> */}
-                          {/* <Link to="/CallListData"> */}
                           <Button
                             className="btn-as st"
                             // onClick={this.toggle}

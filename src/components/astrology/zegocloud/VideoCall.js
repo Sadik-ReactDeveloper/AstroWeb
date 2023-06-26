@@ -103,7 +103,7 @@ export default function App() {
         mode: ZegoUIKitPrebuilt.VideoConference,
       },
       preJoinViewConfig: {
-        title: "csdcscs", // The title of the prejoin view. Uses "enter Room" by default.
+        title: "Join Astrologer Video Call", // The title of the prejoin view. Uses "enter Room" by default.
       },
       onJoinRoom: () => {
         handleStart();

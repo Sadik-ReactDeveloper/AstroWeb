@@ -125,9 +125,11 @@ const AstroProfileVideo = lazy(() =>
 const AskQuestionList = lazy(() =>
   import("./components/astrology/AskQuestionList")
 );
-const LiveAstrologer = lazy(() =>
-  import("./components/astrology/LiveAstrologer")
-);
+// const LiveAstrologer = lazy(() =>
+//   import("./components/astrology/LiveAstrologer")
+// );
+const LiveAstrologer = lazy(() => import("./components/astrology/LiveConnect"));
+const LiveAllUser = lazy(() => import("./components/astrology/LiveAstro"));
 const LalKitab = lazy(() => import("./components/astrology/LalKitab"));
 const LalkitabPlanets = lazy(() =>
   import("./components/astrology/LalkitabPlanets")
@@ -628,6 +630,10 @@ const App = props => {
                   <Route
                     path={process.env.PUBLIC_URL + "/liveAstrologer"}
                     component={LiveAstrologer}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/live"}
+                    component={LiveAllUser}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/profiledetail"}

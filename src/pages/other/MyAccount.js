@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import LayoutOne from "../../layouts/LayoutOne";
 import { Container, Form, Row, Col } from "reactstrap";
 import axiosConfig from "../../axiosConfig";
+import swal from "sweetalert";
 export default class MyAccount extends Component {
   constructor(props) {
     super(props);
@@ -89,20 +90,13 @@ export default class MyAccount extends Component {
     if (this.state.selectedFile !== null) {
       data.append("userimg", this.state.selectedFile, this.state.selectedName);
     }
-    for (var value of data.values()) {
-      console.log(value);
-    }
-    for (var key of data.keys()) {
-      console.log(key);
-    }
-    // let { id } = this.props.match.params;
+
     let user_id = JSON.parse(localStorage.getItem("user_id"));
     axiosConfig
       .post(`/user/edit_myprofile/${user_id}`, data)
       .then(response => {
         console.log(response.data);
-        // swal("Success!", "Submitted SuccessFull!", "success");
-        // this.props.history.push("/app/user/userList");
+        swal("Success!", "Submitted SuccessFull!", "success");
       })
       .catch(error => {
         console.log(error);

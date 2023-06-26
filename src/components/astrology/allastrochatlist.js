@@ -254,7 +254,7 @@ class allastrochatlist extends React.Component {
                                           </span>
                                         </li>
                                         <li>
-                                          Call Rate:{" "}
+                                          Call Rate:
                                           <span>
                                             {astrologer?.callCharge}/
                                             {astrologer?.conrubute_hrs}
@@ -275,7 +275,9 @@ class allastrochatlist extends React.Component {
                                                 class="fa fa-commenting"
                                                 aria-hidden="true"
                                               >
-                                                Chat
+                                                <span className="m-2">
+                                                  Chat
+                                                </span>
                                               </i>
                                             </span>
                                           </Link>
