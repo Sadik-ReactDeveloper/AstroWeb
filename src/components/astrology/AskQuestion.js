@@ -230,7 +230,7 @@ class AskQuestion extends React.Component {
                                 ></textarea>
                                 <small className="sm-txt">
                                   Note: Maximum
-                                  {200 - this.state.question.length} Words
+                                  {150 - this.state.question.length} Words
                                   Accepted.
                                 </small>
                               </div>

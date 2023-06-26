@@ -368,6 +368,7 @@ class AstrologerDetail extends React.Component {
                           <li>
                             {this.state.status === "Online" ? (
                               <>
+                                Status:
                                 <span style={{ color: "green" }} className="">
                                   <b> {this.state.astroData?.status}</b>
                                 </span>
@@ -380,19 +381,16 @@ class AstrologerDetail extends React.Component {
                               </>
                             )}
                           </li>
-                          <li>
+                          {/* <li>
                             <span className="">
                               Status: {this.state.status}
                             </span>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
 
                       <Row>
                         <Col md="3" className="mt-30">
-                          {/* <Link to="/ChatListData"> */}
-                          {/* <Link to="/UserRequestForm"> */}
-
                           {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           <Button
                             className="btn-as st"
@@ -408,28 +406,18 @@ class AstrologerDetail extends React.Component {
                           {/* </Link> */}
                         </Col>
                         <Col md="3" className="mt-30">
-                          {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           <Button
                             className="btn-as st"
-                            // onClick={this.toggle}
                             onClick={() => this.handleStartCall()}
                           >
                             <i className="fa fa-phone" aria-hidden="true"></i>
                             <span className="m-2">Start Call</span>
                           </Button>
-                          {/* </Link> */}
                         </Col>
-                        <Col
-                          // onClick={() => this.handleVideocall}
-                          md="3"
-                          className="mt-30"
-                        >
-                          {/* <Link to="/VideoListData"> */}
-                          {/* <Link to="/UserRequestFormVideoCall"> */}
+                        <Col md="3" className="mt-30">
                           <Button
                             className="btn-as st"
                             onClick={() => this.handleVideocall()}
-                            //  onClick={this.toggle}
                           >
                             <i
                               class="fa fa-video-camera"
@@ -438,7 +426,6 @@ class AstrologerDetail extends React.Component {
 
                             <span className="m-1"> Start Video</span>
                           </Button>
-                          {/* </Link> */}
                         </Col>
                       </Row>
                     </Col>
@@ -447,7 +434,6 @@ class AstrologerDetail extends React.Component {
                   <div>
                     <AstroProfileVideo id={this.state.astro} />
                   </div>
-                  {/* <div className="img_slider">shdsjkshaghjg</div> */}
                 </section>
                 <section className="mt-50 mb-30">
                   <div
@@ -457,8 +443,7 @@ class AstrologerDetail extends React.Component {
                     <h3>AboutUs</h3>
                     <p>{this.state.long_bio}</p>
                   </div>
-                  {/* {/ about us close  /} */}
-                  {/* {/ review section start /} */}
+
                   <div
                     className="product-anotherinfo-wrapper mt-5"
                     style={{ border: "1px solid#ccc", padding: "20px 10px" }}
