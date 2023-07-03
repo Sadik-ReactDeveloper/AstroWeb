@@ -111,7 +111,7 @@ class UserRequestForm extends React.Component {
               <Row>
                 <Col md="12">
                   <div className="leftcont text-left">
-                    <h1>Chat InTake Form</h1>
+                    <h1>Video Call InTake Form</h1>
                   </div>
                 </Col>
               </Row>
@@ -123,7 +123,7 @@ class UserRequestForm extends React.Component {
             <Row>
               <Col lg="12">
                 <div className="wal-amt">
-                  <h3>Chat InTake Form </h3>
+                  <h3>Video Call InTake Form </h3>
                   <hr></hr>
                   <form onSubmit={this.submitHandler}>
                     <Row>
@@ -155,7 +155,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Patner First Name*</label>
+                          <label>Partner First Name*</label>
                           <input
                             type="text"
                             name="p_firstname"
@@ -180,11 +180,11 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Patner Last Name*</label>
+                          <label>Partner Last Name*</label>
                           <input
                             type="text"
                             name="p_lastname"
-                            placeholder="Enter Your Patner Lastname"
+                            placeholder="Enter Your Partner Lastname"
                             value={this.state.p_lastname}
                             onChange={this.changeHandler}
                           />
@@ -205,7 +205,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> patner Date of Birth*</label>
+                          <label> Partner Date of Birth*</label>
                           <input
                             type="date"
                             name="p_dob"
@@ -231,14 +231,12 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> patner Date of Time*</label>
+                          <label> Partner Date of Time*</label>
                           <input
                             type="time"
                             name="p_date_of_time"
                             value={this.state.p_date_of_time}
                             onChange={this.changeHandler}
-                            // required
-                            placeholder="Enter Your Number"
                           />
                         </div>
                       </Col>
@@ -258,13 +256,12 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> patner Birth Place</label>
+                          <label> Partner Birth Place</label>
                           <input
                             type="text"
                             name="p_birthPlace"
                             value={this.state.p_birthPlace}
                             onChange={this.changeHandler}
-                            // required
                             placeholder="Enter Your  Birth Place"
                           />
                         </div>
@@ -283,17 +280,7 @@ class UserRequestForm extends React.Component {
                           <option>Female</option>
                         </Input>
                       </Col>
-                      {/* 
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Gender*</label>
-                          <Input
-                            type="select"
-                            value={this.state.data.gender}
-                            onChange={this.changeHandler1}>
-                          </Input>
-                        </div>
-                      </Col> */}
+
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Marital Status*</label>
@@ -377,7 +364,8 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="12" className="mt-3">
                         <Button className="btn btn-warning">
-                          Start chat with Mukesh07
+                          Start VideoCall with{" "}
+                          {localStorage.getItem("astroname")}
                         </Button>
                       </Col>
                     </Row>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import axiosConfig from "../../axiosConfig";
+import swal from "sweetalert";
 const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
   const [userId, setUserId] = useState("");
   const [bestAstrology, setBestAstrology] = useState(data);
@@ -24,6 +25,7 @@ const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
 
       .then(response => {
         console.log(response);
+        swal("Call Connected", "SuccessFully");
       })
 
       .catch(error => {
@@ -36,8 +38,9 @@ const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
 
   return (
     <div
-      className={`${sliderdemoClass ? sliderdemoClass : " slider-demo"
-        } text-center ${sliderClass ? sliderClass : ""} st-hit`}
+      className={`${
+        sliderdemoClass ? sliderdemoClass : " slider-demo"
+      } text-center ${sliderClass ? sliderClass : ""} st-hit`}
     >
       <div className="image-flip">
         <div className="mainflip flip-0">
@@ -57,13 +60,11 @@ const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
                       Language: <span>{data?.language}</span>
                     </li> */}
                     <li>
-                      Experience: <span>{data?.exp_in_years}</span>
+                      Experience: <span>{data?.exp_in_years} year</span>
                     </li>
                     <li>
-                      Call Rate:{" "}
-                      <span>
-                        {data?.callCharge}/{data?.conrubute_hrs}
-                      </span>
+                      Call Rate:
+                      <span>{data?.callCharge}/Mins</span>
                     </li>
                   </ul>
                   <Link className="btn btn-primary btn-sm st-d">
@@ -74,13 +75,6 @@ const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
                     className="btn btn-primary btn-sm"
                   >
                     <i class="fa fa-phone"></i> Call Now
-                    <small>
-                      {/* / 20{" "}
-                                      <i class="fa fa-inr" aria-hidden="true">
-                                        {data.conrubute_hrs}
-                                      </i>{" "}
-                                      per Hour */}
-                    </small>
                   </Link>
                 </div>
               </div>

@@ -311,7 +311,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Patner First Name*</label>
+                          <label>Partner First Name*</label>
                           <input
                             type="text"
                             name="p_firstname"
@@ -323,7 +323,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Patner Last Name*</label>
+                          <label>Partner Last Name*</label>
                           <input
                             type="text"
                             name="p_lastname"
@@ -336,52 +336,47 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Patner Date of Birth*</label>
+                          <label>Partner Date of Birth*</label>
                           <input
                             type="date"
                             name="p_dob"
                             value={this.state.p_dob}
                             onChange={this.changeHandler}
-                            placeholder="Enter Your Number"
                           />
                         </div>
                       </Col>
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Patner Date of Time*</label>
+                          <label>Partner Date of Time*</label>
                           <input
                             type="time"
                             name="p_date_of_time"
                             value={this.state.p_date_of_time}
                             onChange={this.changeHandler}
-                            // required
-                            placeholder="Enter Your Number"
                           />
                         </div>
                       </Col>
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partnar Birth Place</label>
+                          <label>Partner Birth Place</label>
                           <input
                             type="text"
                             name="p_birthPlace"
                             value={this.state.p_birthPlace}
                             onChange={this.changeHandler}
-                            // required
                             placeholder="Enter Your  Birth Place"
                           />
                         </div>
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Attachment</label>
+                          <label>Attachment</label>
                           <input
                             type="file"
                             onChange={this.onChangeHandler}
                             accept="image/png, image/jpeg,.doc,image/jpg,.pdf"
-                            required
                           />
                         </div>
                       </Col>

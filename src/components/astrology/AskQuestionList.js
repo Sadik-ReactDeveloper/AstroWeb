@@ -136,28 +136,27 @@ class AskQuestionList extends React.Component {
                                     </h4>
                                     <ul className="mb-3">
                                       <li>
-                                        Specility:{" "}
+                                        Specility:
                                         <span>
                                           {askAstro?.astroid.all_skills}
                                         </span>
                                       </li>
                                       <li>
-                                        Language:{" "}
+                                        Language:
                                         <span>
                                           {askAstro?.astroid.language}
                                         </span>
                                       </li>
                                       <li>
-                                        Experience:{" "}
+                                        Experience:
                                         <span>
                                           {askAstro?.astroid.exp_in_years}
                                         </span>
                                       </li>
                                       <li>
-                                        Call Rate:{" "}
+                                        Call Rate:
                                         <span>
-                                          {askAstro?.astroid.callCharge}/
-                                          {askAstro?.astroid.conrubute_hrs}
+                                          {askAstro?.astroid.callCharge}/Mins
                                         </span>
                                       </li>
                                     </ul>

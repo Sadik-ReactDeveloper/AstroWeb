@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
-import textbottom from '../../assets/img/textbottom.png'
-import astro3 from '../../assets/img/team/astro3.jpg'
-import '../../assets/scss/astroteam.scss'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Row, Col } from "reactstrap";
+import textbottom from "../../assets/img/textbottom.png";
+import astro3 from "../../assets/img/team/astro3.jpg";
+import "../../assets/scss/astroteam.scss";
 
 class AstroTeam extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class AstroTeam extends React.Component {
                         <h4 className="card-title">Krishnan Iyer</h4>
                         <ul className="mb-3">
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card Reading , Vedic Astrology</span>
                           </li>
                           <li>
@@ -40,7 +40,7 @@ class AstroTeam extends React.Component {
                         <Link className="btn btn-primary btn-sm">
                           <i class="fa fa-phone"></i> Call
                           <small>
-                            / 20 <i class="fa fa-inr" aria-hidden="true"></i>{' '}
+                            / 20 <i class="fa fa-inr" aria-hidden="true"></i>{" "}
                             per Hour
                           </small>
                         </Link>
@@ -101,8 +101,9 @@ class AstroTeam extends React.Component {
                         <h4 className="card-title">Krishnan Iyer</h4>
                         <ul className="mb-3">
                           <li>
-                            {' '}
-                            Specility: <span>Tarot Card Reading , Vedic Astrology</span>
+                            {" "}
+                            Specility:{" "}
+                            <span>Tarot Card Reading , Vedic Astrology</span>
                           </li>
                           <li>
                             Language: <span>English , Tamil , Malayalam</span>
@@ -114,7 +115,7 @@ class AstroTeam extends React.Component {
                         <Link className="btn btn-primary btn-sm">
                           <i class="fa fa-phone"></i> Call
                           <small>
-                            / 20 <i class="fa fa-inr" aria-hidden="true"></i>{' '}
+                            / 20 <i class="fa fa-inr" aria-hidden="true"></i>{" "}
                             per Hour
                           </small>
                         </Link>
@@ -137,7 +138,7 @@ class AstroTeam extends React.Component {
                             </p>
                           </li>
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card , Vedic Astrology</span>
                           </li>
                           <li>
@@ -153,9 +154,9 @@ class AstroTeam extends React.Component {
                         >
                           <i class="fa fa-phone"></i> Call Now
                           <small>
-                            {' '}
-                            20 <i class="fa fa-inr" aria-hidden="true"></i>{' '}
-                            /Hour{' '}
+                            {" "}
+                            20 <i class="fa fa-inr" aria-hidden="true"></i>{" "}
+                            /Hour{" "}
                           </small>
                         </Link>
                       </div>
@@ -176,7 +177,7 @@ class AstroTeam extends React.Component {
                         <h4 className="card-title">Krishnan Iyer</h4>
                         <ul className="mb-3">
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card Reading , Vedic Astrology</span>
                           </li>
                           <li>
@@ -189,11 +190,11 @@ class AstroTeam extends React.Component {
                         <Link className="btn btn-primary btn-sm">
                           <i class="fa fa-phone"></i> Call
                           <small>
-                            {' '}
+                            {" "}
                             / 20 <i
                               class="fa fa-inr"
                               aria-hidden="true"
-                            ></i>{' '}
+                            ></i>{" "}
                             per Hour
                           </small>
                         </Link>
@@ -216,7 +217,7 @@ class AstroTeam extends React.Component {
                             </p>
                           </li>
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card , Vedic Astrology</span>
                           </li>
                           <li>
@@ -232,7 +233,7 @@ class AstroTeam extends React.Component {
                         >
                           <i class="fa fa-phone"></i> Call Now
                           <small>
-                            {' '}
+                            {" "}
                             <i class="fa fa-inr" aria-hidden="true"></i> 20/Hour
                           </small>
                         </Link>
@@ -254,7 +255,7 @@ class AstroTeam extends React.Component {
                         <h4 className="card-title">Krishnan Iyer</h4>
                         <ul className="mb-3">
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card Reading , Vedic Astrology</span>
                           </li>
                           <li>
@@ -267,7 +268,7 @@ class AstroTeam extends React.Component {
                         <Link className="btn btn-primary btn-sm">
                           <i class="fa fa-phone"></i> Call
                           <small>
-                            {' '}
+                            {" "}
                             /<i class="fa fa-inr" aria-hidden="true"></i> 20 per
                             Hour
                           </small>
@@ -291,7 +292,7 @@ class AstroTeam extends React.Component {
                             </p>
                           </li>
                           <li>
-                            {' '}
+                            {" "}
                             <span>Tarot Card , Vedic Astrology</span>
                           </li>
                           <li>
@@ -307,8 +308,8 @@ class AstroTeam extends React.Component {
                         >
                           <i class="fa fa-phone"></i> Call Now
                           <small>
-                            {' '}
-                            20 <i class="fa fa-inr" aria-hidden="true"></i>{' '}
+                            {" "}
+                            20 <i class="fa fa-inr" aria-hidden="true"></i>{" "}
                             /Hour
                           </small>
                         </Link>
@@ -321,8 +322,8 @@ class AstroTeam extends React.Component {
           </Row>
         </Container>
       </section>
-    )
+    );
   }
 }
 
-export default AstroTeam
+export default AstroTeam;

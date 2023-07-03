@@ -1020,7 +1020,7 @@ class KundaliForm extends React.Component {
                                   />
                                 </Col>
                                 <Col md="6">
-                                  <label>state</label>
+                                  <label>City</label>
                                   <Select
                                     options={City.getCitiesOfState(
                                       this.state.selectedState?.countryCode,

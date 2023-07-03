@@ -100,8 +100,6 @@ class VideoList extends React.Component {
           tuesday: response.data.data.tuesday,
           thursday: response.data.data.thursday,
           saturday: response.data.data.saturday,
-          fullname: response.data.data.fullname,
-          language: response.data.data.language,
           wednesday: response.data.data.wednesday,
           mobile: response.data.data.mobile,
         });
@@ -198,7 +196,7 @@ class VideoList extends React.Component {
                 <Row>
                   <div className="my-1">
                     <Link
-                      to="/userrequestformCall"
+                      to="/UserRequestFormVideoCall"
                       className="btn btn-denger wr"
                     >
                       <button className="btn btn-denger wr">
