@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Table } from "reactstrap";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 
 import LayoutOne from "../../layouts/LayoutOne";
@@ -8,42 +8,24 @@ import "../../assets/scss/astroteam.scss";
 
 import axiosConfig from "../../axiosConfig";
 
-import UserChatHistory from "../chat/UserChatHistory.js";
-
-class UserChatHistoryList extends React.Component {
+class UserCallHistory extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userChatHistory: [],
+      userChatList: [],
     };
   }
   componentDidMount() {
-    let { id } = this.props.match.params;
     let userId = JSON.parse(localStorage.getItem("user_id"));
 
-    console.log(userId);
     axiosConfig
-      .get(`/user/getOne_Conversation_Wallet/${userId}`)
+      .get(`/user/userCallHistory/${userId}`)
       .then(response => {
         console.log("userChatList", response.data.data);
         if (response.data.status === true) {
           this.setState({
-            userChatList: response.data.data,
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    axiosConfig
-      .get(`/user/userChathistory/${userId}`)
-      .then(response => {
-        console.log("chatList", response.data.data);
-        if (response.data.status === true) {
-          this.setState({
-            userChatHistory: response.data.data,
+            userChatList: response?.data?.data,
           });
         }
       })
@@ -53,7 +35,7 @@ class UserChatHistoryList extends React.Component {
   }
 
   render() {
-    const { userChatHistory } = this.state;
+    const { userChatList } = this.state;
 
     return (
       <LayoutOne headerTop="visible">
@@ -79,21 +61,15 @@ class UserChatHistoryList extends React.Component {
               <Row>
                 <Col md="12">
                   <div className="leftcont text-left">
-                    <h1>User Chat History</h1>
+                    <h1>User Call History</h1>
                   </div>
                 </Col>
               </Row>
             </Container>
           </div>
         </section>
-        <section style={{ marginTop: "52px" }} className="userchathistory">
-          <Container>
-            <div className="container mt-3">
-              <UserChatHistory />
-            </div>
-          </Container>
-        </section>
-        {/* <section>
+
+        <section>
           <Container>
             <Row>
               <Col lg="12">
@@ -107,10 +83,9 @@ class UserChatHistoryList extends React.Component {
                         <th>Conversation Type</th>
                         <th>Rate</th>
                         <th>Duration</th>
-                        <th>Amount</th>
+
                         <th>Deducation</th>
                         <th>Date/Time</th>
-                        <th>Action</th>
                       </tr>
                     </thead>
                     {userChatList.length
@@ -118,26 +93,17 @@ class UserChatHistoryList extends React.Component {
                           return (
                             <tbody>
                               <tr>
-                                <th>{user?.conversationId}</th>
+                                <th>{user?.Sid}</th>
                                 <td>{user?.astroid?.fullname}</td>
 
-                                <td>{user?.type}</td>
-                                <td>{user?.astroid?.callCharge}/Min.</td>
-                                
-                                <td>{user?.userid?.amount}Rs.</td>
-                                <td>{user?.userid?.deductedAmt}Rs.</td>
-                                <td>{user?.createdAt}</td>
-                                <td>
-                                  <Link className="Tansdel">
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </Link>
-                                </td>
-                              </tr>
+                                <td>Call</td>
 
-                             
+                                <td>{user?.astroid?.callCharge}/Min.</td>
+
+                                <td>{user?.Duration} Sec</td>
+                                <td>{user?.userdeductedAmt} Rs</td>
+                                <td>{user?.DateCreated.split("T")[0]}</td>
+                              </tr>
                             </tbody>
                           );
                         })
@@ -147,10 +113,10 @@ class UserChatHistoryList extends React.Component {
               </Col>
             </Row>
           </Container>
-        </section> */}
+        </section>
       </LayoutOne>
     );
   }
 }
 
-export default UserChatHistoryList;
+export default UserCallHistory;

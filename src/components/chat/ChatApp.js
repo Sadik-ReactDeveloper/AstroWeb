@@ -143,12 +143,10 @@ class ChatApp extends React.Component {
       this.secondsToTime(minute * 60);
     }
     let user_id = JSON.parse(localStorage.getItem("user_id"));
-    console.log("user_id1452", user_id);
-
     axiosConfig
       .get(`/user/getroomid/${user_id}`)
       .then(response => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         if (response.data.status === true) {
           this.setState({
             data: response.data.data,

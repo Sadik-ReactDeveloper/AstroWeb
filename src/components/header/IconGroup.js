@@ -55,14 +55,18 @@ const IconGroup = ({
   };
   const [userBalance, setuserBalance] = useState("");
 
-  setInterval(() => {
-    const Balance = sessionStorage.getItem("userBalance");
-    setuserBalance(Balance);
-  }, 1000);
+  const timer = () => {
+    setInterval(() => {
+      const Balance = sessionStorage.getItem("userBalance");
+      setuserBalance(Balance);
+    }, 1000);
+  };
+
   // setuserBalance(Balance);
   const Balance = sessionStorage.getItem("userBalance");
 
   useEffect(() => {
+    timer();
     Fetchuserdetail();
   }, [Balance]);
 
@@ -236,6 +240,21 @@ const IconGroup = ({
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/userChatHistoryList"}>
                     User Chat History List
+                  </Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/userCallHistrory"}>
+                    Call History
+                  </Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/userChatHistory"}>
+                    Chat History
+                  </Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/userCallHistrory"}>
+                    Video Call History
                   </Link>
                 </li>
                 <li>

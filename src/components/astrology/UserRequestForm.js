@@ -28,22 +28,17 @@ class UserRequestForm extends React.Component {
       marital_status: "",
       occupation: "",
       topic_of_cnsrn: "",
-      entertopic_of_cnsrn: "",
+      // entertopic_of_cnsrn: "",
       data: [],
-      // data: {},
       state: [],
       city: [],
       country: [],
-      // SelectedCountry: "Country",
-      // SelectedState: "State",
       selectedCountry: null,
       selectedState: null,
       selectedCity: null,
-      // submitPlaceHandler
     };
   }
   changeCity = item => {
-    console.log("item", item);
     this.setState({
       submitPlaceHandler: item,
     });
@@ -80,7 +75,7 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-    console.log(userId, astroId);
+
     let obj = {
       userid: userId,
       astroid: astroId,
@@ -99,7 +94,7 @@ class UserRequestForm extends React.Component {
       marital_status: this.state.marital_status,
       occupation: this.state.occupation,
       topic_of_cnsrn: this.state.topic_of_cnsrn,
-      entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
+      // entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
       // latitude: this.state.latitude,
       // longitude: this.state.longitude,
     };
@@ -115,21 +110,14 @@ class UserRequestForm extends React.Component {
         swal("Error!", "You clicked the button!", "error");
       });
 
-    // new code
-
-    // this.setState({ modalone: true });
-    let mobileNo = localStorage.getItem("user_mobile_no");
-
-    console.log("mobileNo", mobileNo);
-
-    axiosConfig
-      .get(`/admin/getoneAstro/${astroId}`)
-      .then(res => {
-        console.log(res.data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // axiosConfig
+    //   .get(`/admin/getoneAstro/${astroId}`)
+    //   .then(res => {
+    //     console.log(res.data.data);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
   render() {
     return (
@@ -170,7 +158,7 @@ class UserRequestForm extends React.Component {
                 <div className="wal-amt">
                   <h3>Chat InTake Form </h3>
                   <hr></hr>
-                  <form onSubmit={this.submitHandler}>
+                  <form onSubmit={e => this.submitHandler(e)}>
                     <Row>
                       <Col md="4">
                         <div class="form-group mtb-10">
@@ -206,9 +194,47 @@ class UserRequestForm extends React.Component {
                             required
                             type="text"
                             name="lastname"
-                            placeholder="Enter Your  Lastname"
+                            placeholder="Enter Your Lastname"
                             value={this.state.lastname}
                             onChange={this.changeHandler}
+                          />
+                        </div>
+                      </Col>
+                      <Col md="4">
+                        <div class="form-group mtb-10">
+                          <label>Date of Birth*</label>
+                          <input
+                            type="date"
+                            name="dob"
+                            value={this.state.dob}
+                            onChange={this.changeHandler}
+                            required
+                            placeholder="Enter Your Number"
+                          />
+                        </div>
+                      </Col>
+                      <Col md="4">
+                        <div class="form-group mtb-10">
+                          <label>Time of Birth*</label>
+                          <input
+                            type="time"
+                            name="date_of_time"
+                            value={this.state.date_of_time}
+                            onChange={this.changeHandler}
+                            required
+                          />
+                        </div>
+                      </Col>
+                      <Col md="4">
+                        <div class="form-group mtb-10">
+                          <label>Birth Place*</label>
+                          <input
+                            type="text"
+                            name="birthPlace"
+                            value={this.state.birthPlace}
+                            onChange={this.changeHandler}
+                            required
+                            placeholder="Enter Your  Birth Place"
                           />
                         </div>
                       </Col>
@@ -236,19 +262,7 @@ class UserRequestForm extends React.Component {
                           />
                         </div>
                       </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Date of Birth*</label>
-                          <input
-                            type="date"
-                            name="dob"
-                            value={this.state.dob}
-                            onChange={this.changeHandler}
-                            required
-                            placeholder="Enter Your Number"
-                          />
-                        </div>
-                      </Col>
+
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label> Partner Date of Birth*</label>
@@ -264,43 +278,16 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Time of Birth*</label>
-                          <input
-                            type="time"
-                            name="date_of_time"
-                            value={this.state.date_of_time}
-                            onChange={this.changeHandler}
-                            required
-                            // placeholder="Enter Your Number"
-                          />
-                        </div>
-                      </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
                           <label> Partner Time of Birth*</label>
                           <input
                             type="time"
                             name="p_date_of_time"
                             value={this.state.p_date_of_time}
                             onChange={this.changeHandler}
-                            // placeholder="Enter Your Number"
                           />
                         </div>
                       </Col>
 
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Birth Place*</label>
-                          <input
-                            type="text"
-                            name="birthPlace"
-                            value={this.state.birthPlace}
-                            onChange={this.changeHandler}
-                            required
-                            placeholder="Enter Your  Birth Place"
-                          />
-                        </div>
-                      </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label> Partner Birth Place</label>
@@ -325,7 +312,6 @@ class UserRequestForm extends React.Component {
                           }}
                           value={this.state.selectedCountry}
                           onChange={item => {
-                            //setSelectedCountry(item);
                             this.setState({ selectedCountry: item });
                             axiosConfig
                               .post(`/user/time_zone`, {
@@ -357,7 +343,6 @@ class UserRequestForm extends React.Component {
                           }}
                           value={this.state.selectedState}
                           onChange={item => {
-                            //setSelectedState(item);
                             this.setState({ selectedState: item });
                           }}
                         />
@@ -402,7 +387,6 @@ class UserRequestForm extends React.Component {
                       </Col>
 
                       <Col lg="6" md="6" className="my-2 ">
-                        {/* <div class="form-group mtb-10"> */}
                         <label>Marital Status*</label>
                         <Input
                           type="select"
@@ -417,7 +401,6 @@ class UserRequestForm extends React.Component {
                           <option>Separated</option>
                           <option>Widowed</option>
                         </Input>
-                        {/* </div> */}
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
@@ -469,19 +452,19 @@ class UserRequestForm extends React.Component {
                           </Input>
                         </div>
                       </Col>
-                      <Col md="4">
+                      {/* <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Enter topic of concern:</label>
                           <input
                             type="text"
                             name="entertopic_of_cnsrn"
                             required
-                            placeholder="Enter Your Fullname"
+                            placeholder="Enter Topic Of Concern "
                             value={this.state.entertopic_of_cnsrn}
                             onChange={this.changeHandler}
                           />
                         </div>
-                      </Col>
+                      </Col> */}
                       <Col md="12" className="mt-3">
                         <Button className="btn btn-warning">
                           Start chat with {localStorage.getItem("astroname")}

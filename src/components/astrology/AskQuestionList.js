@@ -2,28 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-// import astro3 from '../../assets/img/team/astro3.jpg'
+
 import "../../assets/scss/astroteam.scss";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosConfig from "../../axiosConfig";
+import DemoChat from "./DemoChat";
 
 class AskQuestionList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // data: {},
+      modeChange: true,
+      SelectedPackage: "125",
       askAstroList: [],
-      //   Form: '',
-      //   To: '',
-      //   astroid: '',
-      //   userid: '',
     };
   }
   componentDidMount = () => {
-    // let { id } = this.props.match.params
     let userId = JSON.parse(localStorage.getItem("user_id"));
-
     axiosConfig
       .get(`/user/completed_order/${userId}`)
       .then(response => {
@@ -38,36 +34,10 @@ class AskQuestionList extends React.Component {
         console.log(error.response);
       });
   };
-
-  //   submitHandler = (e, astroid, mobile) => {
-  //     e.preventDefault()
-  //     // let astrologerList = localStorage.getItem('astrologerList')
-  //     let mobileNo = localStorage.getItem('user_mobile_no')
-  //     let userId = JSON.parse(localStorage.getItem('user_id'))
-  //     let astroId = astroid
-  //     let obj = {
-  //       userid: userId,
-  //       astroid: astroId,
-  //       // astrologerList: astrologerList,
-  //       From: mobile, //parseInt(this.state.number)
-  //       To: mobileNo, //parseInt(this.state.number)
-  //     }
-  //     axiosConfig
-  //       .post(`/user/make_call`, obj)
-
-  //       .then((response) => {
-  //         console.log('rhsagdhgshgdjhgj', response.data.data)
-  //         // console.log(response.data.STATUSMSG)
-  //         // this.setState({ responseData: response.data })
-  //         // swal('Successful!', 'Recharge Successful!', 'success')
-  //         // this.props.history.push('/orderrecharge')
-  //       })
-
-  //       .catch((error) => {
-  //         console.log(error)
-  //         // swal('Error!', 'Invalid!', 'error')
-  //       })
-  //   }
+  callback = data => {
+    console.log("payment failed", data);
+    this.setState({ modeChange: data });
+  };
 
   render() {
     const { askAstroList } = this.state;
@@ -78,10 +48,6 @@ class AskQuestionList extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: '#ffcc01',
-              // width: '100%',
-              // padding: '70px 0px',
-              // backgroundSize: 'cover',
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -108,12 +74,59 @@ class AskQuestionList extends React.Component {
             </Container>
           </div>
         </section>
+
         <section id="team" class="pb-5">
           <Container>
-            {/* <div className="heading mb-30">
-                <h2>Best Astrologers </h2>
-                <img src={textbottom} alt=""/>
-            </div>         */}
+            {/* <Row>
+              <section className="selectpackage card mb-3 mt-3">
+                <div className="mainhkjjeading ">
+                  <div className="d-flex justify-content-center">
+                    <h3 className="mb-2">Select Package for Question</h3>{" "}
+                  </div>
+                  <Row>
+                    <Col lg="4">
+                      <form>
+                        <label for="fname">Select Question Package</label>
+                      
+                        <select
+                          defaultValue={125}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            this.setState({ SelectedPackage: e.target.value });
+                          }}
+                          className="form-control"
+                          name="question"
+                        >
+                          <option value="125">3</option>
+                          <option value="200">6</option>
+                          <option value="250">9</option>
+                          <option value="300">15</option>
+                        </select>
+                      </form>
+                    </Col>
+                    <Col lg="4">
+                      <div className="text-center justify-content-center">
+                        <label>Price Rs</label>
+                        <h4>
+                          {this.state.SelectedPackage &&
+                            this.state.SelectedPackage}
+                        </h4>
+                      </div>
+                    </Col>
+                    <Col lg="4">
+                      <label>Pay for Your Questions</label>
+                      <DemoChat
+                        callback={this.callback}
+                        payment={200}
+                        status={false}
+                      />
+                     
+                    </Col>
+                  </Row>
+                </div>{" "}
+              </section>
+            </Row> */}
+
             <Row>
               {askAstroList.length
                 ? askAstroList.map((askAstro, index) => {
@@ -168,57 +181,6 @@ class AskQuestionList extends React.Component {
                                     >
                                       Ask Question
                                     </Link>
-                                    {/* 
-                                    <Link className="btn btn-primary btn-sm st-d">
-                                      Online
-                                    </Link>
-                                    <Link
-                                      className="btn btn-primary btn-sm"
-                                      to={'/allastrologerlist/' + askAstro._id}
-                                    > */}
-                                    {/* <span
-                                        className="sr-btn"
-                                        onClick={this.onCallSubmit}
-                                      >
-                                        <i class="fa fa-phone">
-                                          {astrologer?.userRequestForm}
-                                        </i>{' '}
-                                        Call
-                                      </span> */}
-
-                                    {/* {localStorage.getItem('auth-token') ? ( */}
-                                    {/* <span
-                                        className="sr-btn"
-                                        onClick={(e) =>
-                                          this.submitHandler(
-                                            e,
-                                            askAstro?._id,
-                                            askAstro?.mobile,
-                                          )
-                                        }
-                                      >
-                                        <i class="fa fa-phone"></i> Call
-                                      </span> */}
-                                    {/* ) : (
-                                        <span
-                                          className="sr-btn"
-                                          onClick={(e) =>
-                                            (window.location.href =
-                                              '/#/login-register')
-                                          }
-                                        >
-                                          <i class="fa fa-phone"></i> Call
-                                        </span>
-                                      )} */}
-
-                                    {/* <small>
-                                            / 20{' '}
-                                            <i class="fa fa-inr" aria-hidden="true">
-                                              {astrologer?.conrubute_hrs}
-                                            </i>{' '}
-                                            per Hour
-                                          </small> */}
-                                    {/* </Link> */}
                                   </div>
                                 </div>
                               </Link>

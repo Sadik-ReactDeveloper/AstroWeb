@@ -70,8 +70,6 @@ class ChatList extends React.Component {
 
   componentDidMount = () => {
     this.getuserList();
-
-    // let astroId = localStorage.getItem("astroId");
   };
   getuserList = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));

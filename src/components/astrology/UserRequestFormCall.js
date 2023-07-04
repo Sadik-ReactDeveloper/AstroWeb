@@ -26,7 +26,7 @@ class UserRequestForm extends React.Component {
       marital_status: "",
       occupation: "",
       topic_of_cnsrn: "",
-      entertopic_of_cnsrn: "",
+      // entertopic_of_cnsrn: "",
       data: [],
       selectedFile: {},
       selectedName: "",
@@ -74,25 +74,24 @@ class UserRequestForm extends React.Component {
     data.append("marital_status", this.state.marital_status);
     data.append("occupation", this.state.occupation);
     data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
-    data.append("entertopic_of_cnsrn", this.state.entertopic_of_cnsrn);
+    // data.append("entertopic_of_cnsrn", this.state.entertopic_of_cnsrn);
 
     if (this.state.selectedFile !== null) {
-      data.append("file", this.state.selectedFile);
+      if (this.state.selectedFile !== null) {
+        data.append("file", this.state.selectedFile);
+      } else {
+        data.append("file", null);
+      }
     }
 
     axiosConfig
       .post(`/user/add_chat_intake`, data)
       .then(response => {
-        // console.log("aaaaaform newaaaaaaa", response.data.data);
         swal("Success!", "Submitted SuccessFull!", "success");
-        // window.location.reload("/allastrologerlist");
-        // this.props.history.push("/allastrologerlist");
-        // this.props.history.push("/allMinRechargeCall");
         this.props.history.push("/CallListData");
       })
       .catch(error => {
         swal("Error!", "You clicked the button!", "error");
-        // console.log(error);
       });
   };
   render() {
@@ -134,7 +133,7 @@ class UserRequestForm extends React.Component {
                 <div className="wal-amt">
                   <h3>Call InTake Form </h3>
                   <hr></hr>
-                  <form onSubmit={this.submitHandler}>
+                  <form onSubmit={e => this.submitHandler(e)}>
                     <Row>
                       <Col md="4">
                         <div class="form-group mtb-10">
@@ -229,7 +228,7 @@ class UserRequestForm extends React.Component {
                         </Input>
                       </Col>
                       <Col md="4">
-                        <div class="form-group mtb-10">
+                        <div class="form-group ">
                           <label>Marital Status*</label>
                           <Input
                             type="select"
@@ -296,7 +295,7 @@ class UserRequestForm extends React.Component {
                           </Input>
                         </div>
                       </Col>
-                      <Col md="4">
+                      {/* <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Enter topic of concern:</label>
                           <input
@@ -308,10 +307,10 @@ class UserRequestForm extends React.Component {
                             onChange={this.changeHandler}
                           />
                         </div>
-                      </Col>
+                      </Col> */}
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner First Name*</label>
+                          <label>Partner First Name</label>
                           <input
                             type="text"
                             name="p_firstname"
@@ -323,7 +322,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner Last Name*</label>
+                          <label>Partner Last Name</label>
                           <input
                             type="text"
                             name="p_lastname"
@@ -336,7 +335,7 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner Date of Birth*</label>
+                          <label>Partner Date of Birth</label>
                           <input
                             type="date"
                             name="p_dob"
@@ -348,7 +347,7 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner Date of Time*</label>
+                          <label>Partner Date of Time</label>
                           <input
                             type="time"
                             name="p_date_of_time"

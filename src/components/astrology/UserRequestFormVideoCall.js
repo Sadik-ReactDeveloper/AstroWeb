@@ -125,7 +125,7 @@ class UserRequestForm extends React.Component {
                 <div className="wal-amt">
                   <h3>Video Call InTake Form </h3>
                   <hr></hr>
-                  <form onSubmit={this.submitHandler}>
+                  <form onSubmit={e => this.submitHandler(e)}>
                     <Row>
                       <Col md="4">
                         <div class="form-group mtb-10">

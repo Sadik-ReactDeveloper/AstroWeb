@@ -70,8 +70,6 @@ class CallList extends React.Component {
 
   componentDidMount = () => {
     this.getuserList();
-    // let { id } = this.props.match.params;
-    // console.log("id>>>>>", id);
     let astroId = localStorage.getItem("videoCallAstro_id");
 
     axiosConfig
@@ -112,7 +110,7 @@ class CallList extends React.Component {
   };
   getuserList = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
-    // console.log("userId", userId);
+
     axiosConfig
       .get(`/admin/intekListByUser/${userId}`)
       .then(response => {
@@ -130,21 +128,15 @@ class CallList extends React.Component {
   handleCalling = selectedId => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
-    // console.log("USer", mobileNo);
-    // let object = {
-    //   chatIntekId: selectedId,
-    //   userId: userId,
-    //   astroId: this.state.astroId,
-    // };
+
     let obj = {
       userid: userId,
       astroid: this.state.astroId,
       From: this.state.mobile, //astro no
       To: mobileNo, //user no
     };
-    console.log("obj", obj);
+
     axiosConfig
-      // .post(`/user/selectIntakeForm`, object)
       .post(`/user/addCallWallet`, obj)
       .then(ress => {
         if (ress.data.status === true) {
@@ -156,12 +148,11 @@ class CallList extends React.Component {
             })
 
             .catch(error => {
-              console.log(error);
+              swal("Alert", "Your Number is not whitelisted");
             });
         } else {
           swal("Alert", "Insufficient Balance");
         }
-        // console.log("asss", ress.data.status);
       })
       .catch(err => {
         console.log("err", err);

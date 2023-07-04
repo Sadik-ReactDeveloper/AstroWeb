@@ -16,7 +16,6 @@ class ChatAppList extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${astroId}`)
       .then(res => {
-        console.log(res.data.data);
         this.setState({ Activeastro: res?.data?.data });
       })
       .catch(err => {
@@ -24,11 +23,9 @@ class ChatAppList extends React.Component {
       });
     let userId = JSON.parse(localStorage.getItem("user_id"));
 
-    console.log(userId);
     axiosConfig
       .get(`/user/getroomid/${userId}`)
       .then(response => {
-        console.log(response.data?.data);
         if (response.data.status === true) {
           this.setState({
             userChatList: response.data?.data,

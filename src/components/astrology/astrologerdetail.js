@@ -63,41 +63,123 @@ class AstrologerDetail extends React.Component {
       modal: !this.state.modal,
     });
   }
+  // handleStartChat = () => {
+  //   let userId = JSON.parse(localStorage.getItem("user_id"));
+  //   if (userId !== "" && userId !== null) {
+  //     if (this.state.status === "Online") {
+  //       this.props.history.push("/ChatListData");
+  //     } else swal("Astro is offline ");
+  //   } else {
+  //     swal("Need To Login First");
+  //   }
+  // };
   handleStartChat = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
+
+    const id = localStorage.getItem("astroId");
+
     if (userId !== "" && userId !== null) {
-      if (this.state.status === "Online") {
-        this.props.history.push("/ChatListData");
-      } else swal("Astro is offline ");
-    } else {
-      swal("Need To Login First");
-    }
+      const data = {
+        userid: userId,
+        astroid: id,
+      };
+      if (
+        this.state.astroData?.waiting_tym === 0 &&
+        this.state.astroData?.callingStatus === "Available"
+      ) {
+        axiosConfig
+          .post(`/user/addCallWallet`, data)
+          .then(response => {
+            console.log("@@@chat mode", response.data);
+
+            if (response.data?.msg === "success") {
+              this.props.history.push("/UserRequestForm");
+            } else
+              swal(
+                "Recharge Now",
+                "You Donot have Enough balance to Make This Call",
+                {
+                  buttons: {
+                    cancel: "Recharge Now",
+                    catch: { text: "Cancel ", value: "catch" },
+                  },
+                }
+              ).then(value => {
+                switch (value) {
+                  case "catch":
+                    // swal("Sure Want to cancel it");
+                    break;
+                  default:
+                    this.props.history.push("/walletmoney");
+                }
+              });
+          })
+          .catch(error => {
+            console.log(error);
+            // swal('Error!', 'Invalid!', 'error')
+          });
+      } else {
+        swal(
+          `Astrologer is Busy for ${this.state.astroData?.waiting_tym} Min`,
+          "Do You Want to Be in queue ",
+
+          {
+            buttons: {
+              cancel: "Be in queue",
+              catch: { text: "Cancel ", value: "catch" },
+            },
+          }
+        ).then(value => {
+          switch (value) {
+            case "catch":
+              break;
+            default:
+              let astroid = localStorage.getItem("astroId");
+
+              const payload = {
+                userId: userId,
+                callType: "Chat",
+              };
+
+              axiosConfig
+                .post(`/user/make_another_call/${astroid}`, payload)
+                .then(res => {
+                  console.log(res.data);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+          }
+        });
+      }
+    } else swal("User Does Not Exist");
   };
 
   handleStartCall = () => {
-    if (this.state.status === "Online") {
-      let userId = JSON.parse(localStorage.getItem("user_id"));
-      let { id } = this.props.match.params;
-      console.log(userId, id);
-      if (userId !== "" && userId !== null) {
-        this.props.history.push("/CallListData");
-      } else {
-        swal("Need To Login First");
-      }
-    } else swal("Astro is offline ");
+    const astroid = localStorage.getItem("astroId");
+    // if (this.state.status === "Online") {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    let { id } = this.props.match.params;
+    console.log(userId, id);
+    if (userId !== "" && userId !== null) {
+      this.props.history.push("/CallListData");
+    } else {
+      swal("Need To Login First");
+    }
+    // } else swal("Astro is offline ");
   };
 
   handleVideocall = () => {
-    if (this.state.status === "Online") {
-      let userId = JSON.parse(localStorage.getItem("user_id"));
-      let { id } = this.props.match.params;
-      console.log(userId, id);
-      if (userId !== "" && userId !== null) {
-        this.props.history.push("/VideoListData");
-      } else {
-        swal("Need To Login First");
-      }
-    } else swal("Astro is offline ");
+    // if (this.state.status === "Online") {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    let { id } = this.props.match.params;
+    console.log(userId, id);
+    if (userId !== "" && userId !== null) {
+      this.props.history.push("/VideoListData");
+    } else {
+      swal("Need To Login First");
+    }
+    // } else swal("Astro is offline ");
   };
 
   componentDidMount = () => {
@@ -170,21 +252,22 @@ class AstrologerDetail extends React.Component {
       });
   };
 
-  handleBalacecheck = () => {
-    let userId = JSON.parse(localStorage.getItem("user_id"));
+  // handleBalacecheck = () => {
+  //   let userId = JSON.parse(localStorage.getItem("user_id"));
 
-    let { id } = this.props.match.params;
-    console.log("astro", id);
-    console.log(userId, id);
+  //   let { id } = this.props.match.params;
+  //   console.log("astro", id);
+  //   console.log(userId, id);
 
-    if (userId !== "" && userId !== null) {
-      if (this.state.status === "Online") {
-        this.props.history.push("/ChatListData");
-      } else swal("Astro is offline ");
-    } else {
-      swal("Need to Login first");
-    }
-  };
+  //   if (userId !== "" && userId !== null) {
+  //     // if (this.state.status === "Online") {
+  //     //   this.props.history.push("/ChatListData");
+  //     // }
+  //     // else swal("Astro is offline ");
+  //   } else {
+  //     swal("Need to Login first");
+  //   }
+  // };
   handleFollow = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let { id } = this.props.match.params;
@@ -227,7 +310,7 @@ class AstrologerDetail extends React.Component {
       axiosConfig
         .get(`/admin/getoneAstro/${id}`)
         .then(response => {
-          console.log("getoneastro", response.data?.data);
+          // console.log("getoneastro", response.data?.data);
           if (response.data.data?.callingStatus === "Busy") {
             console.log("Busy");
           }
@@ -381,11 +464,6 @@ class AstrologerDetail extends React.Component {
                               </>
                             )}
                           </li>
-                          {/* <li>
-                            <span className="">
-                              Status: {this.state.status}
-                            </span>
-                          </li> */}
                         </ul>
                       </div>
 
@@ -393,8 +471,19 @@ class AstrologerDetail extends React.Component {
                         <Col md="3" className="mt-30">
                           {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           <Button
+                            disabled={
+                              this.state.astroData?.status === "Offline"
+                                ? true
+                                : false
+                            }
+                            style={{
+                              backgroundColor:
+                                this.state.status === "Offline"
+                                  ? "#9f8211"
+                                  : "primary",
+                            }}
                             className="btn-as st"
-                            onClick={this.handleBalacecheck}
+                            onClick={this.handleStartChat}
                           >
                             <i
                               className="fa fa-commenting"
@@ -407,6 +496,17 @@ class AstrologerDetail extends React.Component {
                         </Col>
                         <Col md="3" className="mt-30">
                           <Button
+                            disabled={
+                              this.state.astroData?.status === "Offline"
+                                ? true
+                                : false
+                            }
+                            style={{
+                              backgroundColor:
+                                this.state.status === "Offline"
+                                  ? "#9f8211"
+                                  : "primary",
+                            }}
                             className="btn-as st"
                             onClick={() => this.handleStartCall()}
                           >
@@ -416,6 +516,17 @@ class AstrologerDetail extends React.Component {
                         </Col>
                         <Col md="3" className="mt-30">
                           <Button
+                            disabled={
+                              this.state.astroData?.status === "Offline"
+                                ? true
+                                : false
+                            }
+                            style={{
+                              backgroundColor:
+                                this.state.status === "Offline"
+                                  ? "#9f8211"
+                                  : "primary",
+                            }}
                             className="btn-as st"
                             onClick={() => this.handleVideocall()}
                           >

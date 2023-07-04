@@ -164,6 +164,13 @@ const OrderHistory = lazy(() => import("./components/astrology/OrderHistory"));
 const UserChatHistoryList = lazy(() =>
   import("./components/astrology/UserChatHistoryList")
 );
+const UserCallHistrory = lazy(() =>
+  import("./components/astrology/UserCallHistrory")
+);
+const UserChatHistory = lazy(() =>
+  import("./components/astrology/UserChatHistory")
+);
+
 const UserRequestForm = lazy(() =>
   import("./components/astrology/UserRequestForm")
 );
@@ -618,6 +625,14 @@ const App = props => {
                   <Route
                     path={process.env.PUBLIC_URL + "/userChatHistoryList"}
                     component={UserChatHistoryList}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/userCallHistrory"}
+                    component={UserCallHistrory}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/userChatHistory"}
+                    component={UserChatHistory}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/astroProfileVideo"}

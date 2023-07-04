@@ -149,7 +149,7 @@ class LalKitab extends Component {
       lon: this.state.longitude,
       tzone: this.state.timezone,
     };
-    console.log("shgdjhg", payload);
+    console.log("payload", payload);
     axiosConfig
       .post(`/user/lalkitab_horoscope`, payload)
       .then(response => {
@@ -349,7 +349,7 @@ class LalKitab extends Component {
                                   onChange={this.changeHandler}
                                 >
                                   <option>--Select--</option>
-                                  <option>0</option>
+
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -673,7 +673,7 @@ class LalKitab extends Component {
                                 />
                               </Col>
 
-                              <Col md="4">
+                              {/* <Col md="4">
                                 <label>Birth Place Latitude</label>
                                 <Input
                                   className="form-control"
@@ -684,8 +684,8 @@ class LalKitab extends Component {
                                   value={this.state.latitude}
                                   onChange={this.changeHandler}
                                 />
-                              </Col>
-                              <Col md="4">
+                              </Col> */}
+                              {/* <Col md="4">
                                 <label>Birth Place Longitude</label>
                                 <Input
                                   className="form-control"
@@ -696,8 +696,8 @@ class LalKitab extends Component {
                                   value={this.state.longitude}
                                   onChange={this.changeHandler}
                                 />
-                              </Col>
-                              <Col md="4">
+                              </Col> */}
+                              {/* <Col md="4">
                                 <label>Birth Place Time Zone</label>
                                 <input
                                   className="form-control"
@@ -708,7 +708,7 @@ class LalKitab extends Component {
                                   value={this.state.timezone}
                                   onChange={this.changeHandler}
                                 />
-                              </Col>
+                              </Col> */}
                             </Row>
                             {/* <button className="btn btn-primary" onClick={() => this.setState({ showContent: true })}>Show Content</button> */}
                             <Button

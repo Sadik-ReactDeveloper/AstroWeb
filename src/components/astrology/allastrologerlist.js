@@ -125,8 +125,9 @@ class AllAstrologerList extends React.Component {
     let obj = {
       userid: userId,
       astroid: this.state.astroId,
-      From: this.state.mobile, //astro no
-      To: mobileNo, //user no
+      // From: this.state.mobile, //astro no
+      From: parseInt(918889407856), //astro no
+      To: parseInt(917692045606), //user no
     };
     console.log("obj", obj);
     axiosConfig
@@ -195,46 +196,46 @@ class AllAstrologerList extends React.Component {
 
   submitHandler = (e, astroid, mobile, data, index) => {
     console.log(index, "indexxxxxx");
-    let mobileNo = localStorage.getItem("user_mobile_no");
+    // let mobileNo = localStorage.getItem("user_mobile_no");
     let userId = JSON.parse(localStorage.getItem("user_id"));
     localStorage.setItem("astroId", astroid);
     localStorage.setItem("astroname", data?.fullname);
     this.setState({ indexnow: index });
-    let astroId = astroid;
-    let obj = {
-      userid: userId,
-      astroid: astroId,
-      From: mobile, //astro id
-      To: mobileNo, //user id
-    };
+    // let astroId = astroid;
+    // let obj = {
+    //   userid: userId,
+    //   astroid: astroId,
+    //   From: mobile, //astro id
+    //   To: mobileNo, //user id
+    // };
     if (userId !== "" && userId !== null) {
-      const data = {
-        userid: userId,
-        astroid: astroId,
-      };
-
-      axiosConfig
-        .post(`/user/addCallWallet`, data)
-        .then(response => {
-          if (response.data.status === true) {
-            axiosConfig
-              .post(`/user/make_call`, obj)
-              .then(response => {
-                console.log("Calling", response.data);
-                swal("Call Connecting", "SuccessFully");
-                this.setState({ callingmode: true });
-              })
-              .catch(error => {
-                console.log(error?.response?.data?.error);
-                swal("Try again after some Time ", "Internal server");
-              });
-          } else {
-            swal("Alert", "Insufficient Balance");
-          }
-        })
-        .catch(error => {
-          swal("Alert", "Insufficient Balance");
-        });
+      this.props.history.push("/CallListData");
+      // const data = {
+      //   userid: userId,
+      //   astroid: astroId,
+      // };
+      // axiosConfig
+      //   .post(`/user/addCallWallet`, data)
+      //   .then(response => {
+      // if (response.data.status === true) {
+      //   axiosConfig
+      //     .post(`/user/make_call`, obj)
+      //     .then(response => {
+      //       console.log("Calling", response.data);
+      //       swal("Call Connecting", "SuccessFully");
+      //       this.setState({ callingmode: true });
+      //     })
+      //     .catch(error => {
+      //       console.log(error?.response?.data?.error);
+      //       swal("Try again after some Time ", "Internal server");
+      //     });
+      // } else {
+      //   swal("Alert", "Insufficient Balance");
+      // }
+      // })
+      // .catch(error => {
+      //   swal("Alert", "Insufficient Balance");
+      // });
     } else {
       swal("Need to Login first");
     }
@@ -451,18 +452,12 @@ class AllAstrologerList extends React.Component {
                                       <li>
                                         Specility:
                                         <span>
-                                          {astrologer?.all_skills.length > 5
-                                            ? astrologer?.all_skills.substring(
+                                          {astrologer?.all_skills?.length > 5
+                                            ? astrologer?.all_skills?.substring(
                                                 0,
                                                 22
                                               )
-                                            : astrologer?.all_skills.length}
-                                          {/* {astrologer?.all_skills.length > 4
-                                            ? astrologer?.all_skills.substring(
-                                                0,
-                                                25
-                                              )
-                                            : astrologer?.all_skills.length} */}
+                                            : astrologer?.all_skills?.length}
                                         </span>
                                       </li>
                                       <li>
@@ -497,18 +492,20 @@ class AllAstrologerList extends React.Component {
                                             )
                                           }
                                         >
-                                          {this.state.indexnow === index &&
+                                          {/* {
+                                          this.state.indexnow === index &&
                                           this.state.callingmode !== true ? (
                                             <div className="btn btn-success btn-sm sc">
                                               <i class="fa fa-phone"></i>
                                               -Calling
                                             </div>
-                                          ) : (
-                                            <div className="btn btn-primary btn-sm sc">
-                                              <i class="fa fa-phone"></i>
-                                              -Call
-                                            </div>
-                                          )}
+                                          ) :
+                                            ( */}
+                                          <div className="btn btn-primary btn-sm sc">
+                                            <i class="fa fa-phone"></i>
+                                            -Call
+                                          </div>
+                                          {/* )} */}
                                         </span>
                                       </>
                                     ) : (
