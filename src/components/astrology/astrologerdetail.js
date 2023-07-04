@@ -223,7 +223,8 @@ class AstrologerDetail extends React.Component {
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
         localStorage.setItem("astroname", response?.data?.data?.fullname);
-        // localStorage.setItem("channelName", response?.data?.data?.channelName);
+        localStorage.setItem("astroNo", response?.data?.data?.mobile);
+
         this.setState({
           fullname: response.data.data.fullname,
           all_skills: response.data.data.all_skills,

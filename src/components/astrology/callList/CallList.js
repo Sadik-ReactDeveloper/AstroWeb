@@ -70,10 +70,10 @@ class CallList extends React.Component {
 
   componentDidMount = () => {
     this.getuserList();
-    let astroId = localStorage.getItem("videoCallAstro_id");
-
+    // let astroId = localStorage.getItem("videoCallAstro_id");
+    let astroid = localStorage.getItem("astroId");
     axiosConfig
-      .get(`/admin/getoneAstro/${astroId}`)
+      .get(`/admin/getoneAstro/${astroid}`)
       .then(response => {
         console.log("AstroViewOne", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
@@ -98,8 +98,7 @@ class CallList extends React.Component {
           tuesday: response.data.data.tuesday,
           thursday: response.data.data.thursday,
           saturday: response.data.data.saturday,
-          fullname: response.data.data.fullname,
-          language: response.data.data.language,
+
           wednesday: response.data.data.wednesday,
           mobile: response.data.data.mobile,
         });
@@ -128,14 +127,15 @@ class CallList extends React.Component {
   handleCalling = selectedId => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
-
+    let astroid = localStorage.getItem("astroId");
+    // let astroNo = localStorage.getItem("astroNo");
     let obj = {
       userid: userId,
-      astroid: this.state.astroId,
+      astroid: astroid,
       From: this.state.mobile, //astro no
       To: mobileNo, //user no
     };
-
+    console.log(obj);
     axiosConfig
       .post(`/user/addCallWallet`, obj)
       .then(ress => {
