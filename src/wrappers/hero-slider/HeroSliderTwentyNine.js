@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swiper from "react-id-swiper";
-import sliderData from "../../data/hero-sliders/hero-slider-twenty-nine.json";
+// import sliderData from "../../data/hero-sliders/hero-slider-twenty-nine.json";
 import HeroSliderTwentyNineSingle from "../../components/hero-slider/HeroSliderTwentyNineSingle.js";
-
+import axiosConfig from "../../axiosConfig";
 const HeroSliderTwentyNine = () => {
+  const [sliderData, setSliderData] = useState([]);
+
+  useEffect(() => {
+    axiosConfig
+      .get("/admin/getbanner")
+      .then(response => {
+        setSliderData(response.data.data);
+        console.log("slider", response.data.data);
+      })
+      .catch(error => {
+        console.log("error", error);
+      });
+  }, []);
   const params = {
     effect: "fade",
     loop: true,
@@ -30,7 +43,7 @@ const HeroSliderTwentyNine = () => {
       <div className="slider-active nav-style-1">
         <Swiper {...params}>
           {sliderData &&
-            sliderData.map((single, key) => {
+            sliderData?.map((single, key) => {
               return (
                 <HeroSliderTwentyNineSingle
                   data={single}

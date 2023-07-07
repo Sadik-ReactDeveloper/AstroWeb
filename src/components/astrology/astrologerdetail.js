@@ -170,16 +170,12 @@ class AstrologerDetail extends React.Component {
   };
 
   handleVideocall = () => {
-    // if (this.state.status === "Online") {
     let userId = JSON.parse(localStorage.getItem("user_id"));
-    let { id } = this.props.match.params;
-    console.log(userId, id);
     if (userId !== "" && userId !== null) {
       this.props.history.push("/VideoListData");
     } else {
       swal("Need To Login First");
     }
-    // } else swal("Astro is offline ");
   };
 
   componentDidMount = () => {
@@ -206,19 +202,6 @@ class AstrologerDetail extends React.Component {
       .catch(err => {
         console.log("eeeeeee", err.response);
       });
-
-    // axiosConfig
-    //   .get("/user/all_min_recharge")
-    //   .then(response => {
-    //     console.log(response.data.data);
-    //     if (response.data.status === true) {
-    //       this.setState({ allminrechargeList: response.data.data });
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-
     axiosConfig
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
@@ -443,12 +426,15 @@ class AstrologerDetail extends React.Component {
                               <b> {this.state.astroData?.callingStatus} </b>
                             </span>
                           </li>
-                          <li>
-                            Waiting Time :
-                            <span style={{ color: "green" }}>
-                              <b> {this.state.astroData?.waiting_tym} Min </b>
-                            </span>
-                          </li>
+                          {this.state.astroData?.waiting_tym > 0 ? (
+                            <li>
+                              Waiting Time :
+                              <span style={{ color: "green" }}>
+                                <b> {this.state.astroData?.waiting_tym} Min </b>
+                              </span>
+                            </li>
+                          ) : null}
+
                           <li>
                             {this.state.status === "Online" ? (
                               <>

@@ -6,7 +6,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import BlogPagination from "../../wrappers/blog/BlogPagination";
 import BlogPostsNoSidebar from "../../wrappers/blog/BlogPostsNoSidebar";
-
+import axiosConfig from "../../axiosConfig";
 const BlogNoSidebar = ({ location }) => {
   const { pathname } = location;
 
@@ -49,7 +49,7 @@ const BlogNoSidebar = ({ location }) => {
 };
 
 BlogNoSidebar.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default BlogNoSidebar;

@@ -1,8 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axiosConfig from "../../../axiosConfig";
 import { getUserID } from "../astrologerdetail";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useHistory } from "react-router-dom";
 
+import swal from "sweetalert";
+import { Fetchuserdetail } from "../../header/IconGroup";
 function randomID(len) {
   let result = "";
   if (result) return result;
@@ -20,52 +23,65 @@ export function getUrlParams(url = window.location.href) {
   let urlStr = url.split("?")[1];
   return new URLSearchParams(urlStr);
 }
-
-//  handlestartinterval = () => {
-//    this.apicall.current = setInterval(() => {
-//      let userId = JSON.parse(localStorage.getItem("user_id"));
-//      let astroId = localStorage.getItem("videoCallAstro_id");
-//      sessionStorage.setItem("typeofcall", "Chat");
-
-//      let payload = {
-//        userId: userId,
-//        astroId: astroId,
-//        status: true,
-//      };
-//      axiosConfig
-//        .post(`/user/addCallDuration`, payload)
-//        .then(res => {
-//          // console.log("callduration", res.data);
-//          Fetchuserdetail();
-//        })
-//        .catch(err => {
-//          console.log(err.response.data.message);
-//          if (
-//            err.response.data.message === "Insufficient balance for the call"
-//          ) {
-//            this.handlestop();
-//            this.props.history.push("/allastrologerlist");
-//            swal("You have Low Balance");
-//          }
-//        });
-//    }, 60000);
-//  };
-
 export default function App() {
-  // const [astroData, setAstroData] = useState("");
-  const [timer, setTimer] = useState();
-  const [current, setCurrent] = useState(0);
-  const roomID = getUrlParams().get("roomID") || randomID(5);
-  let liRef = useRef(null);
-
+  const [timer, setTimer] = useState(0);
+  const [toggle, setToggle] = useState(false);
+  let ref = useRef();
+  const history = useHistory();
+  useEffect(() => {
+    if (toggle) {
+      ref.current = setInterval(() => setTimer(timer => timer + 1), 1000);
+    }
+    return () => {
+      clearInterval(ref.current);
+    };
+  }, [toggle]);
   const handleStart = () => {
-    const Ref = setInterval(() => {
-      // this.setState({ setTimer: this.state.setTimer + 1 });
-      setTimer(timer + 1);
-    }, 1000);
-    // this.handlestartinterval();
+    setToggle(true);
+    handlestartinterval();
+  };
+  const handlestartinterval = () => {
+    this.apicall.current = setInterval(() => {
+      let userId = JSON.parse(localStorage.getItem("user_id"));
+      let astroId = localStorage.getItem("videoCallAstro_id");
+      sessionStorage.setItem("typeofcall", "Chat");
+
+      let payload = {
+        userId: userId,
+        astroId: astroId,
+        status: true,
+      };
+      axiosConfig
+        .post(`/user/addCallDuration`, payload)
+        .then(res => {
+          console.log("callduration", res.data);
+          Fetchuserdetail();
+        })
+        .catch(err => {
+          console.log(err.response.data.message);
+          if (
+            err.response.data.message === "Insufficient balance for the call"
+          ) {
+            this.handlestop();
+            this.props.history.push("/allastrologerlist");
+            swal("You have Low Balance");
+          }
+        });
+    }, 60000);
+  };
+  const handleStop = () => {
+    setToggle(false);
   };
 
+  const roomID = getUrlParams().get("roomID") || randomID(5);
+  const formatTime = timer => {
+    const getSeconds = `0${timer % 60}`.slice(-2);
+    const minutes = `${Math.floor(timer / 60)}`;
+    const getMinutes = `0${minutes % 60}`.slice(-2);
+    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+
+    return `${getHours} : ${getMinutes} : ${getSeconds}`;
+  };
   let myMeeting = async element => {
     // generate Kit Token
     const appID = 1011009319;
@@ -86,6 +102,7 @@ export default function App() {
 
     zp.joinRoom({
       container: element,
+      maxUsers: 2,
       sharedLinks: [
         {
           name: "Personal link",
@@ -103,58 +120,74 @@ export default function App() {
         mode: ZegoUIKitPrebuilt.VideoConference,
       },
       preJoinViewConfig: {
-        title: "Join Astrologer Video Call", // The title of the prejoin view. Uses "enter Room" by default.
+        title: "Join Astrologer Video Call",
+      },
+
+      onUserJoin: async data => {
+        handleStart();
+        let astroid = localStorage.getItem("astroId");
+        let load = {
+          userId: userID,
+          astroId: astroid,
+          type: "Video",
+        };
+        await axiosConfig
+          .post(`/user/deductChatBalance`, load)
+          .then(res => {
+            console.log(res.data);
+          })
+          .catch(err => {
+            console.log(err.response.data);
+          });
+      },
+      onUserLeave: async () => {
+        handleStop();
+        let astroid = localStorage.getItem("astroId");
+
+        let value = {
+          userId: userID,
+          astroId: astroid,
+        };
+        axiosConfig
+          .post(`/user/changeStatus`, value)
+          .then(res => {
+            console.log(res);
+            localStorage.removeItem("CurrentChat_userid");
+            history.push("/astrorating");
+          })
+          .catch(err => {
+            console.log(err.response.data);
+          });
       },
       onJoinRoom: () => {
-        handleStart();
-
         let obj = {
           astroid: localStorage.getItem("astroId"),
-          videoLink:
-            window.location.protocol +
-            "//" +
-            window.location.host +
-            "/#/VideoCall" +
-            window.location.pathname +
-            "?roomID=" +
-            roomID,
+          videoLink: roomID,
           userid: userID,
         };
         axiosConfig
           .post("user/send_VideoLink", obj)
           .then(response => {
-            console.log("PostVideo Callll>>>>", response.data.data.createdAt);
-
-            console.log(
-              "time",
-              new Date(response.data.data.createdAt).getTime()
-            );
-
-            // var timestamp = 1480687432 * 1000;
-            // console.log(new Date(timestamp).toTimeString());
-            // console.log(new Date(timestamp).toLocaleTimeString());
+            console.log(response.data.data.createdAt);
           })
           .catch(error => {
             console.log(error);
           });
       },
       showScreenSharingButton: false,
-      //       zg.on('roomUserUpdate', (roomID, updateType, userList) => {
-      // console.log('roomUserUpdate roomID ', roomID, streamList);
-      //     if (updateType === 'ADD') {
-      //   // update view
-      //     } else if(updateType == 'DELETE') {
-      //   // update view
-      //     }
-      // });
     });
   };
 
   return (
-    <div
-      className="myCallContainer"
-      ref={myMeeting}
-      style={{ width: "100vw", height: "100vh" }}
-    ></div>
+    <div>
+      <div className=" timer">
+        <div className="currentTime">Current timer - {formatTime(timer)}</div>
+      </div>
+      <div
+        className="myCallContainer"
+        ref={myMeeting}
+        style={{ width: "100vw", height: "100vh" }}
+      ></div>
+    </div>
   );
 }

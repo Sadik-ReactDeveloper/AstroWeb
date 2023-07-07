@@ -29,13 +29,8 @@ const BlogFeatured = ({ spaceTopClass, spaceBottomClass }) => {
       }`}
     >
       <div className="container">
-        {/* <SectionTitle
-          titleText="OUR BLOG"
-          positionClass="text-center"
-          spaceClass="mb-55"
-        /> */}
         <div className="heading mt-70">
-          <h2>Blogs </h2>
+          <h2 id="blogs">Blogs </h2>
           <img src={textbottom} alt="" />
         </div>
         <div className="row">

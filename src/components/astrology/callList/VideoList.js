@@ -70,14 +70,12 @@ class VideoList extends React.Component {
 
   componentDidMount = () => {
     this.getuserList();
-    // let { id } = this.props.match.params;
-    // console.log("id>>>>>", id);
+
     let astroId = localStorage.getItem("videoCallAstro_id");
 
     axiosConfig
       .get(`/admin/getoneAstro/${astroId}`)
       .then(response => {
-        // console.log("AstroViewOne", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
         localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({
@@ -110,12 +108,10 @@ class VideoList extends React.Component {
   };
   getuserList = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
-    // console.log("userId", userId);
     axiosConfig
       .get(`/admin/intekListByUser/${userId}`)
       .then(response => {
         if (response.data.status === true) {
-          //   console.log("userId>>>>>>[[[ListData]]", response.data.data);
           this.setState({ allUserList: response.data.data });
           this.setState({ allminrechargeList: response.data.data });
         }
@@ -125,37 +121,37 @@ class VideoList extends React.Component {
         console.log(error.response);
       });
   };
-  handleVideoCalling = () => {
+  handleVideoCalling = id => {
     this.props.history.push("/videocall");
   };
 
-  handleBalacecheck = () => {
-    let userId = JSON.parse(localStorage.getItem("user_id"));
-    let { id } = this.props.match.params;
-    console.log(userId, id);
+  // handleBalacecheck = () => {
+  //   let userId = JSON.parse(localStorage.getItem("user_id"));
+  //   let { id } = this.props.match.params;
+  //   console.log(userId, id);
 
-    if (userId !== "" && userId !== null) {
-      const data = {
-        userid: userId,
-        astroid: id,
-      };
+  //   if (userId !== "" && userId !== null) {
+  //     const data = {
+  //       userid: userId,
+  //       astroid: id,
+  //     };
 
-      axiosConfig
-        .post(`/user/addCallWallet`, data)
-        .then(response => {
-          console.log(response.data);
-          if (response.data.status === true) {
-            this.props.history.push("/UserRequestFormVideoCall");
-            //
-          } else swal("Recharge", "you don't have enough Balance");
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      swal("Need to Login first");
-    }
-  };
+  //     axiosConfig
+  //       .post(`/user/addCallWallet`, data)
+  //       .then(response => {
+  //         console.log(response.data);
+  //         if (response.data.status === true) {
+  //           this.props.history.push("/UserRequestFormVideoCall");
+  //           //
+  //         } else swal("Recharge", "you don't have enough Balance");
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     swal("Need to Login first");
+  //   }
+  // };
   render() {
     const { allUserList } = this.state;
     return (

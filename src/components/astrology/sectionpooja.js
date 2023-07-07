@@ -18,7 +18,7 @@ class SectionPooja extends React.Component {
     return (
       <Container>
         <div className="heading mt-40">
-          <h2>Our Trending Products</h2>
+          <h2>Our Latest Products</h2>
           <img src={textbottom} alt="" />
         </div>
         <Row>

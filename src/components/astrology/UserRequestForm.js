@@ -99,6 +99,7 @@ class UserRequestForm extends React.Component {
       // longitude: this.state.longitude,
     };
 
+    console.log("Birth Details", this.state.dob);
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {

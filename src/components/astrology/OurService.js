@@ -43,7 +43,10 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/heroscopestwo">
                         <h3>Horoscopes</h3>
-                        <p>A horoscope is a forecast of a person's future, typically...</p>
+                        <p>
+                          A horoscope is a forecast of a person's future,
+                          typically...
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -51,7 +54,9 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/kundaliform">
                         <h3> Match Making</h3>
-                        <p>Kundali Match Making is an important consideration...  </p>
+                        <p>
+                          Kundali Match Making is an important consideration...{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -59,7 +64,10 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/manglikdosh">
                         <h3>Manglik Dosh</h3>
-                        <p>In Vedic astrology Manglik Dosh is to describe a specific astrological... </p>
+                        <p>
+                          In Vedic astrology Manglik Dosh is to describe a
+                          specific astrological...{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -67,7 +75,10 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/pitraDosh">
                         <h3>Pitra Dosh</h3>
-                        <p>Pitra Dosh is a term used in Vedic astrology to describe a specific... </p>
+                        <p>
+                          Pitra Dosh is a term used in Vedic astrology to
+                          describe a specific...{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>{" "}
@@ -75,7 +86,10 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/kalsharpDosh">
                         <h3>Kalsharp Dosh</h3>
-                        <p>Kalasarpa Dosha, also known as Kalsharp Dosh, is a condition in Vedic... </p>
+                        <p>
+                          Kalasarpa Dosha, also known as Kalsharp Dosh, is a
+                          condition in Vedic...{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -83,7 +97,9 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/lalKitab">
                         <h3>Lal Kitab</h3>
-                        <p>Looking for your free Kundli from expert astrologers </p>
+                        <p>
+                          Looking for your free Kundli from expert astrologers{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>{" "}
@@ -111,18 +127,24 @@ class OurService extends React.Component {
                 <Row>
                   <Col md="2">
                     <div className="serve-1">
-                      <Link to="/allastrochatlist">
+                      <Link to="/allastrologerlist">
                         <h3>Chat with Astrologer</h3>
-                        <p>Chat with an astrologers online at Astrogyata! Chat Now! </p>
+                        <p>
+                          Chat with an astrologers online at Astrogyata! Chat
+                          Now!{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>
                   <Col md="2">
                     <div className="serve-1">
-                      <Link to="/#/">
+                      <Link to="/allastrologerlist">
                         <h3>Call Astrologer</h3>
                         {/* <i class="fa fa-phone-square" aria-hidden="true"></i> */}
-                        <p>Call with an  astrologers online anytime at Astrogyata! Call Now! </p>
+                        <p>
+                          Call with an astrologers online anytime at Astrogyata!
+                          Call Now!{" "}
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -130,7 +152,10 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/#/">
                         <h3>Video Call Astrologer</h3>
-                        <p>Video Call with an astrologer online at Astrogyata! Video Call Now!</p>
+                        <p>
+                          Video Call with an astrologer online at Astrogyata!
+                          Video Call Now!
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -138,7 +163,11 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/askQuestionList">
                         <h3>Ask Question </h3>
-                        <p> Ask Question with an astrologers online anytime at Astrogyata! Ask Question Now!</p>
+                        <p>
+                          {" "}
+                          Ask Question with an astrologers online anytime at
+                          Astrogyata! Ask Question Now!
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -146,7 +175,11 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/allastrologerlist">
                         <h3>Talk Astrologer</h3>
-                        <p> Talk to experienced astrologers online anytime at Astrogyata! Call Now!</p>
+                        <p>
+                          {" "}
+                          Talk to experienced astrologers online anytime at
+                          Astrogyata! Call Now!
+                        </p>
                       </Link>
                     </div>
                   </Col>
@@ -154,7 +187,11 @@ class OurService extends React.Component {
                     <div className="serve-1">
                       <Link to="/bookEvent">
                         <h3>Book Puja </h3>
-                        <p> Puja to experienced astrologers online anytime at Astrogyata! Book Now!</p>
+                        <p>
+                          {" "}
+                          Puja to experienced astrologers online anytime at
+                          Astrogyata! Book Now!
+                        </p>
                       </Link>
                     </div>
                   </Col>

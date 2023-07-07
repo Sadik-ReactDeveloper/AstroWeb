@@ -62,7 +62,6 @@ class WalletTransacList extends React.Component {
     axiosConfig
       .get(`/user/walletHistory/${userId}`)
       .then(response => {
-        console.log(response.data.data);
         if (response.data.status === true) {
           this.setState({
             WalletTransacList: response.data.data,
@@ -75,7 +74,6 @@ class WalletTransacList extends React.Component {
     axiosConfig
       .get(`/user/viewoneuser/${userId}`)
       .then(response => {
-        console.log("sjdfjdfg", response.data.data);
         this.setState({
           amount: response.data.data.amount,
         });

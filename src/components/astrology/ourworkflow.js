@@ -29,7 +29,7 @@ class OurWorkFlow extends React.Component {
                         </div>
                       </Col>
                       <Col md="7">
-                        <Link to="/allastrochatlist">
+                        <Link to="/allastrologerlist">
                           <h5 className="bt-txt">Chat with Astrologer</h5>
                           {/* <p><small>You can start a live chat with the astrologer of your choice using chat now functionality. </small></p> */}
                         </Link>{" "}
