@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import axiosConfig from "../../axiosConfig";
 import swal from "sweetalert";
 const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
-  const [userId, setUserId] = useState("");
   const [bestAstrology, setBestAstrology] = useState(data);
 
   const handleCalltogyta = data => {
@@ -53,12 +52,6 @@ const SliderDemo = ({ data, sliderClass, sliderdemoClass }) => {
                   </p>
                   <h4 className="card-title">{data?.fullname}</h4>
                   <ul className="mb-3">
-                    {/* <li>
-                      Specility: <span>{data?.all_skills}</span>
-                    </li> */}
-                    {/* <li>
-                      Language: <span>{data?.language}</span>
-                    </li> */}
                     <li>
                       Experience: <span>{data?.exp_in_years} year</span>
                     </li>

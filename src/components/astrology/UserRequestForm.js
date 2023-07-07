@@ -75,7 +75,9 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-
+    console.log("Year", new Date(this.state.dob).getFullYear());
+    console.log("Month", new Date(this.state.dob).getMonth());
+    console.log("Day", new Date(this.state.dob).getDay());
     let obj = {
       userid: userId,
       astroid: astroId,
@@ -99,7 +101,6 @@ class UserRequestForm extends React.Component {
       // longitude: this.state.longitude,
     };
 
-    console.log("Birth Details", this.state.dob);
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {
@@ -241,7 +242,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner First Name*</label>
+                          <label>Partner First Name</label>
                           <input
                             type="text"
                             name="p_firstname"
@@ -253,7 +254,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner Last Name*</label>
+                          <label>Partner Last Name</label>
                           <input
                             type="text"
                             name="p_lastname"
@@ -266,7 +267,7 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Date of Birth*</label>
+                          <label> Partner Date of Birth</label>
                           <input
                             type="date"
                             name="p_dob"
@@ -279,7 +280,7 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Time of Birth*</label>
+                          <label> Partner Time of Birth</label>
                           <input
                             type="time"
                             name="p_date_of_time"
@@ -319,9 +320,9 @@ class UserRequestForm extends React.Component {
                                 country_code: item?.timezones[0].zoneName,
                               })
                               .then(response => {
-                                // this.setState({
-                                //   timezone: response?.data?.data?.timezone,
-                                // });
+                                this.setState({
+                                  timezone: response?.data?.data?.timezone,
+                                });
                               })
                               .catch(error => {
                                 console.log(error);

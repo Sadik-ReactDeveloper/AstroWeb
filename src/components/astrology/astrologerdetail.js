@@ -93,7 +93,8 @@ class AstrologerDetail extends React.Component {
             console.log("@@@chat mode", response.data);
 
             if (response.data?.msg === "success") {
-              this.props.history.push("/UserRequestForm");
+              this.props.history.push("/ChatListData");
+              // this.props.history.push("/UserRequestForm");
             } else
               swal(
                 "Recharge Now",

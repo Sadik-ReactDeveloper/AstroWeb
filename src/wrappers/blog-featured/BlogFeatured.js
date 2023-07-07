@@ -35,7 +35,7 @@ const BlogFeatured = ({ spaceTopClass, spaceBottomClass }) => {
         </div>
         <div className="row">
           {blogData &&
-            blogData.map((single, key) => {
+            blogData.slice(0, 3).map((single, key) => {
               return (
                 <BlogFeaturedSingle
                   data={single}

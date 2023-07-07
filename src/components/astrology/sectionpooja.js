@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import textbottom from "../../assets/img/textbottom.png";
 import axiosConfig from "../../axiosConfig";
-
+import Swiper from "react-id-swiper";
 class SectionPooja extends React.Component {
   state = {
     productList: [],
@@ -28,7 +28,7 @@ class SectionPooja extends React.Component {
                 <div className="container">
                   <Row>
                     {this.state.productList.length
-                      ? productList.map((product, index) => {
+                      ? productList.slice(0, 4).map((product, index) => {
                           return (
                             <Col md="3">
                               <div className="product-grid8">
@@ -42,12 +42,27 @@ class SectionPooja extends React.Component {
                                   </Link>
                                 </div>
                                 <div className="product-content">
-                                  <div className="price">
-                                    <i class="fa fa-inr" aria-hidden="true"></i>{" "}
-                                    {product.price}
+                                  <div className="price d-flex">
+                                    <div>
+                                      <i
+                                        class="fa fa-inr"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </div>
+                                    <div className=" px-2">{product.price}</div>
                                   </div>
                                   <h3 className="title">
-                                    <Link>{product.productname} </Link>
+                                    <Link>
+                                      {product.productname.substr(0, 9)}
+                                      {/* {product.productname.length > 24 ? (
+                                        <span className="">
+                                          {product.productname.substr(0, 9)}
+                                          ...See more
+                                        </span>
+                                      ) : (
+                                        product.productname
+                                      )} */}
+                                    </Link>
                                   </h3>
                                   <Link className="all-deals">
                                     View More

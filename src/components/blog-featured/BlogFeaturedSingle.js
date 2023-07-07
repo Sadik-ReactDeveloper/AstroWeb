@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const BlogFeaturedSingle = ({ data, singlePost }) => {
-  const [userId, setUserId] = useState("");
   const [bestBlog, setBestBlog] = useState(data);
 
   useEffect(() => {
@@ -23,12 +22,7 @@ const BlogFeaturedSingle = ({ data, singlePost }) => {
         </div>
         <div className="blog-content-wrap">
           <div className="blog-content text-center">
-            <h3>
-              {/* <Link to={process.env.PUBLIC_URL + "/blog-standard"}>
-                {singlePost.title}
-              </Link> */}
-              {data?.name}
-            </h3>
+            <h3>{data?.name}</h3>
             <span>By Admin </span>
             <p></p>
           </div>

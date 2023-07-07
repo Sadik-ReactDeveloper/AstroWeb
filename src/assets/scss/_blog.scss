@@ -1,8 +1,10 @@
 .blog-wrap {
   .blog-img {
     position: relative;
-
     overflow: hidden;
+    // width: 305px;
+    height: 16rem;
+    // border: 1px solid #ffcc01;
     img {
       width: 100%;
 
@@ -415,7 +417,6 @@
         text-transform: uppercase;
 
         color: #000000;
-
 
         &::last-child {
           margin-right: 0;
