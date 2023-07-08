@@ -13,6 +13,7 @@ class ConsultantList extends React.Component {
   }
 
   handleAddConsultant = (Productid, consultantid) => {
+    console.log(">>>>>?????", Productid, consultantid);
     localStorage.setItem("astroproduct_id", Productid);
     sessionStorage.setItem("AstroMall_consultant_id", consultantid);
     this.props.history.push(`/addressform/${consultantid}`);
@@ -23,7 +24,6 @@ class ConsultantList extends React.Component {
     axiosConfig
       .get(`/user/product_consltnt_list/${id}`)
       .then(response => {
-        console.log(response.data.data);
         this.setState({ consultantList: response.data.data });
         localStorage.setItem("astro_id", response?.data?.data[0]?._id);
       })
@@ -39,10 +39,6 @@ class ConsultantList extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: '#FFD59E',
-              // width: '100%',
-              // padding: '70px 0px',
-              // backgroundSize: 'cover',
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -85,21 +81,15 @@ class ConsultantList extends React.Component {
                   <Col className="frontside">
                     <div className="card">
                       <div className="card-body text-center py-2">
-                        <img src={list?.astroid?.img} alt="img" />
+                        <img src={list?.category.img} alt="img" />
 
                         <h4 className="card-title">
                           {list?.astroid?.fullname}
                         </h4>
                         <ul>
                           <li>
-                            Rating :<span>{list?.astroid.avg_rating} star</span>
-                            {/* <p className="mb-3">
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </p> */}
+                            Rating :
+                            <span>{list?.astroid?.avg_rating} star</span>
                           </li>
                           <li>
                             {" "}
@@ -127,7 +117,7 @@ class ConsultantList extends React.Component {
                           className="my-2"
                         >
                           <Link
-                            // to={'/addressform/' + list?.astroid?._id}
+                            to={"/addressform/" + list?.astroid?._id}
                             className="btn btn-primary btn-sm"
                           >
                             Select

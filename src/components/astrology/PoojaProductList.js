@@ -20,7 +20,7 @@ class PoojaProductList extends React.Component {
 
   componentDidMount() {
     axiosConfig
-      .get("http://52.66.4.114:8000/admin/get_adminevent")
+      .get("/admin/get_adminevent")
       .then(response => {
         this.setState({ rowData: response.data.data });
         console.log("kunsar kand", response.data.data);

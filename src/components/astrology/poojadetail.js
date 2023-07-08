@@ -29,11 +29,10 @@ class PoojaDetail extends React.Component {
   }
   componentDidMount() {
     let { id } = this.props.match.params;
-    console.log(id);
+
     axiosConfig
       .get(`/admin/viewoneProduct/${id}`)
       .then(response => {
-        console.log(response.data.data?._id);
         this.setState({
           data: response.data.data,
           image: response.data.data.image[0],
@@ -51,10 +50,6 @@ class PoojaDetail extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: "#FFD59E",
-              // width: "100%",
-              // padding: "70px 0px",
-              // backgroundSize: "cover",
               float: "left",
               width: "100%",
               backgroundColor: "#272727",

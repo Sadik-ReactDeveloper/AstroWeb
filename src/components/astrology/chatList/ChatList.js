@@ -13,7 +13,6 @@ class ChatList extends React.Component {
 
     this.state = {
       allUserList: [],
-      allminrechargeList: [],
       data: {},
       fullname: "",
       all_skills: "",
@@ -79,7 +78,6 @@ class ChatList extends React.Component {
       .then(response => {
         if (response.data.status === true) {
           this.setState({ allUserList: response.data.data });
-          this.setState({ allminrechargeList: response.data.data });
         }
       })
       .catch(error => {

@@ -218,7 +218,7 @@ class UserRequestForm extends React.Component {
 
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Date of Time*</label>
+                          <label>Time of Birth*</label>
                           <input
                             type="time"
                             name="date_of_time"
@@ -231,7 +231,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Date of Time*</label>
+                          <label> Partner Time of Birth*</label>
                           <input
                             type="time"
                             name="p_date_of_time"

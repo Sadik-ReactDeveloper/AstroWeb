@@ -108,7 +108,6 @@ class AstrologerDetail extends React.Component {
               ).then(value => {
                 switch (value) {
                   case "catch":
-                    // swal("Sure Want to cancel it");
                     break;
                   default:
                     this.props.history.push("/walletmoney");

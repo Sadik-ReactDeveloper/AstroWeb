@@ -32,6 +32,24 @@ class UserRequestForm extends React.Component {
       selectedName: "",
     };
   }
+  changeCity = item => {
+    this.setState({
+      submitPlaceHandler: item,
+    });
+    axiosConfig
+      .post(`/user/geo_detail`, {
+        place: item?.name,
+      })
+      .then(response => {
+        this.setState({
+          latitude: response?.data?.data?.geonames[0].latitude,
+          longitude: response?.data?.data?.geonames[0].longitude,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   componentDidMount() {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     axiosConfig
@@ -144,7 +162,7 @@ class UserRequestForm extends React.Component {
                             value={this.state.mobile}
                             onChange={this.changeHandler}
                             required
-                            placeholder="Enter Your Number"
+                            placeholder="Mobile Number"
                           />
                         </div>
                       </Col>
@@ -155,7 +173,7 @@ class UserRequestForm extends React.Component {
                             type="text"
                             name="firstname"
                             required
-                            placeholder="Enter Your FirstName"
+                            placeholder="Enter FirstName"
                             value={this.state.fullname}
                             onChange={this.changeHandler}
                           />
@@ -168,7 +186,7 @@ class UserRequestForm extends React.Component {
                             required
                             type="text"
                             name="lastname"
-                            placeholder="Enter Your  Lastname"
+                            placeholder="Enter   Lastname"
                             value={this.state.lastname}
                             onChange={this.changeHandler}
                           />
@@ -189,14 +207,14 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Date of Time*</label>
+                          <label>Time of Birth*</label>
                           <input
                             type="time"
                             name="date_of_time"
                             value={this.state.date_of_time}
                             onChange={this.changeHandler}
                             required
-                            placeholder="Enter Your Number"
+                            placeholder="Time of Birth"
                           />
                         </div>
                       </Col>
@@ -209,7 +227,7 @@ class UserRequestForm extends React.Component {
                             value={this.state.birthPlace}
                             onChange={this.changeHandler}
                             required
-                            placeholder="Enter Your  Birth Place"
+                            placeholder="Birth Place"
                           />
                         </div>
                       </Col>
@@ -314,7 +332,7 @@ class UserRequestForm extends React.Component {
                           <input
                             type="text"
                             name="p_firstname"
-                            placeholder="Enter Your Patner firstname"
+                            placeholder=" Patner firstName"
                             value={this.state.p_firstname}
                             onChange={this.changeHandler}
                           />
@@ -326,7 +344,7 @@ class UserRequestForm extends React.Component {
                           <input
                             type="text"
                             name="p_lastname"
-                            placeholder="Enter Your Patner Lastname"
+                            placeholder=" Patner LastName"
                             value={this.state.p_lastname}
                             onChange={this.changeHandler}
                           />
@@ -365,7 +383,7 @@ class UserRequestForm extends React.Component {
                             name="p_birthPlace"
                             value={this.state.p_birthPlace}
                             onChange={this.changeHandler}
-                            placeholder="Enter Your  Birth Place"
+                            placeholder="Partner Birth Place"
                           />
                         </div>
                       </Col>

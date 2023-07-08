@@ -91,7 +91,7 @@ const MyOrder = ({ location }) => {
                                     {orders?.product?.product?.productname}
                                   </Link>
                                   <br />
-
+                                  <p>by:-{orders?.astroid?.fullname}</p>
                                   {orders?.product?.product?.qsCount ? (
                                     <>
                                       Question Count:{" "}

@@ -97,7 +97,7 @@ class ProductList extends React.Component {
                                     <Col md="12">
                                       <div className="po-1 text-center">
                                         <img
-                                          src={product?.product?.image}
+                                          src={product?.category.img}
                                           alt="pooja"
                                           width="250px"
                                           height="200px"
@@ -108,11 +108,9 @@ class ProductList extends React.Component {
                                       <div className="po-1 mt-1 mb-1 text-center">
                                         <h3>{product.product?.title}</h3>
                                         <p>
-                                          Puja Price
-                                          {product?.price
-                                            ? product?.product?.price
-                                            : 0}{" "}
-                                          Rs/-
+                                          Puja Price Rs
+                                          {product?.price ? product?.price : 0}
+                                          /-
                                         </p>
                                         <Link
                                           to={

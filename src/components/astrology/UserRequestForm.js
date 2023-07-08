@@ -75,9 +75,12 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-    console.log("Year", new Date(this.state.dob).getFullYear());
-    console.log("Month", new Date(this.state.dob).getMonth());
-    console.log("Day", new Date(this.state.dob).getDay());
+    const Year = new Date(this.state.dob).getFullYear();
+    const Month = new Date(this.state.dob).getMonth();
+    const Day = new Date(this.state.dob).getDay();
+    const arr = this.state.date_of_time.split(":");
+    const hour = parseInt(arr[0]);
+    const min = parseInt(arr[1]);
     let obj = {
       userid: userId,
       astroid: astroId,
@@ -97,10 +100,18 @@ class UserRequestForm extends React.Component {
       occupation: this.state.occupation,
       topic_of_cnsrn: this.state.topic_of_cnsrn,
       // entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
-      // latitude: this.state.latitude,
-      // longitude: this.state.longitude,
     };
-
+    const birthDetails = {
+      userid: userId,
+      astroid: astroId,
+      day: Day,
+      month: Month,
+      year: Year,
+      hour: hour,
+      min: min,
+      lat: this.state.latitude,
+      lon: this.state.longitude,
+    };
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {
@@ -111,15 +122,15 @@ class UserRequestForm extends React.Component {
       .catch(error => {
         swal("Error!", "You clicked the button!", "error");
       });
-
-    // axiosConfig
-    //   .get(`/admin/getoneAstro/${astroId}`)
-    //   .then(res => {
-    //     console.log(res.data.data);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axiosConfig
+      .post(`/user/birth_details`, birthDetails)
+      .then(response => {
+        console.log("BirthDetails", response.data.data);
+      })
+      .catch(error => {
+        console.log("Error BirthDetails", error);
+        // swal("Error!", "You clicked the button!", "error");
+      });
   };
   render() {
     return (
@@ -220,10 +231,10 @@ class UserRequestForm extends React.Component {
                           <label>Time of Birth*</label>
                           <input
                             type="time"
+                            required
                             name="date_of_time"
                             value={this.state.date_of_time}
                             onChange={this.changeHandler}
-                            required
                           />
                         </div>
                       </Col>
@@ -363,12 +374,9 @@ class UserRequestForm extends React.Component {
                           getOptionValue={options => {
                             return options["name"];
                           }}
-                          // value={this.state.selectedCity}
                           value={this.state.submitPlaceHandler}
                           onChange={item => {
-                            //setSelectedCity(item);
                             this.changeCity(item);
-                            // this.setState({ selectedCity: item });
                           }}
                         />
                       </Col>
@@ -377,8 +385,9 @@ class UserRequestForm extends React.Component {
                         <label>Gender*</label>
                         <Input
                           id="exampleSelect"
-                          name="gender"
                           type="select"
+                          name="gender"
+                          required
                           value={this.state.data.gender}
                           onChange={this.changeHandler}
                         >
@@ -393,6 +402,7 @@ class UserRequestForm extends React.Component {
                         <Input
                           type="select"
                           name="marital_status"
+                          required
                           value={this.state.marital_status}
                           onChange={this.changeHandler}
                         >
@@ -409,6 +419,7 @@ class UserRequestForm extends React.Component {
                           <label>Occupation*</label>
                           <Input
                             type="select"
+                            required
                             name="occupation"
                             value={this.state.data.occupation}
                             onChange={this.changeHandler}
@@ -430,6 +441,7 @@ class UserRequestForm extends React.Component {
                           <Input
                             type="select"
                             name="topic_of_cnsrn"
+                            required
                             value={this.state.data.topic_of_cnsrn}
                             onChange={this.changeHandler}
                           >
