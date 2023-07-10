@@ -236,22 +236,6 @@ class AstrologerDetail extends React.Component {
       });
   };
 
-  // handleBalacecheck = () => {
-  //   let userId = JSON.parse(localStorage.getItem("user_id"));
-
-  //   let { id } = this.props.match.params;
-  //   console.log("astro", id);
-  //   console.log(userId, id);
-
-  //   if (userId !== "" && userId !== null) {
-  //     // if (this.state.status === "Online") {
-  //     //   this.props.history.push("/ChatListData");
-  //     // }
-  //     // else swal("Astro is offline ");
-  //   } else {
-  //     swal("Need to Login first");
-  //   }
-  // };
   handleFollow = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let { id } = this.props.match.params;
@@ -294,10 +278,10 @@ class AstrologerDetail extends React.Component {
       axiosConfig
         .get(`/admin/getoneAstro/${id}`)
         .then(response => {
-          // console.log("getoneastro", response.data?.data);
-          if (response.data.data?.callingStatus === "Busy") {
-            console.log("Busy");
-          }
+          console.log("getoneastro>>", response.data?.data);
+          // if (response.data.data?.callingStatus === "Busy") {
+          //   console.log("Busy");
+          // }
           localStorage.setItem("astroname", response?.data?.data?.fullname);
 
           this.setState({ astroData: response.data.data });
@@ -320,7 +304,6 @@ class AstrologerDetail extends React.Component {
             tuesday: response.data.data.tuesday,
             thursday: response.data.data.thursday,
             saturday: response.data.data.saturday,
-
             wednesday: response.data.data.wednesday,
           });
         })
@@ -330,7 +313,6 @@ class AstrologerDetail extends React.Component {
     }, 3000);
   };
   render() {
-    // const { allminrechargeList } = this.state;
     const icons = {
       star: {
         complete: farStar,
