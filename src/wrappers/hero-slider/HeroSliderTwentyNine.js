@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Swiper from "react-id-swiper";
-// import sliderData from "../../data/hero-sliders/hero-slider-twenty-nine.json";
 import HeroSliderTwentyNineSingle from "../../components/hero-slider/HeroSliderTwentyNineSingle.js";
 import axiosConfig from "../../axiosConfig";
 const HeroSliderTwentyNine = () => {
@@ -11,7 +10,6 @@ const HeroSliderTwentyNine = () => {
       .get("/admin/getbanner")
       .then(response => {
         setSliderData(response.data.data);
-        console.log("slider", response.data.data);
       })
       .catch(error => {
         console.log("error", error);

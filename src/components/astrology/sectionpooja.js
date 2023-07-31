@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 import textbottom from "../../assets/img/textbottom.png";
 import axiosConfig from "../../axiosConfig";
 import Homebookpooja from "./Homebookpooja.js";
-import Swiper from "react-id-swiper";
+// import Swiper from "react-id-swiper";
 class SectionPooja extends React.Component {
   state = {
     productList: [],
@@ -36,36 +36,34 @@ class SectionPooja extends React.Component {
                 <section className="pt-0">
                   <div className="container">
                     <Row>
-                      {this.state.productList.length
-                        ? productList.slice(0, 4).map((product, index) => {
-                            return (
-                              <Col md="3">
-                                <div className="product-grid8">
-                                  <div class="product-image8">
-                                    <Link to="/poojadetail">
-                                      <img
-                                        src={product.image}
-                                        alt=""
-                                        className="Ptd-img"
-                                      />
-                                    </Link>
-                                  </div>
-                                  <div className="product-content">
-                                    <div className="price d-flex">
-                                      <div>
-                                        <i
-                                          class="fa fa-inr"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </div>
-                                      <div className=" px-2">
-                                        {product.price}
-                                      </div>
+                      {this.state.productList.length ? (
+                        productList.slice(0, 4).map(product => {
+                          return (
+                            <Col md="3" key={product._id}>
+                              <div className="product-grid8">
+                                <div class="product-image8">
+                                  <Link to="/poojadetail">
+                                    <img
+                                      src={product.image}
+                                      alt=""
+                                      className="Ptd-img"
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="product-content">
+                                  <div className="price d-flex">
+                                    <div>
+                                      <i
+                                        class="fa fa-inr"
+                                        aria-hidden="true"
+                                      ></i>
                                     </div>
-                                    <h3 className="title">
-                                      <Link>
-                                        {product.productname.substr(0, 9)}
-                                        {/* {product.productname.length > 24 ? (
+                                    <div className=" px-2">{product.price}</div>
+                                  </div>
+                                  <h3 className="title">
+                                    <Link>
+                                      {product.productname.substr(0, 9)}
+                                      {/* {product.productname.length > 24 ? (
                                         <span className="">
                                           {product.productname.substr(0, 9)}
                                           ...See more
@@ -73,18 +71,20 @@ class SectionPooja extends React.Component {
                                       ) : (
                                         product.productname
                                       )} */}
-                                      </Link>
-                                    </h3>
-                                    <Link className="all-deals">
-                                      View More
-                                      <i class="fa fa-angle-right icon"></i>
                                     </Link>
-                                  </div>
+                                  </h3>
+                                  <Link className="all-deals">
+                                    View More
+                                    <i class="fa fa-angle-right icon"></i>
+                                  </Link>
                                 </div>
-                              </Col>
-                            );
-                          })
-                        : null}
+                              </div>
+                            </Col>
+                          );
+                        })
+                      ) : (
+                        <span className="text-center">Loading ...</span>
+                      )}
                     </Row>
                   </div>
                 </section>

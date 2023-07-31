@@ -52,7 +52,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
             <Link to="/liveAstrologer">Live Astrologer</Link>
           </li>
           <li>
-            <Link>Dosh</Link>
+            <Link to="#">Dosh</Link>
             <ul className="submenu">
               <li className="">
                 <Link to={process.env.PUBLIC_URL + "/manglikdosh"}>
@@ -69,6 +69,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
                   Kalsharp Dosh
                 </Link>
               </li>
+
               {/* {categoryList?.map((cat) => (
                 <li className="" key={cat._id}>
                   <Link to={process.env.PUBLIC_URL + "/heroscopestwo"}>

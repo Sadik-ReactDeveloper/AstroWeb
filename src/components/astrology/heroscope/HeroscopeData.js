@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import LayoutOne from "../../layouts/LayoutOne";
-import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-class ZodicPage extends React.Component {
+import LayoutOne from "../../../layouts/LayoutOne";
+import astrologinbg from "../../../assets/img/astrologin-bg.jpg";
+class HeroscopeData extends React.Component {
   render() {
     return (
       <LayoutOne headerTop="visible">
@@ -169,4 +169,4 @@ class ZodicPage extends React.Component {
     );
   }
 }
-export default ZodicPage;
+export default HeroscopeData;

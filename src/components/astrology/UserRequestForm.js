@@ -36,6 +36,7 @@ class UserRequestForm extends React.Component {
       selectedCountry: null,
       selectedState: null,
       selectedCity: null,
+      showpartner: false,
     };
   }
   changeCity = item => {
@@ -71,6 +72,7 @@ class UserRequestForm extends React.Component {
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   submitHandler = e => {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
@@ -99,6 +101,7 @@ class UserRequestForm extends React.Component {
       marital_status: this.state.marital_status,
       occupation: this.state.occupation,
       topic_of_cnsrn: this.state.topic_of_cnsrn,
+      type: "Chat",
       // entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
     };
     const birthDetails = {
@@ -111,26 +114,63 @@ class UserRequestForm extends React.Component {
       min: min,
       lat: this.state.latitude,
       lon: this.state.longitude,
+      tzone: 5.5,
     };
-    axiosConfig
-      .post(`/user/add_chat_intake`, obj)
-      .then(response => {
-        console.log(response);
-        swal("Success!", "Submitted SuccessFully!", "success");
-        this.props.history.push("/chatApp");
-      })
-      .catch(error => {
-        swal("Error!", "You clicked the button!", "error");
-      });
+
+    // axiosConfig
+    //   .post(`/user/add_chat_intake`, obj)
+    //   .then(response => {
+    //     console.log(response.data.data);
+    //     swal("Success!", "Submitted SuccessFully!", "success");
+    //     this.props.history.push("/chatApp");
+    //   })
+    //   .catch(error => {
+    //     swal("Error!", "You clicked the button!", "error");
+    //   });
     axiosConfig
       .post(`/user/birth_details`, birthDetails)
       .then(response => {
-        console.log("BirthDetails", response.data.data);
+        // console.log("BirthDetails", response.data.data);
       })
       .catch(error => {
-        console.log("Error BirthDetails", error);
-        // swal("Error!", "You clicked the button!", "error");
+        // console.log("Error BirthDetails", error);
+        swal("Error!", "You clicked the button!", "error");
       });
+    if (userId !== "" && userId !== null) {
+      axiosConfig
+        .post(`/user/add_chat_intake`, obj)
+        .then(response => {
+          const data = {
+            userid: userId,
+            astroid: astroId,
+            type: "Chat",
+          };
+          axiosConfig
+            .post(`/user/addCallWallet`, data)
+            .then(res => {
+              sessionStorage.setItem("notificationdata", res.data?._id);
+              if (res.data.status === true) {
+                console.log("checkIDDDDD", res.data);
+                // this.props.history.push("/chatApp");
+                this.props.history.push({
+                  pathname: "/waitingpagechat",
+                  state: res.data,
+                });
+                // this.props.history.push("/waitingpagechat");
+              } else swal("Not having Enough Balance");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(error => {
+          swal("Error!", "Error Occurred!", "error");
+          console.log(error);
+        });
+    } else {
+      swal("Need to Login first");
+      // this.setState({ modal: true });
+    }
   };
   render() {
     return (
@@ -171,6 +211,28 @@ class UserRequestForm extends React.Component {
                 <div className="wal-amt">
                   <h3>Chat InTake Form </h3>
                   <hr></hr>
+
+                  <div className="d-flex">
+                    <Row>
+                      <Col lg="2" sm="2" md="2">
+                        <input
+                          onClick={e => {
+                            this.setState({ showpartner: e.target.checked });
+                          }}
+                          width={14}
+                          type="checkbox"
+                          id="vehicle1"
+                          name="vehicle1"
+                          value="Bike"
+                        />
+                      </Col>
+                      <Col>
+                        <span className="mt-2">
+                          Want to Add Partner Details
+                        </span>
+                      </Col>
+                    </Row>
+                  </div>
                   <form onSubmit={e => this.submitHandler(e)}>
                     <Row>
                       <Col md="4">
@@ -235,6 +297,7 @@ class UserRequestForm extends React.Component {
                             name="date_of_time"
                             value={this.state.date_of_time}
                             onChange={this.changeHandler}
+                            id="timeinput"
                           />
                         </div>
                       </Col>
@@ -251,69 +314,74 @@ class UserRequestForm extends React.Component {
                           />
                         </div>
                       </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Partner First Name</label>
-                          <input
-                            type="text"
-                            name="p_firstname"
-                            placeholder="Enter Your Patner FirstName"
-                            value={this.state.p_firstname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Partner Last Name</label>
-                          <input
-                            type="text"
-                            name="p_lastname"
-                            placeholder="Enter Your Patner LastName"
-                            value={this.state.p_lastname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
 
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label> Partner Date of Birth</label>
-                          <input
-                            type="date"
-                            name="p_dob"
-                            value={this.state.p_dob}
-                            onChange={this.changeHandler}
-                            placeholder="Enter Your Number"
-                          />
-                        </div>
-                      </Col>
+                      {this.state.showpartner ? (
+                        <>
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label>Partner First Name</label>
+                              <input
+                                type="text"
+                                name="p_firstname"
+                                placeholder="Enter Your Patner FirstName"
+                                value={this.state.p_firstname}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label>Partner Last Name</label>
+                              <input
+                                type="text"
+                                name="p_lastname"
+                                placeholder="Enter Your Patner LastName"
+                                value={this.state.p_lastname}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
 
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label> Partner Time of Birth</label>
-                          <input
-                            type="time"
-                            name="p_date_of_time"
-                            value={this.state.p_date_of_time}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Date of Birth</label>
+                              <input
+                                type="date"
+                                name="p_dob"
+                                value={this.state.p_dob}
+                                onChange={this.changeHandler}
+                                placeholder="Enter Your Number"
+                              />
+                            </div>
+                          </Col>
 
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label> Partner Birth Place</label>
-                          <input
-                            type="text"
-                            name="p_birthPlace"
-                            value={this.state.p_birthPlace}
-                            onChange={this.changeHandler}
-                            placeholder="Enter Your  Birth Place"
-                          />
-                        </div>
-                      </Col>
-                      <Col md="4" className="mt-2">
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Time of Birth</label>
+                              <input
+                                type="time"
+                                name="p_date_of_time"
+                                value={this.state.p_date_of_time}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
+
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Birth Place</label>
+                              <input
+                                type="text"
+                                name="p_birthPlace"
+                                value={this.state.p_birthPlace}
+                                onChange={this.changeHandler}
+                                placeholder="Enter Your  Birth Place"
+                              />
+                            </div>
+                          </Col>
+                        </>
+                      ) : null}
+                      <Col lg="4" md="4" sm="6" className="mt-2">
                         <label>Country</label>
                         <Select
                           options={Country.getAllCountries()}
@@ -342,7 +410,7 @@ class UserRequestForm extends React.Component {
                         />
                       </Col>
 
-                      <Col lg="6" md="6">
+                      <Col lg="4" md="4" sm="6" className="mt-2">
                         <label>State</label>
                         <Select
                           options={State?.getStatesOfCountry(
@@ -361,7 +429,7 @@ class UserRequestForm extends React.Component {
                         />
                       </Col>
 
-                      <Col lg="6" md="6">
+                      <Col lg="4" md="4" sm="6" className="mt-2">
                         <label>City</label>
                         <Select
                           options={City.getCitiesOfState(
@@ -381,7 +449,7 @@ class UserRequestForm extends React.Component {
                         />
                       </Col>
 
-                      <Col lg="6" md="6" className="my-2 ">
+                      <Col lg="4" md="4" sm="6" className="my-2 ">
                         <label>Gender*</label>
                         <Input
                           id="exampleSelect"
@@ -397,7 +465,7 @@ class UserRequestForm extends React.Component {
                         </Input>
                       </Col>
 
-                      <Col lg="6" md="6" className="my-2 ">
+                      <Col lg="4" md="4" sm="6" className="my-2 ">
                         <label>Marital Status*</label>
                         <Input
                           type="select"
@@ -414,7 +482,7 @@ class UserRequestForm extends React.Component {
                           <option>Widowed</option>
                         </Input>
                       </Col>
-                      <Col md="4">
+                      <Col lg="4" md="4" sm="6">
                         <div class="form-group mtb-10">
                           <label>Occupation*</label>
                           <Input
@@ -435,7 +503,7 @@ class UserRequestForm extends React.Component {
                           </Input>
                         </div>
                       </Col>
-                      <Col md="4">
+                      <Col lg="4" md="4" sm="6">
                         <div class="form-group mtb-10">
                           <label>Topic of concern*</label>
                           <Input

@@ -221,7 +221,7 @@ const IconGroup = ({
                 </li>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/walletmoney"}>
-                    Wallet Recharge{" "}
+                    Wallet Recharge
                     <span className="ml-2">
                       ₹
                       {userBalance ? (

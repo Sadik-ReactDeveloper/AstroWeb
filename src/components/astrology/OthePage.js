@@ -18,10 +18,6 @@ const OthePage = () => {
           <div
             className=""
             style={{
-              // backgroundColor: '#FFD59E',
-              // width: '100%',
-              // padding: '70px 0px',
-              // backgroundSize: 'cover',
               float: "left",
               width: "100%",
               backgroundColor: "#272727",

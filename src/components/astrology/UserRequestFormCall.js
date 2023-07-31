@@ -30,6 +30,7 @@ class UserRequestForm extends React.Component {
       data: [],
       selectedFile: {},
       selectedName: "",
+      type: "Call",
     };
   }
   changeCity = item => {
@@ -159,6 +160,7 @@ class UserRequestForm extends React.Component {
                           <input
                             type="text"
                             name="mobile"
+                            disabled
                             value={this.state.mobile}
                             onChange={this.changeHandler}
                             required

@@ -20,7 +20,6 @@ class BookEvent extends React.Component {
     localStorage.setItem("poojaviewone", JSON.stringify(value));
     const userid = localStorage.getItem("user_id");
     if (userid !== null) {
-      //   <Redirect to={`/Poojadetailpage/${value?._id}`} />;
       this.props.history.push(`/Poojadetailpage/${value?._id}`);
     } else swal("No User Found", "User Need to login First");
   };
@@ -29,7 +28,6 @@ class BookEvent extends React.Component {
     axiosConfig
       .get(`/admin/get_adminevent`)
       .then(res => {
-        console.log(res.data.data);
         this.setState({ listofpooja: res.data.data.slice(0, 4) });
       })
       .catch(err => console.log(err));

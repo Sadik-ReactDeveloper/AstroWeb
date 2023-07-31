@@ -128,7 +128,6 @@ class CallList extends React.Component {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
     let astroid = localStorage.getItem("astroId");
-    // let astroNo = localStorage.getItem("astroNo");
     let obj = {
       userid: userId,
       astroid: astroid,
@@ -238,101 +237,97 @@ class CallList extends React.Component {
                   {allUserList?.length ? (
                     allUserList?.map((list, index) => {
                       return (
-                        <>
-                          <Col md="4" key={index} className="mt-1">
-                            <div className="card ">
-                              <div className="card-body ">
-                                <ul>
-                                  <li className="">
-                                    FirstName:
-                                    <span>{list.firstname}</span>
-                                    <div
-                                      className="delete"
-                                      style={{ float: "right" }}
-                                      onClick={() =>
-                                        this.handleDeleteList(list._id)
-                                      }
-                                    >
-                                      <i
-                                        class="fa fa-trash-o"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </div>
-                                  </li>
-                                  <li>
-                                    LastName:
-                                    <span>{list.lastname}</span>
-                                  </li>
-                                  <li>
-                                    BirthPlace:
-                                    <span>{list.birthPlace}</span>
-                                  </li>
-                                  <li>
-                                    Date Of Time:
-                                    <span>{list.date_of_time}</span>
-                                  </li>
-                                  <li>
-                                    Date Of Birth:
-                                    <span>{list.dob}</span>
-                                  </li>
-                                  <li>
-                                    Gender:
-                                    <span>{list.gender}</span>
-                                  </li>
-                                  <li>
-                                    Mobile:
-                                    <span>{list.mobile}</span>
-                                  </li>
-                                  <li>
-                                    Occupation:
-                                    <span>{list.occupation}</span>
-                                  </li>
-                                  <li>
-                                    Marital Status:
-                                    <span>{list.marital_status}</span>
-                                  </li>
-                                  {list.p_birthPlace ? (
-                                    <li>
-                                      Partner BirthPlace:
-                                      <span>{list.p_birthPlace}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_date_of_time ? (
-                                    <li>
-                                      Partner Date Of Time:
-                                      <span>{list.p_date_of_time}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_firstname ? (
-                                    <li>
-                                      Partner First Name:
-                                      <span>{list.p_firstname}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_lastname ? (
-                                    <li>
-                                      Partner Last Name:
-                                      <span>{list.p_lastname}</span>
-                                    </li>
-                                  ) : null}
-
-                                  {/* <Link to="#"> */}
-                                  <div style={{ float: "right" }}>
-                                    <button
-                                      className="btn btn-denger wr"
-                                      onClick={() =>
-                                        this.handleCalling(list._id)
-                                      }
-                                    >
-                                      Start Call
-                                    </button>
+                        <Col md="4" key={index} className="mt-1">
+                          <div className="card ">
+                            <div className="card-body ">
+                              <ul>
+                                <li className="">
+                                  FirstName:
+                                  <span>{list.firstname}</span>
+                                  <div
+                                    className="delete"
+                                    style={{ float: "right" }}
+                                    onClick={() =>
+                                      this.handleDeleteList(list._id)
+                                    }
+                                  >
+                                    <i
+                                      class="fa fa-trash-o"
+                                      aria-hidden="true"
+                                    ></i>
                                   </div>
-                                  {/* </Link> */}
-                                </ul>
-                              </div>
+                                </li>
+                                <li>
+                                  LastName:
+                                  <span>{list.lastname}</span>
+                                </li>
+                                <li>
+                                  BirthPlace:
+                                  <span>{list.birthPlace}</span>
+                                </li>
+                                <li>
+                                  Date Of Time:
+                                  <span>{list.date_of_time}</span>
+                                </li>
+                                <li>
+                                  Date Of Birth:
+                                  <span>{list.dob}</span>
+                                </li>
+                                <li>
+                                  Gender:
+                                  <span>{list.gender}</span>
+                                </li>
+                                <li>
+                                  Mobile:
+                                  <span>{list.mobile}</span>
+                                </li>
+                                <li>
+                                  Occupation:
+                                  <span>{list.occupation}</span>
+                                </li>
+                                <li>
+                                  Marital Status:
+                                  <span>{list.marital_status}</span>
+                                </li>
+                                {list.p_birthPlace ? (
+                                  <li>
+                                    Partner BirthPlace:
+                                    <span>{list.p_birthPlace}</span>
+                                  </li>
+                                ) : null}
+                                {list.p_date_of_time ? (
+                                  <li>
+                                    Partner Date Of Time:
+                                    <span>{list.p_date_of_time}</span>
+                                  </li>
+                                ) : null}
+                                {list.p_firstname ? (
+                                  <li>
+                                    Partner First Name:
+                                    <span>{list.p_firstname}</span>
+                                  </li>
+                                ) : null}
+                                {list.p_lastname ? (
+                                  <li>
+                                    Partner Last Name:
+                                    <span>{list.p_lastname}</span>
+                                  </li>
+                                ) : null}
+
+                                {/* <Link to="#"> */}
+                                <div style={{ float: "right" }}>
+                                  <button
+                                    className="btn btn-denger wr"
+                                    onClick={() => this.handleCalling(list._id)}
+                                  >
+                                    Start Call
+                                  </button>
+                                </div>
+                                {/* </Link> */}
+                              </ul>
                             </div>
-                          </Col>
-                        </>
+                          </div>
+                        </Col>
                       );
                     })
                   ) : (

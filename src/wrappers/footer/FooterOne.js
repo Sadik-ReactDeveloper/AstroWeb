@@ -44,7 +44,6 @@ const FooterOne = ({
       .get(`/admin/getallCategory`)
       .then(response => {
         setCategoryList(response.data.data);
-        // console.log(response.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -105,9 +104,9 @@ const FooterOne = ({
                 <ul>
                   <li>
                     <ul className="submenu">
-                      {categoryList?.map((item, i) => {
+                      {categoryList?.map(item => {
                         return (
-                          <li className="">
+                          <li className="" key={item._id}>
                             <Link to={process.env.PUBLIC_URL + "/zodicPage"}>
                               {item.title}
                             </Link>
@@ -204,45 +203,6 @@ const FooterOne = ({
                           </li>
                         </ul>
                       </div>
-                      {/* <div className="footer-title mt-3">
-                        <h3>Others</h3>
-                      </div> */}
-                      {/* <div className="footer-list">
-                        <ul>
-                          <li>
-                            <ul className="submenu">
-                              <li className="">
-                                <Link
-                                  to={process.env.PUBLIC_URL + "/otherpage"}
-                                >
-                                  otherpage 1
-                                </Link>
-                              </li>
-                              <li className="">
-                                <Link
-                                  to={process.env.PUBLIC_URL + "/otherpage"}
-                                >
-                                  otherpage 2
-                                </Link>
-                              </li>
-                              <li className="">
-                                <Link
-                                  to={process.env.PUBLIC_URL + "/otherpage"}
-                                >
-                                  otherpage 3
-                                </Link>
-                              </li>
-                              <li className="">
-                                <Link
-                                  to={process.env.PUBLIC_URL + "/otherpage"}
-                                >
-                                  otherpage 4
-                                </Link>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div> */}
                     </ul>
                   </li>
                 </ul>

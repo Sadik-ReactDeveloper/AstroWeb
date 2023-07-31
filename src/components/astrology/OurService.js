@@ -6,30 +6,7 @@ import textbottom from "../../assets/img/textbottom.png";
 class OurService extends React.Component {
   render() {
     return (
-      // <LayoutOne headerTop="visible">
       <div>
-        {/* <section className="pt-0 pb-0" >
-          <div
-            className=""
-            style={{
-              backgroundColor: "#ffcc01",
-              width: "100%",
-              padding: "70px 0px",
-              backgroundSize: "cover"
-            }}
-          >
-            <Container>
-              <Row>
-                <Col md="12">
-                  <div className="leftcont text-left">
-                    <h1>Our Services</h1>
-                    <p></p>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-        </section> */}
         <section className="ptb-30">
           <Container>
             <div className="heading">
@@ -55,7 +32,7 @@ class OurService extends React.Component {
                       <Link to="/kundaliform">
                         <h3> Match Making</h3>
                         <p>
-                          Kundali Match Making is an important consideration...{" "}
+                          Kundali Match Making is an important consideration...
                         </p>
                       </Link>
                     </div>
@@ -131,7 +108,7 @@ class OurService extends React.Component {
                         <h3>Chat with Astrologer</h3>
                         <p>
                           Chat with an astrologers online at Astrogyata! Chat
-                          Now!{" "}
+                          Now!
                         </p>
                       </Link>
                     </div>
@@ -143,14 +120,14 @@ class OurService extends React.Component {
                         {/* <i class="fa fa-phone-square" aria-hidden="true"></i> */}
                         <p>
                           Call with an astrologers online anytime at Astrogyata!
-                          Call Now!{" "}
+                          Call Now!
                         </p>
                       </Link>
                     </div>
                   </Col>
                   <Col md="2">
                     <div className="serve-1">
-                      <Link to="/#/">
+                      <Link to="/allastrologerlist">
                         <h3>Video Call Astrologer</h3>
                         <p>
                           Video Call with an astrologer online at Astrogyata!

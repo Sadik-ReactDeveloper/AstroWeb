@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Input } from "reactstrap";
@@ -53,8 +54,6 @@ class BookEvent extends React.Component {
     localStorage.setItem("poojaviewone", JSON.stringify(value));
     const userid = localStorage.getItem("user_id");
     if (userid !== null) {
-      //   history.push("/Poojadetailpage");
-      //   this.props.history.push("/Poojadetailpage");
       this.props.history.push(`/Poojadetailpage/${value?._id}`);
     } else swal("No User Found", "User Need to login First");
   };
@@ -70,13 +69,7 @@ class BookEvent extends React.Component {
   }
   submitHandler = e => {
     e.preventDefault();
-    // let { id } = this.props.match.params
-    // console.log(id)
-    // let userId = JSON.parse(localStorage.getItem('user_id'))
-
-    // let astroid = JSON.parse(localStorage.getItem('astroId'))
     let userid = localStorage.getItem("user_id");
-
     let obj = {
       // astroId: astroid,
       userId: userid,
@@ -95,9 +88,7 @@ class BookEvent extends React.Component {
       .post(`/user/add_event`, obj)
       .then(response => {
         console.log("@@@@@", response.data);
-        //localStorage.setItem('shipping_id', response?.data?.data[0]?._id)
         swal("Success!", "Submitted SuccessFull!", "success");
-        // window.location.reload("/astromallList");
         this.props.history.push("/astromallList");
       })
 
@@ -133,9 +124,6 @@ class BookEvent extends React.Component {
               <Row>
                 <Col md="12">
                   <div className="leftcont text-left">
-                    {/* <h1>
-                        Astromall Shop/ Product Detail/ Consultant List/ Address
-                    </h1> */}
                     <h3>Book Your Pooja</h3>
                   </div>
                 </Col>
@@ -170,12 +158,19 @@ class BookEvent extends React.Component {
                                             fontSize: "15px",
                                             fontWeight: "500",
                                           }}
-                                          //   className=" poojaname  justify-content-left"
                                         >
-                                          {value?.pooja_type?.pooja_name}
+                                          {value?.pooja_type?.pooja_name.substr(
+                                            0,
+                                            6
+                                          )}
                                         </div>
                                       </Col>
-                                      <Col lg="6" md="6" sm="6">
+                                      <Col
+                                        className="text-end"
+                                        lg="6"
+                                        md="6"
+                                        sm="6"
+                                      >
                                         <div
                                           style={{ fontSize: "15px" }}
                                           className=" poojanames  justify-content-end"
@@ -183,24 +178,80 @@ class BookEvent extends React.Component {
                                           <i
                                             class="fa fa-inr"
                                             aria-hidden="true"
-                                          ></i>{" "}
-                                          {value?.pooja_price}
+                                          ></i>
+                                          <span className="pl-1">
+                                            {value?.pooja_price}
+                                          </span>
                                         </div>
+                                      </Col>
+                                      <Col lg="6" md="6" sm="6">
+                                        <div
+                                          style={{
+                                            fontSize: "10px",
+                                            fontWeight: "500",
+                                          }}
+                                        >
+                                          Mode Of Pooja
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        lg="6"
+                                        md="6"
+                                        sm="6"
+                                        className="text-end"
+                                      >
+                                        {value.mode === "Online" ? (
+                                          <div
+                                            style={{
+                                              fontSize: "10px",
+                                              fontWeight: "500",
+                                              color: "green",
+                                            }}
+                                          >
+                                            {value?.mode}
+                                          </div>
+                                        ) : (
+                                          <div
+                                            style={{
+                                              fontSize: "10px",
+                                              fontWeight: "500",
+                                              color: "red",
+                                            }}
+                                          >
+                                            {value?.mode}
+                                          </div>
+                                        )}
                                       </Col>
                                     </Row>
                                     <Row className="mt-1">
-                                      <Col lg="6" md="6" sm="6">
+                                      {value.mode === "Offline" ? (
+                                        <>
+                                          <Col lg="6" md="6" sm="6">
+                                            <div style={{ fontSize: "15px" }}>
+                                              Location
+                                            </div>
+                                          </Col>
+                                          <Col
+                                            lg="6"
+                                            md="6"
+                                            sm="6"
+                                            className="text-end"
+                                          >
+                                            <div style={{ fontSize: "15px" }}>
+                                              <MdOutlineLocationOn
+                                                color="red"
+                                                size={20}
+                                              />
+                                              {value?.fullfill_location}
+                                            </div>
+                                          </Col>
+                                        </>
+                                      ) : (
                                         <div
-                                          style={{ fontSize: "15px" }}
-                                          //   className=" poojaname  justify-content-left"
-                                        >
-                                          <MdOutlineLocationOn
-                                            color="red"
-                                            size={20}
-                                          />{" "}
-                                          {value?.fullfill_location}
-                                        </div>
-                                      </Col>
+                                          style={{ padding: "12px 0" }}
+                                        ></div>
+                                      )}
+
                                       <Col lg="6" md="6" sm="6">
                                         <div
                                           style={{ fontSize: "12px" }}
@@ -208,6 +259,13 @@ class BookEvent extends React.Component {
                                         >
                                           LiveStreaming
                                         </div>
+                                      </Col>
+                                      <Col
+                                        lg="6"
+                                        md="6"
+                                        sm="6"
+                                        className="text-end"
+                                      >
                                         <span style={{ fontSize: "12px" }}>
                                           {value?.liveStreaming === true ? (
                                             <div style={{ color: "green" }}>
@@ -228,41 +286,26 @@ class BookEvent extends React.Component {
                                             fontSize: "17px",
                                             fontWeight: "500",
                                           }}
-                                          //   className=" poojaname  justify-content-left"
                                         >
                                           <BiTime color="green" size={16} />{" "}
                                           Duration
                                         </div>
                                       </Col>
-                                      <Col lg="6" md="6" sm="6">
+                                      <Col
+                                        lg="6"
+                                        md="6"
+                                        sm="6"
+                                        className="text-end"
+                                      >
                                         <div
                                           style={{ fontSize: "15px" }}
                                           className=" poojanames  justify-content-end"
                                         >
                                           {value?.duration}
-                                          {/* <select
-                                            onChange={(e) =>
-                                              this.setState({
-                                                timeslot: e.target.value,
-                                              })
-                                            }
-                                          >
-                                            <option>Select Time</option>
-                                            {value?.time_slots?.map(
-                                              (ele, i) => (
-                                                <option key={i} value={ele}>
-                                                  {ele}
-                                                </option>
-                                              )
-                                            )}
-                                          </select> */}
                                         </div>
                                       </Col>
                                     </Row>
 
-                                    {/* <h3 className="title">
-                                <Link>Magic ball reader</Link>
-                              </h3> */}
                                     <Row className="mt-1">
                                       <Button
                                         onClick={() =>
@@ -330,7 +373,7 @@ class BookEvent extends React.Component {
                       </Col>
                       <Col md="3">
                         <div class="form-group mtb-10">
-                          <label>price Offline*</label>
+                          <label>Price Offline*</label>
                           <Input
                             type="text"
                             name="mobile"

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row } from "reactstrap";
-import axios from "axios";
-
 import ReactHtmlParser from "react-html-parser";
-
 import HtmlParser from "react-html-parser";
 import LayoutOne from "../../layouts/LayoutOne";
 
@@ -12,11 +9,10 @@ function Bookpoojadetail() {
   const [blogdescription, setBlogdescription] = useState([]);
   const [Pooja, setPooja] = useState({});
   const Param = useParams();
-  // console.log(Param);
   useEffect(() => {
     console.log(Param.id);
     const bookpooja = JSON.parse(localStorage.getItem("poojaviewone"));
-    console.log(bookpooja);
+    console.log("pooja", bookpooja);
     setPooja(bookpooja);
   }, [Param]);
 
@@ -30,16 +26,9 @@ function Bookpoojadetail() {
                 {Pooja?.pooja_type?.pooja_name}
               </h2>
             </Row>
-
-            {/* <p className="d-flex justify-content-center mb-4">
-            Updated At: {blogdescription?.updatedAt}
-            Updated At: {Pooja?.updatedAt}
-          </p> */}
-
             <Row className="mt-3">
               <img
                 className=" d-flex justify-content-center imgColnew"
-                //   src={blogdescription?.blogImg}
                 src={Pooja?.poojaimg}
                 style={{ height: "500px", borderRadius: "10px" }}
                 alt="blogimg"
@@ -60,30 +49,25 @@ function Bookpoojadetail() {
 
               <div className=" descriptionofblog   mt-1 mb-1">
                 <h4>
-                  <b> Duration:</b>{" "}
+                  <b> Duration:</b>
                   <span style={{ fontSize: "18px" }}> {Pooja?.duration} </span>
                 </h4>
               </div>
 
               <div className=" descriptionofblog   mt-1 mb-1">
                 <h4>
-                  {" "}
                   <b> Pooja Price: </b>
                   <span style={{ fontSize: "18px" }}>
-                    {"   "}
-                    <i class="fa fa-inr" aria-hidden="true"></i>{" "}
-                    {Pooja?.pooja_price}{" "}
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    {Pooja?.pooja_price}
                   </span>
                 </h4>
               </div>
 
               <div className=" descriptionofblog   mt-1 mb-1">
                 <h4>
-                  {" "}
                   <b> Pooja Name:</b>
-                  {"  "}
                   <span style={{ fontSize: "18px" }}>
-                    {"  "}
                     {Pooja?.pooja_type?.pooja_name}
                   </span>
                 </h4>
@@ -95,6 +79,7 @@ function Bookpoojadetail() {
               <h3>{ReactHtmlParser(blogdescription?.desc)}</h3>
             </div>
           </Row> */}
+            <h2>Want to Buy Something?</h2>
           </Container>
         </div>
       </LayoutOne>

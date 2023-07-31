@@ -68,17 +68,49 @@ class UserRequestForm extends React.Component {
       topic_of_cnsrn: this.state.topic_of_cnsrn,
       entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
     };
+    // axiosConfig
+    //   .post(`/user/add_chat_intake`, obj)
+    //   .then(response => {
+    //     console.log("aaaaaaaaaaaa", response.data.data);
+    //     swal("Success!", "Submitted SuccessFull!", "success");
+    //     // window.location.reload("/allastrologerlist");
+    //     // this.props.history.push("/allastrologerlist");
+    //     this.props.history.push("/");
+    //   })
+    //   .catch(error => {
+    //     swal("Error!", "You clicked the button!", "error");
+    //     console.log(error);
+    //   });
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {
-        console.log("aaaaaaaaaaaa", response.data.data);
-        swal("Success!", "Submitted SuccessFull!", "success");
-        // window.location.reload("/allastrologerlist");
-        // this.props.history.push("/allastrologerlist");
-        this.props.history.push("/");
+        let payload = {
+          userid: userId,
+          astroid: astroId,
+          type: "Video",
+        };
+        axiosConfig
+          .post(`/user/addCallWallet`, payload)
+          .then(res => {
+            if (res.data.status === true) {
+              this.props.history.push({
+                pathname: "/waitingpagevideo",
+                state: res.data,
+              });
+              this.props.history.push(`/waitingpagevideo`);
+              // this.props.history.push(`/userVideoCall/${userId}`);
+              // this.props.history.push(`/waitingpagevideo`);
+            } else swal("Not Having Enough Balance");
+          })
+          .catch(err => {
+            console.log(err.response.data.message);
+            if (err.response.data.message) {
+              alert("Low balance Recharge");
+            }
+          });
       })
       .catch(error => {
-        swal("Error!", "You clicked the button!", "error");
+        swal("Error!", "error");
         console.log(error);
       });
   };
@@ -155,7 +187,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner First Name*</label>
+                          <label>Partner First Name</label>
                           <input
                             type="text"
                             name="p_firstname"
@@ -180,7 +212,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Partner Last Name*</label>
+                          <label>Partner Last Name</label>
                           <input
                             type="text"
                             name="p_lastname"
@@ -205,7 +237,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Date of Birth*</label>
+                          <label> Partner Date of Birth</label>
                           <input
                             type="date"
                             name="p_dob"
@@ -231,7 +263,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Time of Birth*</label>
+                          <label> Partner Time of Birth</label>
                           <input
                             type="time"
                             name="p_date_of_time"
@@ -364,7 +396,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="12" className="mt-3">
                         <Button className="btn btn-warning">
-                          Start VideoCall with{" "}
+                          Start VideoCall with
                           {localStorage.getItem("astroname")}
                         </Button>
                       </Col>

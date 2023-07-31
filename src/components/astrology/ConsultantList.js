@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosConfig from "../../axiosConfig";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-class ConsultantList extends React.Component {
+class DoshaList extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,6 +24,7 @@ class ConsultantList extends React.Component {
     axiosConfig
       .get(`/user/product_consltnt_list/${id}`)
       .then(response => {
+        console.log(response.data.data);
         this.setState({ consultantList: response.data.data });
         localStorage.setItem("astro_id", response?.data?.data[0]?._id);
       })
@@ -32,7 +33,6 @@ class ConsultantList extends React.Component {
       });
   }
   render() {
-    console.log("first", this.state.consultantList);
     return (
       <LayoutOne headerTop="visible">
         <section className="pt-0 pb-0">
@@ -81,7 +81,14 @@ class ConsultantList extends React.Component {
                   <Col className="frontside">
                     <div className="card">
                       <div className="card-body text-center py-2">
-                        <img src={list?.category.img} alt="img" />
+                        <img
+                          src={
+                            list?.astroid?.img[0]
+                              ? list?.astroid?.img[0]
+                              : astrologinbg
+                          }
+                          alt="img"
+                        />
 
                         <h4 className="card-title">
                           {list?.astroid?.fullname}
@@ -89,32 +96,33 @@ class ConsultantList extends React.Component {
                         <ul>
                           <li>
                             Rating :
-                            <span>{list?.astroid?.avg_rating} star</span>
+                            <span>{list?.astroid?.avg_rating} Star</span>
                           </li>
                           <li>
-                            {" "}
-                            <span>{list?.astroid?.primary_skills}</span>
+                            <span>
+                              AllSkills:
+                              {list?.astroid?.all_skills}
+                            </span>
                           </li>
                           <li>
                             Language: <span>{list?.astroid?.language}</span>
                           </li>
                           <li>
-                            {" "}
                             ₹ <span>{list?.price}</span>
                           </li>
                           <li>
-                            Experience:{" "}
-                            <span>{list?.astroid?.exp_in_years}</span>
+                            Experience:
+                            <span>{list?.astroid?.exp_in_years} year</span>
                           </li>
                         </ul>
                         <div
+                          className="my-2"
                           onClick={() =>
                             this.handleAddConsultant(
                               list?._id,
                               list?.astroid?._id
                             )
                           }
-                          className="my-2"
                         >
                           <Link
                             to={"/addressform/" + list?.astroid?._id}
@@ -143,4 +151,4 @@ class ConsultantList extends React.Component {
   }
 }
 
-export default ConsultantList;
+export default DoshaList;

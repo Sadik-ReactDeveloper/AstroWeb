@@ -3,7 +3,6 @@ import React from "react";
 import handbgone from "../../assets/img/om.png";
 import Abotimg from "../../assets/img/gif.png";
 const HeroSliderTwentyNineSingle = ({ data, sliderClass }) => {
-  console.log("mydata", data);
   return (
     <div
       className={`single-slider-2 slider-height-2 d-flex align-items-center bg-img ${

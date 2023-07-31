@@ -201,6 +201,16 @@ const FreeKundli = lazy(() =>
 const PitraDosh = lazy(() => import("./components/astrology/PitraDosh"));
 const KalsharpDosh = lazy(() => import("./components/astrology/KalsharpDosh"));
 const ManglikDosh = lazy(() => import("./components/astrology/ManglikDosh"));
+// const PlanetDasha = lazy(() =>
+//   import("./components/astrology/dasha/PlanetDasha")
+// );
+// const VismshottariDasha = lazy(() =>
+//   import("./components/astrology/dasha/VismshottariDasha")
+// );
+// const YoginiDasha = lazy(() =>
+//   import("./components/astrology/dasha/YoginiDasha")
+// );
+// const CharDasha = lazy(() => import("./components/astrology/dasha/CharDasha"));
 
 const bannerSection = lazy(() =>
   import("./components/astrology/bannerSection")
@@ -233,6 +243,10 @@ const PoojaDetail = lazy(() => import("./components/astrology/poojadetail"));
 const HeroscopesAll = lazy(() =>
   import("./components/astrology/heroscopesall")
 );
+// const HeroscopesDataList = lazy(() =>
+//   import("./components/astrology/heroscope/HeroscopeData")
+// );
+
 const HeroscopesTwo = lazy(() =>
   import("./components/astrology/heroscopestwo")
 );
@@ -278,6 +292,13 @@ const ServiceList = lazy(() => import("./components/astrology/ServiceList"));
 
 const AllAstrologerList = lazy(() =>
   import("./components/astrology/allastrologerlist")
+);
+const WaitingPage = lazy(() => import("./components/WaitingPage/Waitingpage"));
+const WaitingPagechat = lazy(() =>
+  import("./components/WaitingPage/WaitingPageChat")
+);
+const WaitingPagevideo = lazy(() =>
+  import("./components/WaitingPage/WaitingPageVideo")
 );
 const AllAstrochatList = lazy(() =>
   import("./components/astrology/allastrochatlist")
@@ -690,6 +711,23 @@ const App = props => {
                     path={process.env.PUBLIC_URL + "/manglikdosh"}
                     component={ManglikDosh}
                   />
+                  {/* <Route
+                    path={process.env.PUBLIC_URL + "/planetdasha"}
+                    component={PlanetDasha}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/vismshottariDasha"}
+                    component={VismshottariDasha}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/yoginiDasha"}
+                    component={YoginiDasha}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/charDasha"}
+                    component={CharDasha}
+                  /> */}
+
                   <Route
                     path={process.env.PUBLIC_URL + "/kalsharpdosh"}
                     component={KalsharpDosh}
@@ -734,6 +772,10 @@ const App = props => {
                     path={process.env.PUBLIC_URL + "/heroscopesall"}
                     component={HeroscopesAll}
                   />
+                  {/* <Route
+                    path={process.env.PUBLIC_URL + "/heroscope/:id"}
+                    component={HeroscopesDataList}
+                  /> */}
                   <Route
                     path={process.env.PUBLIC_URL + "/heroscopestwo"}
                     component={HeroscopesTwo}
@@ -842,6 +884,18 @@ const App = props => {
                   <Route
                     path={process.env.PUBLIC_URL + "/allastrochatlist"}
                     component={AllAstrochatList}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/waitingpage"}
+                    component={WaitingPage}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/waitingpagechat"}
+                    component={WaitingPagechat}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/waitingpagevideo"}
+                    component={WaitingPagevideo}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/autosearch"}

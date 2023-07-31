@@ -18,14 +18,12 @@ class AstromallList extends React.Component {
     axiosConfig
       .get("/admin/getproductcalegory")
       .then(response => {
-        console.log(response.data.data);
         if (response.data.status === true) {
           this.setState({ procategory: response.data.data });
         }
       })
       .catch(error => {
         console.log(error);
-        console.log(error.response);
       });
   };
   render() {
@@ -36,10 +34,6 @@ class AstromallList extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: "#FFD59E",
-              // width: "100%",
-              // padding: "70px 0px",
-              // backgroundSize: "cover",
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -75,9 +69,9 @@ class AstromallList extends React.Component {
                   <AutoSearch />
                   <Row>
                     {procategory.length
-                      ? procategory.map((procat, index) => {
+                      ? procategory.map(procat => {
                           return (
-                            <Col key={index} md="4">
+                            <Col key={procat._id} md="4">
                               <div className="po-box">
                                 <Link to={"/productlist/" + procat._id}>
                                   <Row>
