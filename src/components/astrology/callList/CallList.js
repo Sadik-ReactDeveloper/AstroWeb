@@ -61,7 +61,6 @@ class CallList extends React.Component {
       .get(`admin/dlt_ChatIntek/${deleteId}`)
       .then(resp => {
         this.getuserList();
-        console.log("resp", resp.data);
       })
       .catch(err => {
         console.log("er", err);
@@ -134,7 +133,6 @@ class CallList extends React.Component {
       From: this.state.mobile, //astro no
       To: mobileNo, //user no
     };
-    console.log(obj);
     axiosConfig
       .post(`/user/addCallWallet`, obj)
       .then(ress => {
@@ -257,10 +255,10 @@ class CallList extends React.Component {
                                     ></i>
                                   </div>
                                 </li>
-                                <li>
+                                {/* <li>
                                   LastName:
                                   <span>{list.lastname}</span>
-                                </li>
+                                </li> */}
                                 <li>
                                   BirthPlace:
                                   <span>{list.birthPlace}</span>

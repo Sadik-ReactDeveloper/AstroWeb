@@ -24,10 +24,8 @@ class ProductList extends React.Component {
   }
   componentDidMount() {
     let { id } = this.props.match.params;
-    console.log(id);
     axiosConfig
       .get(`/user/productbycategory/${id}`)
-      // .get(`/user/productbycategory/64799dad576f08ea7789d670`)
       .then(response => {
         console.log("productbycategory", response.data.data);
         this.setState({
@@ -48,10 +46,6 @@ class ProductList extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: '#ffcc01',
-              // width: '100%',
-              // padding: '70px 0px',
-              // backgroundSize: 'cover',
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -87,61 +81,50 @@ class ProductList extends React.Component {
                   <AutoSearch />
 
                   <Row>
-                    {productList.length
-                      ? productList.map((product, index) => {
-                          return (
-                            <>
-                              <Col md="3" key={index}>
-                                <div className="po-box text-center">
-                                  <Row>
-                                    <Col md="12">
-                                      <div className="po-1 text-center">
-                                        <img
-                                          src={product?.category.img}
-                                          alt="pooja"
-                                          width="250px"
-                                          height="200px"
-                                        />
-                                      </div>
-                                    </Col>
-                                    <Col md="12">
-                                      <div className="po-1 mt-1 mb-1 text-center">
-                                        <h3>{product.product?.title}</h3>
-                                        <p>
-                                          Puja Price Rs
-                                          {product?.price ? product?.price : 0}
-                                          /-
-                                        </p>
-                                        <Link
-                                          to={
-                                            "/poojadetail/" +
-                                            product?.product?._id
-                                          }
-                                          className="pto-l text-center"
-                                        >
-                                          Book Now
-                                        </Link>
-                                      </div>
-                                    </Col>
-                                  </Row>
-                                </div>
-                              </Col>
-                              {/* <Col>
-                                <Row>
-                                  <div className="container">
-                                    <h4>
-                                      <b>{product?.title}</b>
-                                    </h4>
-                                    <h5>{product?.productname}</h5>
-                                    <h6>{ReactHtmlParser(product?.desc)}</h6>
-                                    <h5> Price:-{product?.product?.price} /-</h5>
+                    {productList.length ? (
+                      productList.map(product => {
+                        return (
+                          <Col md="3" key={product?._id}>
+                            <div className="po-box text-center">
+                              <Row>
+                                <Col md="12">
+                                  <div className="po-1 text-center">
+                                    <img
+                                      src={product?.category.img}
+                                      alt="pooja"
+                                      width="250px"
+                                      height="200px"
+                                    />
                                   </div>
-                                </Row>
-                              </Col> */}
-                            </>
-                          );
-                        })
-                      : null}
+                                </Col>
+                                <Col md="12">
+                                  <div className="po-1 mt-1 mb-1 text-center">
+                                    <h3>{product.product?.title}</h3>
+                                    <p>
+                                      Puja Price Rs
+                                      {product?.price ? product?.price : 0}
+                                      /-
+                                    </p>
+                                    <Link
+                                      to={
+                                        "/poojadetail/" + product?.product?._id
+                                      }
+                                      className="pto-l text-center"
+                                    >
+                                      Book Now
+                                    </Link>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Col>
+                        );
+                      })
+                    ) : (
+                      <span className="text-center" style={{ color: "red" }}>
+                        No Product Found
+                      </span>
+                    )}
                   </Row>
                 </div>
               </Col>

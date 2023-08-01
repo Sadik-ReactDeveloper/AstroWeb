@@ -204,7 +204,7 @@ class VideoList extends React.Component {
                     allUserList?.map((list, index) => {
                       return (
                         <>
-                          <Col md="4" key={index} className="mt-1">
+                          <Col md="4" key={list._id} className="mt-1">
                             <div className="card ">
                               <div className="card-body ">
                                 <ul>
@@ -224,10 +224,10 @@ class VideoList extends React.Component {
                                       ></i>
                                     </div>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     LastName:
                                     <span>{list.lastname}</span>
-                                  </li>
+                                  </li> */}
                                   <li>
                                     BirthPlace:
                                     <span>{list.birthPlace}</span>

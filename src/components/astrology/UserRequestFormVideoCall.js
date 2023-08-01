@@ -28,6 +28,7 @@ class UserRequestForm extends React.Component {
       topic_of_cnsrn: "",
       entertopic_of_cnsrn: "",
       data: [],
+      showpartner: false,
     };
   }
   componentDidMount() {
@@ -36,6 +37,7 @@ class UserRequestForm extends React.Component {
       .get(`/user/viewoneuser/${userId}`)
       .then(response => {
         this.setState({ mobile: response.data.data.mobile });
+        this.setState({ firstname: response.data.data.fullname });
       })
       .catch(error => {
         console.log(error);
@@ -46,6 +48,8 @@ class UserRequestForm extends React.Component {
   };
   submitHandler = e => {
     e.preventDefault();
+    console.log("checkkkk");
+    debugger;
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astro_id");
     let obj = {
@@ -54,7 +58,7 @@ class UserRequestForm extends React.Component {
       mobile: parseInt(this.state.mobile),
       firstname: this.state.firstname,
       p_firstname: this.state.p_firstname,
-      lastname: this.state.lastname,
+      // lastname: this.state.lastname,
       p_lastname: this.state.p_lastname,
       dob: this.state.dob,
       p_dob: this.state.p_dob,
@@ -67,6 +71,7 @@ class UserRequestForm extends React.Component {
       occupation: this.state.occupation,
       topic_of_cnsrn: this.state.topic_of_cnsrn,
       entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
+      type: "Video",
     };
     // axiosConfig
     //   .post(`/user/add_chat_intake`, obj)
@@ -84,30 +89,30 @@ class UserRequestForm extends React.Component {
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {
-        let payload = {
-          userid: userId,
-          astroid: astroId,
-          type: "Video",
-        };
-        axiosConfig
-          .post(`/user/addCallWallet`, payload)
-          .then(res => {
-            if (res.data.status === true) {
-              this.props.history.push({
-                pathname: "/waitingpagevideo",
-                state: res.data,
-              });
-              this.props.history.push(`/waitingpagevideo`);
-              // this.props.history.push(`/userVideoCall/${userId}`);
-              // this.props.history.push(`/waitingpagevideo`);
-            } else swal("Not Having Enough Balance");
-          })
-          .catch(err => {
-            console.log(err.response.data.message);
-            if (err.response.data.message) {
-              alert("Low balance Recharge");
-            }
-          });
+        this.props.history.push(`/waitingpagevideo`);
+        // let payload = {
+        //   userid: userId,
+        //   astroid: astroId,
+        // };
+        // axiosConfig
+        //   .post(`/user/addCallWallet`, payload)
+        //   .then(res => {
+        //     if (res.data.status === true) {
+        //       this.props.history.push({
+        //         pathname: "/waitingpagechat",
+        //         state: res.data,
+        //       });
+        //       this.props.history.push(`/waitingpagevideo`);
+        //       // this.props.history.push(`/userVideoCall/${userId}`);
+        //       // this.props.history.push(`/waitingpagevideo`);
+        //     } else swal("Not Having Enough Balance");
+        //   })
+        //   .catch(err => {
+        //     console.log(err.response.data.message);
+        //     if (err.response.data.message) {
+        //       alert("Low balance Recharge");
+        //     }
+        //   });
       })
       .catch(error => {
         swal("Error!", "error");
@@ -121,10 +126,6 @@ class UserRequestForm extends React.Component {
           <div
             className=""
             style={{
-              // backgroundColor: "#ffcc01",
-              // width: "100%",
-              // padding: "70px 0px",
-              // backgroundSize: "cover",
               float: "left",
               width: "100%",
               backgroundColor: "#272727",
@@ -157,6 +158,27 @@ class UserRequestForm extends React.Component {
                 <div className="wal-amt">
                   <h3>Video Call InTake Form </h3>
                   <hr></hr>
+                  <div className="d-flex">
+                    <Row>
+                      <Col lg="2" sm="2" md="2">
+                        <input
+                          onClick={e => {
+                            this.setState({ showpartner: e.target.checked });
+                          }}
+                          width={14}
+                          type="checkbox"
+                          id="box"
+                          name="box"
+                          value="intakeform"
+                        />
+                      </Col>
+                      <Col>
+                        <span className="mt-2">
+                          Want to Add Partner Details
+                        </span>
+                      </Col>
+                    </Row>
+                  </div>
                   <form onSubmit={e => this.submitHandler(e)}>
                     <Row>
                       <Col md="4">
@@ -174,30 +196,18 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>First Name*</label>
+                          <label>Full Name*</label>
                           <input
                             type="text"
                             name="firstname"
                             required
-                            placeholder="Enter Your FirstName"
-                            value={this.state.fullname}
+                            placeholder="Enter Your Full Name"
+                            value={this.state.firstname}
                             onChange={this.changeHandler}
                           />
                         </div>
                       </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Partner First Name</label>
-                          <input
-                            type="text"
-                            name="p_firstname"
-                            placeholder="Enter Your Patner firstname"
-                            value={this.state.p_firstname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
-                      <Col md="4">
+                      {/* <Col md="4">
                         <div class="form-group mtb-10">
                           <label> Last Name*</label>
                           <input
@@ -209,19 +219,8 @@ class UserRequestForm extends React.Component {
                             onChange={this.changeHandler}
                           />
                         </div>
-                      </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Partner Last Name</label>
-                          <input
-                            type="text"
-                            name="p_lastname"
-                            placeholder="Enter Your Partner Lastname"
-                            value={this.state.p_lastname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
+                      </Col> */}
+
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Date of Birth*</label>
@@ -237,19 +236,6 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Date of Birth</label>
-                          <input
-                            type="date"
-                            name="p_dob"
-                            value={this.state.p_dob}
-                            onChange={this.changeHandler}
-                            placeholder="Enter Your Number"
-                          />
-                        </div>
-                      </Col>
-
-                      <Col md="4">
-                        <div class="form-group mtb-10">
                           <label>Time of Birth*</label>
                           <input
                             type="time"
@@ -263,18 +249,6 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label> Partner Time of Birth</label>
-                          <input
-                            type="time"
-                            name="p_date_of_time"
-                            value={this.state.p_date_of_time}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col>
-
-                      <Col md="4">
-                        <div class="form-group mtb-10">
                           <label>Birth Place*</label>
                           <input
                             type="text"
@@ -286,19 +260,74 @@ class UserRequestForm extends React.Component {
                           />
                         </div>
                       </Col>
-                      <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label> Partner Birth Place</label>
-                          <input
-                            type="text"
-                            name="p_birthPlace"
-                            value={this.state.p_birthPlace}
-                            onChange={this.changeHandler}
-                            placeholder="Enter Your  Birth Place"
-                          />
-                        </div>
-                      </Col>
-                      <Col lg="6" md="6" className="mb-2">
+                      {this.state.showpartner ? (
+                        <>
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label>Partner First Name</label>
+                              <input
+                                type="text"
+                                name="p_firstname"
+                                placeholder="Enter Your Patner firstname"
+                                value={this.state.p_firstname}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
+
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label>Partner Last Name</label>
+                              <input
+                                type="text"
+                                name="p_lastname"
+                                placeholder="Enter Your Partner Lastname"
+                                value={this.state.p_lastname}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Date of Birth</label>
+                              <input
+                                type="date"
+                                name="p_dob"
+                                value={this.state.p_dob}
+                                onChange={this.changeHandler}
+                                placeholder="Enter Your Number"
+                              />
+                            </div>
+                          </Col>
+
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Time of Birth</label>
+                              <input
+                                type="time"
+                                name="p_date_of_time"
+                                value={this.state.p_date_of_time}
+                                onChange={this.changeHandler}
+                              />
+                            </div>
+                          </Col>
+
+                          <Col md="4">
+                            <div class="form-group mtb-10">
+                              <label> Partner Birth Place</label>
+                              <input
+                                type="text"
+                                name="p_birthPlace"
+                                value={this.state.p_birthPlace}
+                                onChange={this.changeHandler}
+                                placeholder="Enter Your  Birth Place"
+                              />
+                            </div>
+                          </Col>
+                        </>
+                      ) : null}
+
+                      <Col lg="4" md="4" sm="4" className="mt-3">
                         <label>Gender*</label>
                         <Input
                           id="exampleSelect"
@@ -383,12 +412,12 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Enter topic of concern:</label>
+                          <label>Topic of concern:</label>
                           <input
                             type="text"
                             name="entertopic_of_cnsrn"
                             required
-                            placeholder="Enter Your Fullname"
+                            placeholder="Enter topic of Concern"
                             value={this.state.entertopic_of_cnsrn}
                             onChange={this.changeHandler}
                           />

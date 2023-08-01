@@ -22,13 +22,13 @@ class PoojaProductList extends React.Component {
       .get("/admin/get_adminevent")
       .then(response => {
         this.setState({ rowData: response.data.data });
-        console.log("kunsar kand", response.data.data);
       })
       .catch(error => {
         console.log(error);
       });
   }
   render() {
+    const { rowData } = this.state;
     return (
       <LayoutOne headerTop="visible">
         <section className="pt-0 pb-0">
@@ -69,8 +69,8 @@ class PoojaProductList extends React.Component {
                 <div className="pt-10 pb-50">
                   <AutoSearch />
                   <Row>
-                    {this.state.rowData.length ? (
-                      this.state.rowData?.map(value => (
+                    {rowData.length ? (
+                      rowData?.map(value => (
                         <Col md="3" key={value._id}>
                           <div className="po-box">
                             <Link>
@@ -118,7 +118,7 @@ class PoojaProductList extends React.Component {
                         </Col>
                       ))
                     ) : (
-                      <span>No Data Found</span>
+                      <span>No Data Found lorem</span>
                     )}
                   </Row>
                 </div>

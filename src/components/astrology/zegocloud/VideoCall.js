@@ -132,9 +132,9 @@ export default function App() {
           type: "Video",
         };
         await axiosConfig
-          .post(`/user/deductChatBalance`, load)
+          .post(`/admin/notificationList`, load)
           .then(res => {
-            console.log(res.data);
+            console.log("Video Calling", res.data);
           })
           .catch(err => {
             console.log(err.response.data);
@@ -168,7 +168,7 @@ export default function App() {
         axiosConfig
           .post("user/send_VideoLink", obj)
           .then(response => {
-            console.log(response.data.data.createdAt);
+            // console.log(response.data.data.createdAt);
           })
           .catch(error => {
             console.log(error);

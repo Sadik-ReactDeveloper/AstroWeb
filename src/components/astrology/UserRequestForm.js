@@ -15,6 +15,7 @@ class UserRequestForm extends React.Component {
       astroid: "",
       mobile: "",
       firstname: "",
+      fullName: "",
       p_firstname: "",
       lastname: "",
       p_lastname: "",
@@ -64,6 +65,7 @@ class UserRequestForm extends React.Component {
       .get(`/user/viewoneuser/${userId}`)
       .then(response => {
         this.setState({ mobile: response.data.data.mobile });
+        this.setState({ firstname: response.data.data.fullname });
       })
       .catch(error => {
         console.log(error);
@@ -88,8 +90,8 @@ class UserRequestForm extends React.Component {
       astroid: astroId,
       mobile: parseInt(this.state.mobile),
       firstname: this.state.firstname,
+      // lastname: "nkk",
       p_firstname: this.state.p_firstname,
-      lastname: this.state.lastname,
       p_lastname: this.state.p_lastname,
       dob: this.state.dob,
       p_dob: this.state.p_dob,
@@ -129,28 +131,24 @@ class UserRequestForm extends React.Component {
     //   });
     axiosConfig
       .post(`/user/birth_details`, birthDetails)
-      .then(response => {
-        // console.log("BirthDetails", response.data.data);
-      })
+      .then(response => {})
       .catch(error => {
-        // console.log("Error BirthDetails", error);
         swal("Error!", "You clicked the button!", "error");
       });
     if (userId !== "" && userId !== null) {
       axiosConfig
         .post(`/user/add_chat_intake`, obj)
+
         .then(response => {
           const data = {
             userid: userId,
             astroid: astroId,
-            type: "Chat",
           };
           axiosConfig
             .post(`/user/addCallWallet`, data)
             .then(res => {
               sessionStorage.setItem("notificationdata", res.data?._id);
               if (res.data.status === true) {
-                console.log("checkIDDDDD", res.data);
                 // this.props.history.push("/chatApp");
                 this.props.history.push({
                   pathname: "/waitingpagechat",
@@ -169,7 +167,6 @@ class UserRequestForm extends React.Component {
         });
     } else {
       swal("Need to Login first");
-      // this.setState({ modal: true });
     }
   };
   render() {
@@ -221,9 +218,9 @@ class UserRequestForm extends React.Component {
                           }}
                           width={14}
                           type="checkbox"
-                          id="vehicle1"
-                          name="vehicle1"
-                          value="Bike"
+                          id="box"
+                          name="box"
+                          value="intakeform"
                         />
                       </Col>
                       <Col>
@@ -250,19 +247,19 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>First Name*</label>
+                          <label>FullName*</label>
                           <input
                             type="text"
                             name="firstname"
                             required
                             placeholder="Enter Your FirstName"
-                            value={this.state.fullname}
+                            value={this.state.firstname}
                             onChange={this.changeHandler}
                           />
                         </div>
                       </Col>
 
-                      <Col md="4">
+                      {/* <Col md="4">
                         <div class="form-group mtb-10">
                           <label> Last Name*</label>
                           <input
@@ -274,7 +271,7 @@ class UserRequestForm extends React.Component {
                             onChange={this.changeHandler}
                           />
                         </div>
-                      </Col>
+                      </Col> */}
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Date of Birth*</label>

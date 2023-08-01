@@ -88,22 +88,25 @@ class PoojaDetail extends React.Component {
                   </Col>
                   <Col md="8">
                     <div className="details">
-                      <h3 className="product-title">
+                      <h4 className="product-title">
                         {this.state.data.productname}
-                      </h3>
-                      <p>{ReactHtmlParser(this.state.data.desc)}</p>
-                      <h4 className="price">
-                        Starting From: <span>₹ {this.state.data.price}</span>
                       </h4>
+                      <p>{ReactHtmlParser(this.state.data.desc)}</p>
+                      <h5 className="price">
+                        Starting From: <span>₹ {this.state.data.price}</span>
+                      </h5>
 
                       <div class="action">
                         <Link to={"/consultantlist/" + this.state.data?._id}>
-                          <button
+                          {/* <button
                             className="add-to-cart btn btn-default"
                             type="button"
                           >
                             Book Now
-                          </button>
+                          </button> */}
+                          <Button className="btn btn-warning mt-2">
+                            Book Now
+                          </Button>
                         </Link>
                       </div>
                     </div>
