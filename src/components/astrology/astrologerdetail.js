@@ -291,7 +291,7 @@ class AstrologerDetail extends React.Component {
         console.log("astrocharge", astrocharge);
         let useramount = this.state.useramount;
         if (useramount > astrocharge) {
-          this.props.history.push("/UserRequestFormCall");
+          this.props.history.push("/CallListData");
         } else
           swal(
             "Recharge Now",
