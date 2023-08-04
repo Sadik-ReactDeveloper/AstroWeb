@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axiosConfig from "../../../axiosConfig";
-import { getUserID } from "../astrologerdetail";
+// import { getUserID } from "../astrologerdetail";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useHistory } from "react-router-dom";
 
@@ -40,8 +40,9 @@ export default function App() {
     setToggle(true);
     handlestartinterval();
   };
+
   const handlestartinterval = () => {
-    ref.current = setInterval(() => {
+    this.apicall.current = setInterval(() => {
       let userId = JSON.parse(localStorage.getItem("user_id"));
       let astroId = localStorage.getItem("astroId");
       sessionStorage.setItem("typeofcall", "Video");
@@ -68,7 +69,7 @@ export default function App() {
             swal("You have Low Balance");
           }
         });
-    }, 60000);
+    }, 1000);
   };
   const handleStop = () => {
     setToggle(false);
