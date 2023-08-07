@@ -129,6 +129,8 @@ const AskQuestionList = lazy(() =>
 //   import("./components/astrology/LiveAstrologer")
 // );
 const LiveAstrologer = lazy(() => import("./components/astrology/LiveConnect"));
+
+// Live Main Curent use
 const LiveAllUser = lazy(() => import("./components/astrology/LiveAstro"));
 const LalKitab = lazy(() => import("./components/astrology/LalKitab"));
 const LalkitabPlanets = lazy(() =>

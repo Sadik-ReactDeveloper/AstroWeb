@@ -145,7 +145,6 @@ export default function App() {
       onLeaveRoom: async () => {
         handleStop();
         let astroid = localStorage.getItem("astroId");
-
         let value = {
           userId: userID,
           astroId: astroid,
@@ -167,7 +166,6 @@ export default function App() {
       onUserLeave: async () => {
         handleStop();
         let astroid = localStorage.getItem("astroId");
-
         let value = {
           userId: userID,
           astroId: astroid,
@@ -175,7 +173,7 @@ export default function App() {
         axiosConfig
           .post(`/user/changeStatus`, value)
           .then(res => {
-            console.log("CloneJob Stop", res);
+            console.log("CloneJob Stop astrooo", res);
             localStorage.removeItem("CurrentChat_userid");
             history.push("/astrorating");
           })

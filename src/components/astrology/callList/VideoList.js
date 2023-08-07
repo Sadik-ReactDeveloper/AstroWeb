@@ -10,7 +10,7 @@ import swal from "sweetalert";
 class VideoList extends React.Component {
   constructor(props) {
     super(props);
-
+    // console.log(props.location.state);
     this.state = {
       allUserList: [],
       allminrechargeList: [],
@@ -37,6 +37,7 @@ class VideoList extends React.Component {
       astroId: "",
       astro: "",
       avg_rating: [false],
+      previousData: "",
     };
 
     this.state = {
@@ -52,16 +53,15 @@ class VideoList extends React.Component {
     });
   }
 
-  handleVideocall = () => {
-    console.log(this.state.fullname);
-  };
+  // handleVideocall = () => {
+  //   console.log(this.state.fullname);
+  // };
 
   handleDeleteList = deleteId => {
     axiosConfig
       .get(`admin/dlt_ChatIntek/${deleteId}`)
       .then(resp => {
         this.getuserList();
-        console.log("resp", resp.data);
       })
       .catch(err => {
         console.log("er", err);
@@ -69,6 +69,8 @@ class VideoList extends React.Component {
   };
 
   componentDidMount = () => {
+    this.setState({ previousData: this.props.location.state });
+    // console.log(this.props.location.state);
     this.getuserList();
 
     let astroId = localStorage.getItem("videoCallAstro_id");
@@ -122,36 +124,41 @@ class VideoList extends React.Component {
       });
   };
   handleVideoCalling = id => {
-    this.props.history.push("/videocall");
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    let payload = {
+      userid: userId,
+      astroid: this.state.astroId,
+      status: "Requested",
+      type: "Video",
+    };
+    axiosConfig
+      .post(`/user/addCallWallet`, payload)
+      .then(res => {
+        console.log(res.data._id);
+        if (res.data.status === true) {
+          localStorage.setItem("waitingId", res.data._id);
+          this.props.history.push({
+            pathname: "/waitingpagevideo",
+            state: res.data,
+          });
+        } else swal("Not Having Enough Balance");
+      })
+      .catch(err => {
+        console.log(err.response.data);
+        if (err.response.data.message) {
+          alert("Low balance Recharge");
+        }
+      });
+    // })
+
+    // this.props.history.push("/videocall");
+
+    // this.props.history.push({
+    //   pathname: "/waitingpagevideo",
+    //   state: this.state.previousData,
+    // });
   };
 
-  // handleBalacecheck = () => {
-  //   let userId = JSON.parse(localStorage.getItem("user_id"));
-  //   let { id } = this.props.match.params;
-  //   console.log(userId, id);
-
-  //   if (userId !== "" && userId !== null) {
-  //     const data = {
-  //       userid: userId,
-  //       astroid: id,
-  //     };
-
-  //     axiosConfig
-  //       .post(`/user/addCallWallet`, data)
-  //       .then(response => {
-  //         console.log(response.data);
-  //         if (response.data.status === true) {
-  //           this.props.history.push("/UserRequestFormVideoCall");
-  //           //
-  //         } else swal("Recharge", "you don't have enough Balance");
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     swal("Need to Login first");
-  //   }
-  // };
   render() {
     const { allUserList } = this.state;
     return (
@@ -201,103 +208,101 @@ class VideoList extends React.Component {
                     </Link>
                   </div>
                   {allUserList?.length ? (
-                    allUserList?.map((list, index) => {
+                    allUserList?.map(list => {
                       return (
-                        <>
-                          <Col md="4" key={list._id} className="mt-1">
-                            <div className="card ">
-                              <div className="card-body ">
-                                <ul>
-                                  <li className="">
-                                    FirstName:
-                                    <span>{list.firstname}</span>
-                                    <div
-                                      className="delete"
-                                      style={{ float: "right" }}
-                                      onClick={() =>
-                                        this.handleDeleteList(list._id)
-                                      }
-                                    >
-                                      <i
-                                        class="fa fa-trash-o"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </div>
-                                  </li>
-                                  {/* <li>
+                        <Col md="4" key={list._id} className="mt-1">
+                          <div className="card ">
+                            <div className="card-body ">
+                              <ul>
+                                <li className="">
+                                  FirstName:
+                                  <span>{list.firstname}</span>
+                                  <div
+                                    className="delete"
+                                    style={{ float: "right" }}
+                                    onClick={() =>
+                                      this.handleDeleteList(list._id)
+                                    }
+                                  >
+                                    <i
+                                      class="fa fa-trash-o"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </div>
+                                </li>
+                                {/* <li>
                                     LastName:
                                     <span>{list.lastname}</span>
                                   </li> */}
+                                <li>
+                                  BirthPlace:
+                                  <span>{list.birthPlace}</span>
+                                </li>
+                                <li>
+                                  Date Of Time:
+                                  <span>{list.date_of_time}</span>
+                                </li>
+                                <li>
+                                  Date Of Birth:
+                                  <span>{list.dob}</span>
+                                </li>
+                                <li>
+                                  Gender:
+                                  <span>{list.gender}</span>
+                                </li>
+                                <li>
+                                  Mobile:
+                                  <span>{list.mobile}</span>
+                                </li>
+                                <li>
+                                  Occupation:
+                                  <span>{list.occupation}</span>
+                                </li>
+                                <li>
+                                  Marital Status:
+                                  <span>{list.marital_status}</span>
+                                </li>
+                                {list.p_birthPlace ? (
                                   <li>
-                                    BirthPlace:
-                                    <span>{list.birthPlace}</span>
+                                    Partner BirthPlace:
+                                    <span>{list.p_birthPlace}</span>
                                   </li>
+                                ) : null}
+                                {list.p_date_of_time ? (
                                   <li>
-                                    Date Of Time:
-                                    <span>{list.date_of_time}</span>
+                                    Partner Date Of Time:
+                                    <span>{list.p_date_of_time}</span>
                                   </li>
+                                ) : null}
+                                {list.p_firstname ? (
                                   <li>
-                                    Date Of Birth:
-                                    <span>{list.dob}</span>
+                                    Partner First Name:
+                                    <span>{list.p_firstname}</span>
                                   </li>
+                                ) : null}
+                                {list.p_lastname ? (
                                   <li>
-                                    Gender:
-                                    <span>{list.gender}</span>
+                                    Partner Last Name:
+                                    <span>{list.p_lastname}</span>
                                   </li>
-                                  <li>
-                                    Mobile:
-                                    <span>{list.mobile}</span>
-                                  </li>
-                                  <li>
-                                    Occupation:
-                                    <span>{list.occupation}</span>
-                                  </li>
-                                  <li>
-                                    Marital Status:
-                                    <span>{list.marital_status}</span>
-                                  </li>
-                                  {list.p_birthPlace ? (
-                                    <li>
-                                      Partner BirthPlace:
-                                      <span>{list.p_birthPlace}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_date_of_time ? (
-                                    <li>
-                                      Partner Date Of Time:
-                                      <span>{list.p_date_of_time}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_firstname ? (
-                                    <li>
-                                      Partner First Name:
-                                      <span>{list.p_firstname}</span>
-                                    </li>
-                                  ) : null}
-                                  {list.p_lastname ? (
-                                    <li>
-                                      Partner Last Name:
-                                      <span>{list.p_lastname}</span>
-                                    </li>
-                                  ) : null}
+                                ) : null}
 
-                                  {/* <Link to="#"> */}
-                                  <div style={{ float: "right" }}>
-                                    <button
-                                      className="btn btn-denger wr"
-                                      onClick={() =>
-                                        this.handleVideoCalling(list._id)
-                                      }
-                                    >
-                                      Start VideoCall
-                                    </button>
-                                  </div>
-                                  {/* </Link> */}
-                                </ul>
-                              </div>
+                                {/* <Link to="#"> */}
+                                <div style={{ float: "right" }}>
+                                  <button
+                                    className="btn btn-denger wr"
+                                    onClick={() =>
+                                      this.handleVideoCalling(list._id)
+                                    }
+                                  >
+                                    Start VideoCall
+                                  </button>
+                                </div>
+                                {/* </Link> */}
+                              </ul>
                             </div>
-                          </Col>
-                        </>
+                          </div>
+                        </Col>
                       );
                     })
                   ) : (

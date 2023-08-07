@@ -13,7 +13,6 @@ function randomID(len) {
   }
   return result;
 }
-
 export function getUrlParams(url = window.location.href) {
   let urlStr = url.split("?")[1];
   return new URLSearchParams(urlStr);
@@ -25,7 +24,6 @@ export default function App() {
   let roomId = location.state?.videoliveStream;
   if (roomId) {
     let roomID = roomId;
-
     //   const roomID = roomId;
     // getUrlParams().get("roomID") || randomID(5);
     let role_str = getUrlParams(window.location.href).get("role") || "Host";
@@ -69,7 +67,6 @@ export default function App() {
       randomID(5),
       randomID(5)
     );
-
     // start the call
     let myMeeting = async element => {
       // Create instance object from Kit Token.

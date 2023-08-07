@@ -112,8 +112,16 @@ class ChatApp extends React.Component {
       astroId: astroId,
       status: false,
     };
+    // axiosConfig
+    //   .post(`/user/addCallDuration`, payload)
+    //   .then(res => {
+    //     console.log("callduration per min", res.data);
+    //   })
+    //   .catch(err => {
+    //     console.log(err.response.data.message);
+    //   });
     axiosConfig
-      .post(`/user/addCallDuration`, payload)
+      .post(`/user/changeStatus`, payload)
       .then(res => {
         console.log("callduration per min", res.data);
       })

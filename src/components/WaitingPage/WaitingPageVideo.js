@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
 
@@ -30,6 +31,8 @@ const WaitingPageVideo = ({ location, args }) => {
 
   const history = useHistory();
   const mylocation = useLocation();
+  // console.log("history", history.location.state);
+  console.log("useLocation", mylocation.state);
   const toggle = () => setModal(!modal);
   const fetchOrder = async () => {
     let userid = JSON.parse(localStorage.getItem("user_id"));
@@ -47,44 +50,48 @@ const WaitingPageVideo = ({ location, args }) => {
 
   const handlegetAcceptAstro = () => {
     const interval = setInterval(() => {
-      let userid = JSON.parse(localStorage.getItem("user_id"));
-      console.log(mylocation.state?._id);
       let id =
-        mylocation?.state?._id || sessionStorage.getItem("notificationdata");
-      console.log(id);
+        localStorage.getItem("waitingId") ||
+        mylocation?.state?._id ||
+        sessionStorage.getItem("notificationdata");
+      // console.log(id);
+
       axiosConfig
         .get(`/user/getOnenotificationByastro/${id}`)
-        .then((res) => {
+        .then(res => {
           console.log("request status ", res.data.data);
-          console.log("notificationid", res.data.data);
           if (
             res?.data?.data?.status === "Accept" &&
             res?.data?.data?.type === "Video"
           ) {
             swal("Request Accepted", "Wait Till Astro Joins Videocall");
             clearInterval(interval);
-            history.push(`/userVideoCall/${res.data.data?._id}`);
+            history.push(`/videocall/${res.data.data?._id}`);
 
             axiosConfig
               .get(`/admin/dltNotificattion/${res.data.data?._id}`)
-              .then((res) => {
+              .then(res => {
                 console.log("notification deleted", res);
               })
-              .catch((err) => {
+              .catch(err => {
                 console.log(err);
               });
           }
         })
-        .catch((err) => {
-          // console.log(err);
+        .catch(err => {
+          console.log(err);
         });
     }, 5000);
   };
 
   useEffect(() => {
+    // let watingUser = false;
     if (localStorage.getItem("user_id")) {
       handlegetAcceptAstro();
     }
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
@@ -118,7 +125,7 @@ WaitingPageVideo.propTypes = {
   wishlistItems: PropTypes.array,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     cartItems: state.cartData,
     wishlistItems: state.wishlistData,
@@ -126,7 +133,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
@@ -137,7 +144,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteFromWishlist: (item, addToast, quantityCount) => {
       dispatch(deleteFromWishlist(item, addToast, quantityCount));
     },
-    deleteAllFromWishlist: (addToast) => {
+    deleteAllFromWishlist: addToast => {
       dispatch(deleteAllFromWishlist(addToast));
     },
   };

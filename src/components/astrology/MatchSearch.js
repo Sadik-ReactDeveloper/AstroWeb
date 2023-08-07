@@ -1,59 +1,63 @@
-import React from 'react'
-import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import React from "react";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 function MatchSearch() {
   // note: the id field is mandatory
   const items = [
     {
       id: 0,
-      name: 'Cobol'
+      name: "Cobol",
     },
     {
       id: 1,
-      name: 'JavaScript'
+      name: "JavaScript",
     },
     {
       id: 2,
-      name: 'Basic'
+      name: "Basic",
     },
     {
       id: 3,
-      name: 'PHP'
+      name: "PHP",
     },
     {
       id: 4,
-      name: 'Java'
-    }
-  ]
+      name: "Java",
+    },
+  ];
 
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    console.log(string, results)
-  }
+    console.log(string, results);
+  };
 
-  const handleOnHover = (result) => {
+  const handleOnHover = result => {
     // the item hovered
-    console.log(result)
-  }
+    console.log(result);
+  };
 
-  const handleOnSelect = (item) => {
+  const handleOnSelect = item => {
     // the item selected
-    console.log(item)
-  }
+    console.log(item);
+  };
 
   const handleOnFocus = () => {
-    console.log('Focused')
-  }
+    // console.log('Focused')
+  };
 
-  const formatResult = (item) => {
+  const formatResult = item => {
     return (
       <>
-        <span style={{ display: 'block', textAlign: 'left' }}>id: {item.id}</span>
-        <span style={{ display: 'block', textAlign: 'left' }}>name: {item.name}</span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          id: {item.id}
+        </span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          name: {item.name}
+        </span>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <div className="App">
@@ -71,9 +75,7 @@ function MatchSearch() {
         </div>
       </header>
     </div>
-  )
+  );
 }
 
-export default MatchSearch
-  
-
+export default MatchSearch;

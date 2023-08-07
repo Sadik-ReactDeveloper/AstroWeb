@@ -95,7 +95,7 @@ const Waitingpage = ({ location, args }) => {
     <Fragment>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Waiting page
+        Waiting Chat Page
       </BreadcrumbsItem>
 
       <LayoutOne headerTop="visible">

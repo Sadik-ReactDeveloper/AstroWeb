@@ -48,10 +48,8 @@ class UserRequestForm extends React.Component {
   };
   submitHandler = e => {
     e.preventDefault();
-    console.log("checkkkk");
-    debugger;
     let userId = JSON.parse(localStorage.getItem("user_id"));
-    let astroId = localStorage.getItem("astro_id");
+    let astroId = localStorage.getItem("astroId");
     let obj = {
       userid: userId,
       astroid: astroId,
@@ -73,42 +71,37 @@ class UserRequestForm extends React.Component {
       entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
       type: "Video",
     };
-    // axiosConfig
-    //   .post(`/user/add_chat_intake`, obj)
-    //   .then(response => {
-    //     console.log("aaaaaaaaaaaa", response.data.data);
-    //     swal("Success!", "Submitted SuccessFull!", "success");
-    //     // window.location.reload("/allastrologerlist");
-    //     // this.props.history.push("/allastrologerlist");
-    //     this.props.history.push("/");
-    //   })
-    //   .catch(error => {
-    //     swal("Error!", "You clicked the button!", "error");
-    //     console.log(error);
-    //   });
     axiosConfig
       .post(`/user/add_chat_intake`, obj)
       .then(response => {
-        this.props.history.push(`/waitingpagevideo`);
+        console.log(response.data.data);
+        this.props.history.push({
+          pathname: "/VideoListData",
+        });
+        // this.props.history.push(`/VideoListData`);
+        // this.props.history.push(`/waitingpagevideo`);
+        // this.props.history.push(`/userVideoCall/${userId}`);
         // let payload = {
         //   userid: userId,
         //   astroid: astroId,
+        //   status: "Requested",
+        //   type: "Video",
         // };
+        // console.log(payload);
         // axiosConfig
         //   .post(`/user/addCallWallet`, payload)
         //   .then(res => {
+        //     console.log(res.data._id);
         //     if (res.data.status === true) {
+        //       localStorage.setItem("waitingId", res.data._id);
         //       this.props.history.push({
-        //         pathname: "/waitingpagechat",
+        //         pathname: "/VideoListData",
         //         state: res.data,
         //       });
-        //       this.props.history.push(`/waitingpagevideo`);
-        //       // this.props.history.push(`/userVideoCall/${userId}`);
-        //       // this.props.history.push(`/waitingpagevideo`);
         //     } else swal("Not Having Enough Balance");
         //   })
         //   .catch(err => {
-        //     console.log(err.response.data.message);
+        //     console.log(err.response.data);
         //     if (err.response.data.message) {
         //       alert("Low balance Recharge");
         //     }
@@ -426,7 +419,9 @@ class UserRequestForm extends React.Component {
                       <Col md="12" className="mt-3">
                         <Button className="btn btn-warning">
                           Start VideoCall with
-                          {localStorage.getItem("astroname")}
+                          <span style={{ paddingLeft: "2px" }}>
+                            {localStorage.getItem("astroname").toUpperCase()}
+                          </span>
                         </Button>
                       </Col>
                     </Row>

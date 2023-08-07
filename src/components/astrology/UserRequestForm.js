@@ -140,26 +140,25 @@ class UserRequestForm extends React.Component {
         .post(`/user/add_chat_intake`, obj)
 
         .then(response => {
-          const data = {
-            userid: userId,
-            astroid: astroId,
-          };
-          axiosConfig
-            .post(`/user/addCallWallet`, data)
-            .then(res => {
-              sessionStorage.setItem("notificationdata", res.data?._id);
-              if (res.data.status === true) {
-                // this.props.history.push("/chatApp");
-                this.props.history.push({
-                  pathname: "/waitingpagechat",
-                  state: res.data,
-                });
-                // this.props.history.push("/waitingpagechat");
-              } else swal("Not having Enough Balance");
-            })
-            .catch(err => {
-              console.log(err);
-            });
+          // const data = {
+          //   userid: userId,
+          //   astroid: astroId,
+          //   type: "Chat",
+          // };
+          // axiosConfig
+          //   .post(`/user/addCallWallet`, data)
+          //   .then(res => {
+          //     sessionStorage.setItem("notificationdata", res.data?._id);
+          //     if (res.data.status === true) {
+          //       this.props.history.push({
+          //         pathname: "/waitingpagechat",
+          //         state: res.data,
+          //       });
+          //     } else swal("Not having Enough Balance");
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
         })
         .catch(error => {
           swal("Error!", "Error Occurred!", "error");

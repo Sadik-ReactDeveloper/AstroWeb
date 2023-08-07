@@ -89,9 +89,9 @@ class UserCallHistory extends React.Component {
                       </tr>
                     </thead>
                     {userChatList.length
-                      ? userChatList.map((user, index) => {
+                      ? userChatList.map(user => {
                           return (
-                            <tbody>
+                            <tbody key={user._id}>
                               <tr>
                                 <th>{user?.Sid}</th>
                                 <td>{user?.astroid?.fullname}</td>
@@ -100,7 +100,7 @@ class UserCallHistory extends React.Component {
 
                                 <td>{user?.astroid?.callCharge}/Min.</td>
 
-                                <td>{user?.Duration} Sec</td>
+                                <td>{user?.Duration} Min</td>
                                 <td>{user?.userdeductedAmt} Rs</td>
                                 <td>{user?.DateCreated.split("T")[0]}</td>
                               </tr>

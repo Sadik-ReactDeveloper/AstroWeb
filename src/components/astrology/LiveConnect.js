@@ -15,16 +15,21 @@ class LiveAstrologer extends React.Component {
     };
   }
   componentDidMount() {
-    axiosConfig
-      .get(`/user/listWebLiveStream`)
-      .then(res => {
-        console.log(res.data.data);
-        this.setState({ liveastrilist: res.data.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.handlenotification();
   }
+
+  handlenotification = () => {
+    setInterval(() => {
+      axiosConfig
+        .get(`/user/listWebLiveStream`)
+        .then(res => {
+          this.setState({ liveastrilist: res.data.data });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, 5000);
+  };
 
   handleastrolive = data => {
     this.props.history.push({
