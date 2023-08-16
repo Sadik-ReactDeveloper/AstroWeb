@@ -12,22 +12,14 @@ import {
   FormGroup,
   Input,
 } from "reactstrap";
-import Nav from "react-bootstrap/Nav";
+// import Nav from "react-bootstrap/Nav";
 import {
   AstroSkills,
   AstroStatus,
   Language,
   Specialisation,
 } from "./skills/AstroSkills.js";
-import {
-  NavItem,
-  TabContent,
-  NavLink,
-  TabPane,
-  Card,
-  CardTitle,
-  CardText,
-} from "reactstrap";
+import { NavItem, TabContent, TabPane } from "reactstrap";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 import { Button } from "reactstrap";
 import "../../assets/scss/astroteam.scss";

@@ -74,16 +74,17 @@ export default class LoginRegister extends Component {
   };
   loginHandler = e => {
     e.preventDefault();
+    console.log("Login");
     if (this.state.mobile !== "") {
       let obj = { mobile: parseInt(this.state.mobile) };
       axiosConfig
         .post(`/user/userlogin`, obj)
         .then(response => {
+          console.log(response);
           this.setState({ otpMsg: response.data.msg });
           if (response.data.msg === "otp Send Successfully") {
             localStorage.setItem("mobileNumber", this.state.mobile);
             swal("OTP Send Successfully");
-            // this.props.history.push('/')
           } else {
             swal("OTP Send Successfully");
           }
@@ -252,7 +253,7 @@ export default class LoginRegister extends Component {
                               >
                                 <Row>
                                   <Col md="12">
-                                    <Label>User Image</Label>
+                                    <h3>User Image</h3>
                                     <Input
                                       type="file"
                                       name="userimg"

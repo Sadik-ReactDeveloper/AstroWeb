@@ -27,7 +27,7 @@ class SectionPooja extends React.Component {
         </Container>
         <Container>
           <div className="heading mt-40">
-            <h2>Our Latest Products</h2>
+            <h2>Our Trending Products</h2>
             <img src={textbottom} alt="" />
           </div>
           <Row>
@@ -42,7 +42,7 @@ class SectionPooja extends React.Component {
                             <Col md="3" key={product._id}>
                               <div className="product-grid8">
                                 <div class="product-image8">
-                                  <Link to="/poojadetail">
+                                  <Link to={`/productlist/${product?._id}`}>
                                     <img
                                       src={product.image}
                                       alt=""
@@ -73,7 +73,14 @@ class SectionPooja extends React.Component {
                                       )} */}
                                     </Link>
                                   </h3>
-                                  <Link className="all-deals">
+                                  {/* <Link className="all-deals">
+                                    View More
+                                    <i class="fa fa-angle-right icon"></i>
+                                  </Link> */}
+                                  <Link
+                                    to={`/productlist/${product?._id}`}
+                                    className="all-deals"
+                                  >
                                     View More
                                     <i class="fa fa-angle-right icon"></i>
                                   </Link>

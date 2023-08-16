@@ -2,8 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import textbottom from "../../assets/img/textbottom.png";
-
+import swal from "sweetalert";
 class OurService extends React.Component {
+  handleAsk = () => {
+    let userId = JSON.parse(localStorage.getItem("user_id"));
+    if (userId !== "" && userId !== null) {
+      // history.pushState("askQuestionList");
+      this.props.history.push("/askQuestionList");
+    } else {
+      swal("Need To Login First");
+    }
+  };
   render() {
     return (
       <div>
@@ -137,15 +146,14 @@ class OurService extends React.Component {
                     </div>
                   </Col>
                   <Col md="2">
-                    <div className="serve-1">
-                      <Link to="/askQuestionList">
-                        <h3>Ask Question </h3>
-                        <p>
-                          {" "}
-                          Ask Question with an astrologers online anytime at
-                          Astrogyata! Ask Question Now!
-                        </p>
-                      </Link>
+                    <div className="serve-1" onClick={() => this.handleAsk()}>
+                      {/* <Link to="/askQuestionList"> */}
+                      <h3>Ask Question </h3>
+                      <p>
+                        Ask Question with an astrologers online anytime at
+                        Astrogyata! Ask Question Now!
+                      </p>
+                      {/* </Link> */}
                     </div>
                   </Col>
                   <Col md="2">
@@ -153,7 +161,6 @@ class OurService extends React.Component {
                       <Link to="/allastrologerlist">
                         <h3>Talk Astrologer</h3>
                         <p>
-                          {" "}
                           Talk to experienced astrologers online anytime at
                           Astrogyata! Call Now!
                         </p>

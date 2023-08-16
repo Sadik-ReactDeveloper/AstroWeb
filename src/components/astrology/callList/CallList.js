@@ -37,6 +37,7 @@ class CallList extends React.Component {
       astroId: "",
       astro: "",
       avg_rating: [false],
+      callingId: "",
     };
 
     this.state = {
@@ -74,7 +75,7 @@ class CallList extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${astroid}`)
       .then(response => {
-        console.log("AstroViewOne", response.data?.data);
+        // console.log("AstroViewOne", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
         localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({
@@ -123,7 +124,7 @@ class CallList extends React.Component {
         console.log(error.response);
       });
   };
-  handleCalling = selectedId => {
+  handleCalling = callerId => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let mobileNo = JSON.parse(localStorage.getItem("user_mobile_no"));
     let astroid = localStorage.getItem("astroId");
@@ -140,7 +141,8 @@ class CallList extends React.Component {
           axiosConfig
             .post(`/user/make_call`, obj)
             .then(response => {
-              console.log("Calling", response.data);
+              this.setState({ callingId: callerId });
+              // console.log("Calling", response.data);
               swal("Call Connected", "SuccessFully");
             })
 
@@ -312,16 +314,16 @@ class CallList extends React.Component {
                                   </li>
                                 ) : null}
 
-                                {/* <Link to="#"> */}
                                 <div style={{ float: "right" }}>
                                   <button
                                     className="btn btn-denger wr"
                                     onClick={() => this.handleCalling(list._id)}
                                   >
-                                    Start Call
+                                    {this.state.callingId === list._id
+                                      ? "Calling Now"
+                                      : "Start Call"}
                                   </button>
                                 </div>
-                                {/* </Link> */}
                               </ul>
                             </div>
                           </div>

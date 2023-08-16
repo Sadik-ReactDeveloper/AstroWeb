@@ -53,7 +53,6 @@ class KundaliMatchList extends React.Component {
                 <Col md="12">
                   <div className="leftcont text-left">
                     <h1>Kundli Matching Details</h1>
-                    {/* <h3>Kundli Matching Details</h3> */}
                   </div>
                 </Col>
               </Row>
@@ -92,7 +91,7 @@ class KundaliMatchList extends React.Component {
                       <thead>
                         <tr>
                           <th>Received Point</th>
-                          <th>NO of points </th>
+                          <th>No of points </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -108,37 +107,6 @@ class KundaliMatchList extends React.Component {
                     </Table>
                   </div>
                 </Col>
-                {/* <Col md="4">
-                  <div className="mat-box">
-                    <h3>Dashakoot</h3>
-                    <Table striped>
-                      <thead>
-                        <tr>
-                          <th>Attribute</th>
-                          <th>Description </th>
-                          <th>Matching Points</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </div>
-                </Col> */}
               </Row>
 
               <div className="bx-conclusion">
@@ -147,36 +115,6 @@ class KundaliMatchList extends React.Component {
                   <Row className="mt-1 mb-2">
                     <p>{this.state.data?.data?.conclusion?.match_report}</p>
                   </Row>
-                  {/* <Col md="6">
-                    <div className="matbox">
-                      <div className="matbox-1">
-                        <h2>50%</h2>
-                      </div>
-                      <div className="matbox-2">
-                        <h3>Ashtakoot</h3>
-                        <p>
-                          Ashtakoot Matching between male and female is 21.5
-                          points out of 36 points. This is the medium score.
-                          Hence, marriage can be approved.
-                        </p>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col md="6">
-                    <div className="matbox">
-                      <div className="matbox-1">
-                        <h2>50%</h2>
-                      </div>
-                      <div className="matbox-2">
-                        <h3>Dashakoot</h3>
-                        <p>
-                          Dashakoot Matching between male and female is 18
-                          points out of 36 points. This is the medium score.
-                          Hence, marriage can be approved.
-                        </p>
-                      </div>
-                    </div>
-                  </Col> */}
                 </Row>
               </div>
 

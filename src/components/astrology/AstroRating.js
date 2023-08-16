@@ -1,14 +1,13 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 import StarRatingComponent from "react-star-rating-component";
 import { Col, Container, Row } from "reactstrap";
 import LayoutOne from "../../layouts/LayoutOne";
+import swal from "sweetalert";
 import axiosConfig from "../../axiosConfig";
 class AstroRating extends React.Component {
   constructor() {
     super();
-
     this.state = {
       rating: 1,
       rating_custom_icon: 6,
@@ -22,27 +21,18 @@ class AstroRating extends React.Component {
   }
 
   onStarClick(nextValue, prevValue, name) {
-    console.log(
-      "name: %s, nextValue: %s, prevValue: %s",
-      name,
-      nextValue,
-      prevValue
-    );
-
-    // this.setState({rating: target.value});
-
     this.setState({ rating: nextValue });
   }
 
-  onStarClickCustomIcon(nextValue, prevValue, name) {
-    console.log(
-      "name: %s, nextValue: %s, prevValue: %s",
-      name,
-      nextValue,
-      prevValue
-    );
-    this.setState({ rating_custom_icon: nextValue });
-  }
+  // onStarClickCustomIcon(nextValue, prevValue, name) {
+  //   console.log(
+  //     "name: %s, nextValue: %s, prevValue: %s",
+  //     name,
+  //     nextValue,
+  //     prevValue
+  //   );
+  //   this.setState({ rating_custom_icon: nextValue });
+  // }
 
   onStarClickHalfStar(nextValue, prevValue, name, e) {
     const xPos =
@@ -72,38 +62,30 @@ class AstroRating extends React.Component {
     );
     this.setState({ rating_empty_initial: nextValue });
   }
-  submitHandler = (e, astroid, userId) => {
+  submitHandler = e => {
+    console.log("e, astroid,");
     e.preventDefault();
-    let { id } = this.props.match.params;
-
     let user_id = JSON.parse(localStorage.getItem("user_id"));
+    let astroId = localStorage.getItem("astroId");
     let obj = {
-      astroId: id,
-      astroid: astroid,
       userid: user_id,
-      // question: this.state.question,
+      astroid: astroId,
       rating: this.state.rating,
       comment: this.state.comment,
       type: this.state.type,
     };
-
     axiosConfig
       .post(`/user/addChatReview`, obj)
-      // /user/addChatReview
       .then(response => {
-        console.log("@@@@@", response.data.data);
         this.setState({
           comment: "",
-          rating: "",
+          rating: "1",
         });
-        this.props.history.push("/");
-        // this.getQuestionList(id)
-        // swal("Success!", "Submitted SuccessFull!", "success");
-        //window.location.reload('/askQuestion')
+        // this.props.history.push("/");
+        swal("Success!", "Thank You For Your Valuable FeedBack", "success");
       })
 
       .catch(error => {
-        // swal("Error!", "You clicked the button!", "error");
         console.log(error);
       });
   };
@@ -158,12 +140,12 @@ class AstroRating extends React.Component {
                     <Row>
                       <Col md="6">
                         <div className="star-bx mt-5">
-                          <h3>Rating ({this.state.rating})</h3>
+                          <h3>Rating Number({this.state.rating})</h3>
                           <div style={{ fontSize: 26 }}>
                             <StarRatingComponent
                               name="app2"
                               starCount={5}
-                              value={this.state.rating}
+                              value={Number(this.state.rating)}
                               onStarClick={this.onStarClick.bind(this)}
                             />
                           </div>
@@ -175,6 +157,7 @@ class AstroRating extends React.Component {
                           <textarea
                             name="comment"
                             placeholder="Your Message*"
+                            required
                             maxLength={150}
                             value={this.state.comment}
                             onChange={e => {

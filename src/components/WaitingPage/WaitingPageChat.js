@@ -49,10 +49,10 @@ const Waitingpage = ({ location, args }) => {
   const handlegetAcceptAstro = () => {
     intervalRef.current = setInterval(() => {
       // let userid = JSON.parse(localStorage.getItem("user_id"));
-      console.log(mylocation.state?._id);
+      // console.log(mylocation.state?._id);
       let id =
         mylocation?.state?._id || sessionStorage.getItem("notificationdata");
-      console.log(id);
+      // console.log(id);
       axiosConfig
         .get(`/user/getOnenotificationByastro/${id}`)
         .then(res => {

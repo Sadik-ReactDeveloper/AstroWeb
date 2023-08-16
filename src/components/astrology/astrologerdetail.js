@@ -153,131 +153,9 @@ class AstrologerDetail extends React.Component {
             }
           });
       }
-    } else swal("User Does Not Exist");
+    } else swal("Need To Login First");
   };
 
-  // handleStartCall = () => {
-  //   // const astroid = localStorage.getItem("astroId");
-  //   // if (this.state.status === "Online") {
-  //   let userId = JSON.parse(localStorage.getItem("user_id"));
-  //   let { id } = this.props.match.params;
-  //   console.log(userId, id);
-  //   if (userId !== "" && userId !== null) {
-  //     this.props.history.push("/CallListData");
-  //   } else {
-  //     swal("Need To Login First");
-  //   }
-  //   // } else swal("Astro is offline ");
-  // };
-  // handleStartCall = () => {
-  //   let recharge = this.state.astroData?.callCharge * 5;
-  //   console.log("recharge", recharge);
-  //   let userId = JSON.parse(localStorage.getItem("user_id"));
-  //   if (userId !== "" && userId !== null) {
-  //     if (
-  //       this.state.astroData?.waiting_tym === 0 &&
-  //       this.state.astroData?.callingStatus === "Available"
-  //     ) {
-  //       let astrocharge = this.state.astroData?.callCharge * 5;
-  //       console.log("astrocharge", astrocharge);
-  //       let useramount = this.state.useramount;
-  //       if (useramount > astrocharge) {
-  //         this.props.history.push("/CallListData");
-  //       } else
-  //         swal(
-  //           "Recharge Now",
-  //           "You Donot have Enough balance to Make This Call",
-  //           {
-  //             buttons: {
-  //               cancel: "Recharge Now",
-  //               catch: { text: "Cancel ", value: "catch" },
-  //             },
-  //           }
-  //         ).then(value => {
-  //           switch (value) {
-  //             case "catch":
-  //               // swal("Sure Want to cancel it");
-  //               break;
-  //             default:
-  //               this.props.history.push("/walletmoney");
-  //           }
-  //         });
-
-  //       // axiosConfig
-  //       //   .post(`/user/addCallWallet`, data)
-  //       //   .then((response) => {
-  //       //     console.log("@@@callingmode", response.data);
-
-  //       //     if (response.data?.msg === "success") {
-  //       //       this.props.history.push("/UserRequestFormCall");
-  //       //     } else
-  //       //       swal(
-  //       //         "Recharge Now",
-  //       //         "You Donot have Enough balance to Make This Call",
-  //       //         {
-  //       //           buttons: {
-  //       //             cancel: "Recharge Now",
-  //       //             catch: { text: "Cancel ", value: "catch" },
-  //       //           },
-  //       //         }
-  //       //       ).then((value) => {
-  //       //         switch (value) {
-  //       //           case "catch":
-  //       //             // swal("Sure Want to cancel it");
-  //       //             break;
-  //       //           default:
-  //       //             this.props.history.push("/walletmoney");
-  //       //         }
-  //       //       });
-  //       //   })
-  //       //   .catch((error) => {
-  //       //     console.log(error);
-  //       //     // swal('Error!', 'Invalid!', 'error')
-  //       //   });
-  //     } else {
-  //       let astrocharge = this.state.astroData?.callCharge * 5;
-  //       let useramount = this.state.useramount;
-  //       console.log(useramount, astrocharge);
-  //       if (useramount > astrocharge) {
-  //         swal(
-  //           `Astrologer is Busy`,
-  //           "Do You Want to Be in queue ",
-
-  //           {
-  //             buttons: {
-  //               cancel: "Be in queue",
-  //               catch: { text: "Cancel ", value: "catch" },
-  //             },
-  //           }
-  //         ).then(value => {
-  //           switch (value) {
-  //             case "catch":
-  //               break;
-  //             default:
-  //               let astroid = localStorage.getItem("astroId");
-  //               // let userId = JSON.parse(localStorage.getItem("user_id"));
-  //               let payload = {
-  //                 userId: this.state.UserId,
-  //                 callType: "VoiceCall",
-  //               };
-
-  //               axiosConfig
-  //                 .post(`/user/make_another_call/${astroid}`, payload)
-  //                 .then(res => {
-  //                   console.log(res);
-  //                 })
-  //                 .catch(err => {
-  //                   console.log(err);
-  //                 });
-  //           }
-  //         });
-  //       } else swal("User Not Have enough Balance To Connect with Astrologer");
-  //     }
-  //   } else {
-  //     swal("Need to Login first");
-  //     // this.setState({ modal: true });
-  //   }
-  // };
   handleStartCall = () => {
     let recharge = this.state.astroData?.callCharge * 5;
     console.log("recharge", recharge);
@@ -372,7 +250,7 @@ class AstrologerDetail extends React.Component {
     localStorage.setItem("videoCallAstro_id", id);
     this.handleStartViewOneAstro();
 
-    const astroId = localStorage.getItem("videoCallAstro_id");
+    // const astroId = localStorage.getItem("videoCallAstro_id");
     //  const { id } = this.props.match.params;
     //  const userId = JSON.parse(localStorage.getItem("user_id"));
     axiosConfig
@@ -395,7 +273,7 @@ class AstrologerDetail extends React.Component {
       .get(`/user/getone_followers/${userId}/${id}`)
       .then(resl => {
         this.setState({ follow: resl.data.data.follow });
-        console.log("followOne", resl.data.data);
+        // console.log("followOne", resl.data.data);
       })
       .catch(err => {
         console.log("eeeeeee", err.response.data.status);
@@ -503,7 +381,7 @@ class AstrologerDetail extends React.Component {
         .catch(error => {
           console.log(error);
         });
-    }, 1000);
+    }, 2000);
   };
   render() {
     const icons = {
@@ -595,12 +473,14 @@ class AstrologerDetail extends React.Component {
                           <li>
                             Call Rate: <span>{this.state.callCharge}/Min</span>
                           </li>
-                          <li>
+                          {/* <li>
                             Availability :
                             <span style={{ color: "green" }}>
-                              <b> {this.state.astroData?.callingStatus} </b>
-                            </span>
-                          </li>
+                              {" "}
+                              <b> {this.state.astroData?.status}</b> */}
+                          {/* <b> {this.state.astroData?.callingStatus} </b> */}
+                          {/* </span>
+                          </li> */}
                           {this.state.astroData?.waiting_tym > 0 ? (
                             <li>
                               Waiting Time :
@@ -611,9 +491,9 @@ class AstrologerDetail extends React.Component {
                           ) : null}
 
                           <li>
+                            Availability:
                             {this.state.status === "Online" ? (
                               <>
-                                Status:
                                 <span style={{ color: "green" }} className="">
                                   <b> {this.state.astroData?.status}</b>
                                 </span>
@@ -621,7 +501,8 @@ class AstrologerDetail extends React.Component {
                             ) : (
                               <>
                                 <span style={{ color: "red" }} className="">
-                                  <b> {this.state.astroData?.status}</b>
+                                  {/* <b> {this.state.astroData?.status}</b> */}
+                                  <b> {this.state.astroData?.callingStatus} </b>
                                 </span>
                               </>
                             )}
@@ -654,7 +535,6 @@ class AstrologerDetail extends React.Component {
 
                             <span className="m-1"> Start Chat</span>
                           </Button>
-                          {/* </Link> */}
                         </Col>
                         <Col md="3" className="mt-30">
                           <Button
@@ -950,31 +830,29 @@ class AstrologerDetail extends React.Component {
                                     </>
                                   ) : (
                                     <>
-                                      <>
-                                        <div
-                                          className=""
+                                      <div
+                                        className=""
+                                        style={{
+                                          width: "100%",
+                                          paddingBottom: "30px",
+                                          paddingTop: "10px",
+                                        }}
+                                      >
+                                        <p
                                           style={{
-                                            width: "100%",
-                                            paddingBottom: "30px",
-                                            paddingTop: "10px",
+                                            backgroundColor: "rgb(25 120 4)",
+                                            color: "#fff",
+                                            padding: "10px",
+                                            borderRadius: "50px",
+                                            fontSize: "16px",
+                                            fontWeight: "600",
+                                            width: "400px",
+                                            margin: "0  auto",
                                           }}
                                         >
-                                          <p
-                                            style={{
-                                              backgroundColor: "rgb(25 120 4)",
-                                              color: "#fff",
-                                              padding: "10px",
-                                              borderRadius: "50px",
-                                              fontSize: "16px",
-                                              fontWeight: "600",
-                                              width: "400px",
-                                              margin: "0  auto",
-                                            }}
-                                          >
-                                            <span>Not available </span>
-                                          </p>
-                                        </div>
-                                      </>
+                                          <span>Not available </span>
+                                        </p>
+                                      </div>
                                     </>
                                   )}
                                 </Tab.Pane>
@@ -1005,7 +883,6 @@ class AstrologerDetail extends React.Component {
                                           {this.state.wednesday?.map(value => (
                                             <span key={value?._id}>
                                               {value}
-                                              {"  "}
                                             </span>
                                           ))}
                                         </p>
@@ -1013,31 +890,30 @@ class AstrologerDetail extends React.Component {
                                     </>
                                   ) : (
                                     <>
-                                      <>
-                                        <div
-                                          className=""
+                                      {" "}
+                                      <div
+                                        className=""
+                                        style={{
+                                          width: "100%",
+                                          paddingBottom: "30px",
+                                          paddingTop: "10px",
+                                        }}
+                                      >
+                                        <p
                                           style={{
-                                            width: "100%",
-                                            paddingBottom: "30px",
-                                            paddingTop: "10px",
+                                            backgroundColor: "rgb(25 120 4)",
+                                            color: "#fff",
+                                            padding: "10px",
+                                            borderRadius: "50px",
+                                            fontSize: "16px",
+                                            fontWeight: "600",
+                                            width: "400px",
+                                            margin: "0  auto",
                                           }}
                                         >
-                                          <p
-                                            style={{
-                                              backgroundColor: "rgb(25 120 4)",
-                                              color: "#fff",
-                                              padding: "10px",
-                                              borderRadius: "50px",
-                                              fontSize: "16px",
-                                              fontWeight: "600",
-                                              width: "400px",
-                                              margin: "0  auto",
-                                            }}
-                                          >
-                                            <span>Not available </span>
-                                          </p>
-                                        </div>
-                                      </>
+                                          <span>Not available </span>
+                                        </p>
+                                      </div>
                                     </>
                                   )}
                                 </Tab.Pane>

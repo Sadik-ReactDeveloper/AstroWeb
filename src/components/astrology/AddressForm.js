@@ -326,11 +326,10 @@ class AddressForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Alternative Number*</label>
+                          <label>Alternative Number</label>
                           <input
                             type="text"
                             name="alt_mobile"
-                            required
                             placeholder="Enter Your Number"
                             value={this.state.alt_mobile}
                             onChange={this.changeHandler}

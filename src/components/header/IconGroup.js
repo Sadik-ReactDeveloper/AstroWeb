@@ -177,14 +177,14 @@ const IconGroup = ({
               <>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                    Login
+                    Login/Register
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to={process.env.PUBLIC_URL + "/login-register"}>
                     Register
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <a href="http://3.6.219.3/#/pages/login">Astrologer login</a>
                 </li>

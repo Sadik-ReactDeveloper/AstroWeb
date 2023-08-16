@@ -10,7 +10,6 @@ import swal from "sweetalert";
 class VideoList extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props.location.state);
     this.state = {
       allUserList: [],
       allminrechargeList: [],

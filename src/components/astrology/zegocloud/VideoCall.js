@@ -36,13 +36,19 @@ export default function App() {
       clearInterval(ref.current);
     };
   }, [toggle]);
+  useEffect(() => {
+    let id = localStorage.getItem("astroId");
+    axiosConfig.get(`/admin/getoneAstro/${id}`).then(res => {
+      console.log(res.data.data);
+    });
+  }, []);
   const handleStart = () => {
     setToggle(true);
     handlestartinterval();
   };
 
   const handlestartinterval = () => {
-    this.apicall.current = setInterval(() => {
+    ref.current = setInterval(() => {
       let userId = JSON.parse(localStorage.getItem("user_id"));
       let astroId = localStorage.getItem("astroId");
       sessionStorage.setItem("typeofcall", "Video");
@@ -50,9 +56,10 @@ export default function App() {
       let payload = {
         userId: userId,
         astroId: astroId,
-        // status: true,
         type: "Video",
+        // status: true,
       };
+      console.log("payload", payload);
       axiosConfig
         .post(`/user/deductChatBalance`, payload)
         .then(res => {
