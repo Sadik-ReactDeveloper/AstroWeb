@@ -79,7 +79,7 @@ class UserChatHistoryList extends React.Component {
               <Row>
                 <Col md="12">
                   <div className="leftcont text-left">
-                    <h1>User Chat History</h1>
+                    <h1>User Chat/Video History</h1>
                   </div>
                 </Col>
               </Row>

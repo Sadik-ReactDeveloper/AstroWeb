@@ -202,7 +202,12 @@ const IconGroup = ({
                   </Link>
                 </li>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/my-order"}>Refund</Link>
+                  <Link to={process.env.PUBLIC_URL + "/my-refund"}>Refund</Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/mybookedpooja"}>
+                    My Pooja Booking
+                  </Link>
                 </li>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/notificationlist"}>
@@ -252,14 +257,14 @@ const IconGroup = ({
                 </li>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/userChatHistory"}>
-                    Chat History
+                    Chat /Video Call List
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to={process.env.PUBLIC_URL + "/userCallHistrory"}>
                     Video Call History
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/customersupport"}>
                     Customer Support Chat

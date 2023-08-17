@@ -366,6 +366,8 @@ const AddressFormEdit = lazy(() =>
 const Home = lazy(() => import("./components/astrology/zegocloud/Home"));
 const Cart = lazy(() => import("./pages/other/Cart"));
 const MyOrder = lazy(() => import("./pages/other/MyOrder"));
+const MyRefund = lazy(() => import("./pages/other/MyRefund"));
+const Mypoojabooked = lazy(() => import("./pages/other/MyPoojabooking.js"));
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
@@ -624,6 +626,14 @@ const App = props => {
                   <Route
                     path={process.env.PUBLIC_URL + "/my-order"}
                     component={MyOrder}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/my-refund"}
+                    component={MyRefund}
+                  />
+                  <Route
+                    path={process.env.PUBLIC_URL + "/mybookedpooja"}
+                    component={Mypoojabooked}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/addEvent"}
