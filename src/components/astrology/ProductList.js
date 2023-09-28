@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 import LayoutOne from "../../layouts/LayoutOne";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+// import ReactHtmlParser, {
+//   processNodes,
+//   convertNodeToElement,
+//   htmlparser2,
+// } from "react-html-parser";
 
 import AutoSearch from "./autosearch";
 import axiosConfig from "../../axiosConfig";
@@ -18,7 +18,6 @@ class ProductList extends React.Component {
     super(props);
 
     this.state = {
-      // data: {},
       productList: [],
     };
   }
@@ -74,17 +73,17 @@ class ProductList extends React.Component {
         </section>
 
         <section className="ptb-0">
-          <Container>
-            <Row>
-              <Col lg="12">
-                <div className="pt-10 pb-50">
-                  <AutoSearch />
+          {productList.length ? (
+            <Container>
+              <Row>
+                <Col lg="12">
+                  <div className="pt-10 pb-50">
+                    <AutoSearch />
 
-                  <Row>
-                    {productList.length ? (
-                      productList.map(product => {
+                    <Row>
+                      {productList.map(product => {
                         return (
-                          <Col md="3" key={product?._id}>
+                          <Col md="4" key={product?._id}>
                             <div className="po-box text-center">
                               <Row>
                                 <Col md="12">
@@ -119,22 +118,29 @@ class ProductList extends React.Component {
                             </div>
                           </Col>
                         );
-                      })
-                    ) : (
-                      <span className="text-center" style={{ color: "red" }}>
-                        No Product Found
-                      </span>
-                    )}
-                  </Row>
-                </div>
-              </Col>
-              <Col lg="6">
-                {/* <div className="abo-2">
+                      })}
+                    </Row>
+                  </div>
+                </Col>
+                <Col lg="6">
+                  {/* <div className="abo-2">
                                   <img src={aboutone} alt="" className="about-img"></img>
                             </div> */}
-              </Col>
-            </Row>
-          </Container>
+                </Col>
+              </Row>
+            </Container>
+          ) : (
+            <div
+              className="notFound text-center"
+              style={{
+                color: "red",
+                height: "50vh",
+                // width: "250px",
+              }}
+            >
+              <span> No Product Found</span>
+            </div>
+          )}
         </section>
       </LayoutOne>
     );

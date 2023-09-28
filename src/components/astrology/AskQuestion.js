@@ -25,8 +25,8 @@ class AskQuestion extends React.Component {
     axiosConfig
       .get(`/user/list_ask_qus/${id}/${JSON.parse(user_id)}`)
       .then(response => {
-        console.log("askquesionlist", response.data);
-        console.log(response);
+        // console.log("askquesionlist", response.data);
+        // console.log(response);
         const lastindex = response.data?.data?.length - 1;
         const data = response.data.data[lastindex]?.view_button;
         this.setState({ togglebtn: data });
@@ -45,7 +45,7 @@ class AskQuestion extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${id}`)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           fullname: response.data.data.fullname,
           all_skills: response.data.data.all_skills,
@@ -77,17 +77,17 @@ class AskQuestion extends React.Component {
         userid: user_id,
         question: this.state.question,
       };
-
+      console.log(obj);
       axiosConfig
         .post(`/user/user_ask_qus`, obj)
         .then(response => {
           console.log("@@@@@", response.data);
 
-          if (("@@@@@", response.data?.message == "success")) {
+          if (response.data?.message === "success") {
             swal("Success!", "Question Submitted SuccessFully!", "success");
           }
           this.getListofQuestion();
-          if (response.data?.msg == "Your Question limit is Over") {
+          if (response.data?.msg === "Your Question limit is Over") {
             swal("Your Question limit is Over");
           }
           this.setState({ question: "" });

@@ -83,7 +83,7 @@ class PoojaDetail extends React.Component {
                 <Row>
                   <Col md="4">
                     <div className="preview-pic tab-content">
-                      <img src={this.state?.image} alt="" width="100%" />
+                      <img src={this.state?.image} alt="" width="50%" />
                     </div>
                   </Col>
                   <Col md="8">

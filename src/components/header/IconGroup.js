@@ -27,9 +27,7 @@ const IconGroup = ({
   };
   const handleLogout = e => {
     window.localStorage.clear();
-    // window.location.reload()
     window.location.replace("/");
-    //  window.location.replace("http://soxypay.com/");
   };
 
   const triggerMobileMenu = () => {
@@ -41,14 +39,11 @@ const IconGroup = ({
 
   //const { id } = useParams();
   const fetchcarts = async token => {
-    const { data } = await Axios.get(
-      // `http://13.235.180.192/api/admin/cartbycustomer`,
-      {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-      }
-    );
+    const { data } = await Axios.get({
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
     const carts = data.data;
     setCarts(carts);
     console.log(carts);

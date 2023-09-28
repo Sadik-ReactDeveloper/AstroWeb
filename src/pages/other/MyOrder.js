@@ -80,7 +80,7 @@ const MyOrder = ({ location }) => {
                                       width="80px"
                                       height="80px"
                                       className="img-fluid"
-                                      src={orders?.product?.product?.image[0]}
+                                      src={orders.products?.product?.image[0]}
                                       alt=""
                                     />
                                   </Link>
@@ -117,7 +117,13 @@ const MyOrder = ({ location }) => {
                                   {orders?.cartId?.total_amt}
                                 </td>
                                 <td className="product-price-cart">
-                                  <span className="amount"></span>
+                                  <span
+                                    className=""
+                                    style={{
+                                      backgroundColor: "green",
+                                      color: "#fff",
+                                    }}
+                                  ></span>
                                   {orders?.status}
                                 </td>
                               </tr>

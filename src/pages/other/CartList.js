@@ -5,18 +5,16 @@ import LayoutOne from "../../layouts/LayoutOne";
 import "../../assets/scss/astroteam.scss";
 import { Table } from "reactstrap";
 import pay1 from "../../assets/img/icon-img/pay-1.png";
-// import pay2 from '../../assets/img/icon-img/pay-2.png'
 import pay3 from "../../assets/img/icon-img/pay-3.png";
 import pay4 from "../../assets/img/icon-img/pay-4.png";
 import pay5 from "../../assets/img/icon-img/pay-5.png";
 import pay6 from "../../assets/img/icon-img/pay-6.png";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
 
-import swal from "sweetalert";
 import axiosConfig from "../../axiosConfig";
 import ReactHtmlParser from "react-html-parser";
-import DemoChat from "../../components/astrology/DemoChat";
-
+// import DemoChat from "../../components/astrology/DemoChat";
+import Payment from "../payment/Payment";
 class CartList extends React.Component {
   constructor(props) {
     super(props);
@@ -66,7 +64,6 @@ class CartList extends React.Component {
             className=""
             style={{
               backgroundColor: "#FFD59E",
-
               float: "left",
               width: "100%",
               // backgroundColor: "#272727",
@@ -125,7 +122,7 @@ class CartList extends React.Component {
 
                           <br />
                           <span>
-                            {this.state.dataCart?.productid?.price} Rs/-
+                            Rs/- {this.state.dataCart?.productid?.price}
                           </span>
                           <br />
                           <span>
@@ -143,7 +140,6 @@ class CartList extends React.Component {
                           {this.state.dataCart?.shipping_address?.city}{" "}
                           {this.state.dataCart?.shipping_address?.pincode}
                           <p>
-                            {" "}
                             mobile No:-
                             {this.state.dataCart?.shipping_address?.mobile}
                           </p>
@@ -152,7 +148,7 @@ class CartList extends React.Component {
                         <td width="10%">
                           <p className="mx-2" width="10%">
                             <span>
-                              {this.state.dataCart?.productid?.price} Rs/-
+                              Rs/- {this.state.dataCart?.productid?.price}
                             </span>
                           </p>
                           {/* <Link className="Tansdel">
@@ -173,17 +169,17 @@ class CartList extends React.Component {
                   <ul>
                     <li>
                       Order Amount
-                      <span> {this.state.dataCart?.productid?.price} Rs</span>
+                      <span>Rs {this.state.dataCart?.productid?.price} </span>
                     </li>
 
                     <li>
                       GST @18%
-                      <span>{this.state.dataCart?.gst} Rs</span>
+                      <span> Rs {this.state.dataCart?.gst}</span>
                     </li>
                     <hr />
                     <li>
                       Total Payable Amount
-                      <span>{this.state.dataCart?.total_amt} Rs</span>
+                      <span>Rs {this.state.dataCart?.total_amt} </span>
                     </li>
                   </ul>
                 </div>
@@ -242,7 +238,8 @@ class CartList extends React.Component {
               </Col>
             </Row>
             <Row>
-              <DemoChat payment={this.state.dataCart?.total_amt} />
+              {/* <DemoChat payment={this.state.dataCart?.total_amt} /> */}
+              <Payment payment={this.state.dataCart?.total_amt} />
             </Row>
           </Container>
         </section>
