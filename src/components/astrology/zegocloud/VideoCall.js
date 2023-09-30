@@ -36,12 +36,12 @@ export default function App() {
       clearInterval(ref.current);
     };
   }, [toggle]);
-  useEffect(() => {
-    let id = localStorage.getItem("astroId");
-    axiosConfig.get(`/admin/getoneAstro/${id}`).then(res => {
-      console.log(res.data.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   let id = localStorage.getItem("astroId");
+  //   axiosConfig.get(`/admin/getoneAstro/${id}`).then(res => {
+  //     // console.log(res.data.data);
+  //   });
+  // }, []);
   const handleStart = () => {
     setToggle(true);
     handlestartinterval();

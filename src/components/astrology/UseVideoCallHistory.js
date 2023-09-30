@@ -1,17 +1,13 @@
 import React from "react";
-
 import { Container, Row, Col, Table } from "reactstrap";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-
 import LayoutOne from "../../layouts/LayoutOne";
 import "../../assets/scss/astroteam.scss";
-
 import axiosConfig from "../../axiosConfig";
 
-class UserCallHistory extends React.Component {
+class UseVideoCallHistory extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       userChatList: [],
     };
@@ -20,7 +16,7 @@ class UserCallHistory extends React.Component {
     let userId = JSON.parse(localStorage.getItem("user_id"));
 
     axiosConfig
-      .get(`/user/userCallHistory/${userId}`)
+      .get(`/user/userVideohistory/${userId}`)
       .then(response => {
         if (response.data.status === true) {
           this.setState({
@@ -60,7 +56,7 @@ class UserCallHistory extends React.Component {
               <Row>
                 <Col md="12">
                   <div className="leftcont text-left">
-                    <h1>User Call History</h1>
+                    <h1>User VideoCall History</h1>
                   </div>
                 </Col>
               </Row>
@@ -76,7 +72,7 @@ class UserCallHistory extends React.Component {
                   <Table striped className="">
                     <thead>
                       <tr>
-                        <th>#Conversation ID</th>
+                        {/* <th>#Conversation ID</th> */}
                         <th>Astrologer Name</th>
 
                         <th>Conversation Type</th>
@@ -92,16 +88,16 @@ class UserCallHistory extends React.Component {
                           return (
                             <tbody key={user._id}>
                               <tr>
-                                <th>{user?.Sid}</th>
-                                <td>{user?.astroid?.fullname}</td>
+                                {/* <th>{user?.Sid}</th> */}
+                                <td>{user?.astroId?.fullname}</td>
 
-                                <td>Call</td>
+                                <td>{user?.type} Call</td>
 
-                                <td>{user?.astroid?.callCharge}/Min.</td>
+                                <td>{user?.astroId?.callCharge}/Min.</td>
 
-                                <td>{user?.Duration} Min</td>
-                                <td>{user?.userdeductedAmt} Rs</td>
-                                <td>{user?.DateCreated.split("T")[0]}</td>
+                                <td>{user?.duration} Min</td>
+                                <td>Rs {user?.userdeductedAmt} </td>
+                                <td>{user?.createdAt.split("T")[0]}</td>
                               </tr>
                             </tbody>
                           );
@@ -118,4 +114,4 @@ class UserCallHistory extends React.Component {
   }
 }
 
-export default UserCallHistory;
+export default UseVideoCallHistory;

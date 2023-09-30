@@ -69,14 +69,6 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
                   Kalsharp Dosh
                 </Link>
               </li>
-
-              {/* {categoryList?.map((cat) => (
-                <li className="" key={cat._id}>
-                  <Link to={process.env.PUBLIC_URL + "/heroscopestwo"}>
-                    {cat?.title}
-                  </Link>
-                </li>
-              ))} */}
             </ul>
           </li>
           <li>
@@ -102,24 +94,11 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
                   Monthly
                 </Link>
               </li>
-              {/* <li className="">
-                <Link to={process.env.PUBLIC_URL + "/heroscopestwo4"}>
-                  Yearly
-                </Link>
-              </li> */}
-              {/* {categoryList?.map((cat) => (
-                <li className="" key={cat._id}>
-                  <Link to={process.env.PUBLIC_URL + "/heroscopestwo"}>
-                    {cat?.title}
-                  </Link>
-                </li>
-              ))} */}
             </ul>
           </li>
 
           <li className="">
             <Link to={process.env.PUBLIC_URL + "/astromallList"}>
-              {/* {strings["Monthly Horoscope"]} */}
               Astromall
             </Link>
           </li>

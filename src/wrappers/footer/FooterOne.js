@@ -167,42 +167,6 @@ const FooterOne = ({
                           Book Online Puja
                         </Link>
                       </li>
-                      {pages[0]?.other === true ? (
-                        <>
-                          <div className="footer-title mt-3">
-                            <h3>Others</h3>
-                          </div>
-                        </>
-                      ) : null}
-
-                      <div className="footer-list">
-                        <ul>
-                          <li>
-                            <ul className="submenu">
-                              {pages.length > 0 ? (
-                                <>
-                                  {pages?.map(ele => {
-                                    if (ele?.status === true) {
-                                      return (
-                                        <li key={ele?._id} className="">
-                                          <Link
-                                            to={
-                                              process.env.PUBLIC_URL +
-                                              `/otherpage/${ele?._id}`
-                                            }
-                                          >
-                                            {ele?.pageName}
-                                          </Link>
-                                        </li>
-                                      );
-                                    }
-                                  })}
-                                </>
-                              ) : null}
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
                     </ul>
                   </li>
                 </ul>

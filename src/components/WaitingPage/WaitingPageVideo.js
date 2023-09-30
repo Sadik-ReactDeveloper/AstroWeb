@@ -54,8 +54,7 @@ const WaitingPageVideo = ({ location, args }) => {
         localStorage.getItem("waitingId") ||
         mylocation?.state?._id ||
         sessionStorage.getItem("notificationdata");
-      // console.log(id);
-
+      console.log(id);
       axiosConfig
         .get(`/user/getOnenotificationByastro/${id}`)
         .then(res => {

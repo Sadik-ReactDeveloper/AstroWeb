@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button, Input } from "reactstrap";
+import { Container, Row, Col, Button, Input, Label } from "reactstrap";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosConfig from "../../axiosConfig";
 import swal from "sweetalert";
@@ -15,7 +15,6 @@ class UserRequestForm extends React.Component {
       astroid: "",
       mobile: "",
       firstname: "",
-      fullName: "",
       p_firstname: "",
       lastname: "",
       p_lastname: "",
@@ -38,6 +37,7 @@ class UserRequestForm extends React.Component {
       selectedState: null,
       selectedCity: null,
       showpartner: false,
+      type: "Chat",
     };
   }
   changeCity = item => {
@@ -65,7 +65,7 @@ class UserRequestForm extends React.Component {
       .get(`/user/viewoneuser/${userId}`)
       .then(response => {
         this.setState({ mobile: response.data.data.mobile });
-        this.setState({ firstname: response.data.data.fullname });
+        this.setState({ firstname: response.data.data.firstname });
       })
       .catch(error => {
         console.log(error);
@@ -85,27 +85,25 @@ class UserRequestForm extends React.Component {
     const arr = this.state.date_of_time.split(":");
     const hour = parseInt(arr[0]);
     const min = parseInt(arr[1]);
-    let obj = {
-      userid: userId,
-      astroid: astroId,
-      mobile: parseInt(this.state.mobile),
-      firstname: this.state.firstname,
-      // lastname: "nkk",
-      p_firstname: this.state.p_firstname,
-      p_lastname: this.state.p_lastname,
-      dob: this.state.dob,
-      p_dob: this.state.p_dob,
-      birthPlace: this.state.birthPlace,
-      p_birthPlace: this.state.p_birthPlace,
-      date_of_time: this.state.date_of_time,
-      p_date_of_time: this.state.p_date_of_time,
-      gender: this.state.gender,
-      marital_status: this.state.marital_status,
-      occupation: this.state.occupation,
-      topic_of_cnsrn: this.state.topic_of_cnsrn,
-      type: "Chat",
-      // entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
-    };
+    const data = new FormData();
+    data.append("userid", userId);
+    data.append("astroid", astroId);
+    data.append("mobile", parseInt(this.state.mobile));
+    data.append("firstname", this.state.firstname);
+    data.append("dob", this.state.dob);
+    data.append("p_firstname", this.state.p_firstname);
+    data.append("p_lastname", this.state.p_lastname);
+    data.append("p_birthPlace", this.state.p_birthPlace);
+    data.append("birthPlace", this.state.birthPlace);
+    data.append("date_of_time", this.state.date_of_time);
+    data.append("p_dob", this.state.p_dob);
+    data.append("p_date_of_time", this.state.p_date_of_time);
+    data.append("gender", this.state.gender);
+    data.append("marital_status", this.state.marital_status);
+    data.append("occupation", this.state.occupation);
+    data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
+    data.append("type", "Chat");
+
     const birthDetails = {
       userid: userId,
       astroid: astroId,
@@ -119,16 +117,6 @@ class UserRequestForm extends React.Component {
       tzone: 5.5,
     };
 
-    // axiosConfig
-    //   .post(`/user/add_chat_intake`, obj)
-    //   .then(response => {
-    //     console.log(response.data.data);
-    //     swal("Success!", "Submitted SuccessFully!", "success");
-    //     this.props.history.push("/chatApp");
-    //   })
-    //   .catch(error => {
-    //     swal("Error!", "You clicked the button!", "error");
-    //   });
     axiosConfig
       .post(`/user/birth_details`, birthDetails)
       .then(response => {})
@@ -137,28 +125,33 @@ class UserRequestForm extends React.Component {
       });
     if (userId !== "" && userId !== null) {
       axiosConfig
-        .post(`/user/add_chat_intake`, obj)
-
+        .post(`/user/add_chat_intake`, data)
         .then(response => {
-          // const data = {
-          //   userid: userId,
-          //   astroid: astroId,
-          //   type: "Chat",
-          // };
-          // axiosConfig
-          //   .post(`/user/addCallWallet`, data)
-          //   .then(res => {
-          //     sessionStorage.setItem("notificationdata", res.data?._id);
-          //     if (res.data.status === true) {
-          //       this.props.history.push({
-          //         pathname: "/waitingpagechat",
-          //         state: res.data,
-          //       });
-          //     } else swal("Not having Enough Balance");
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   });
+          const data = {
+            userid: userId,
+            astroid: astroId,
+            type: "Chat",
+          };
+          axiosConfig
+            .post(`/user/addCallWallet`, data)
+            .then(res => {
+              console.log(res);
+              sessionStorage.setItem("notificationdata", res.data?._id);
+              if (res.data.status === true) {
+                this.props.history.push({
+                  pathname: "/waitingpagechat",
+                  state: res.data,
+                });
+              } else swal("Not having Enough Balance");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          // swal("Success!", "Submitted SuccessFull!", "success");
+          // this.props.history.push({
+          //   pathname: "/waitingpagechat",
+          //   state: response.data,
+          // });
         })
         .catch(error => {
           swal("Error!", "Error Occurred!", "error");
@@ -233,7 +226,7 @@ class UserRequestForm extends React.Component {
                     <Row>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Mobile Number*</label>
+                          <Label>Mobile Number*</Label>
                           <input
                             type="number"
                             name="mobile"
@@ -246,7 +239,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>FullName*</label>
+                          <Label>FullName*</Label>
                           <input
                             type="text"
                             name="firstname"
@@ -257,23 +250,9 @@ class UserRequestForm extends React.Component {
                           />
                         </div>
                       </Col>
-
-                      {/* <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label> Last Name*</label>
-                          <input
-                            required
-                            type="text"
-                            name="lastname"
-                            placeholder="Enter Your Lastname"
-                            value={this.state.lastname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col> */}
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Date of Birth*</label>
+                          <Label>Date of Birth*</Label>
                           <input
                             type="date"
                             name="dob"
@@ -286,7 +265,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Time of Birth*</label>
+                          <Label>Time of Birth*</Label>
                           <input
                             type="time"
                             required
@@ -299,7 +278,7 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
-                          <label>Birth Place*</label>
+                          <Label>Birth Place*</Label>
                           <input
                             type="text"
                             name="birthPlace"
@@ -315,11 +294,11 @@ class UserRequestForm extends React.Component {
                         <>
                           <Col md="4">
                             <div class="form-group mtb-10">
-                              <label>Partner First Name</label>
+                              <Label>Partner First Name</Label>
                               <input
                                 type="text"
                                 name="p_firstname"
-                                placeholder="Enter Your Patner FirstName"
+                                placeholder="Enter Patner FirstName"
                                 value={this.state.p_firstname}
                                 onChange={this.changeHandler}
                               />
@@ -327,11 +306,11 @@ class UserRequestForm extends React.Component {
                           </Col>
                           <Col md="4">
                             <div class="form-group mtb-10">
-                              <label>Partner Last Name</label>
+                              <Label>Partner Last Name</Label>
                               <input
                                 type="text"
                                 name="p_lastname"
-                                placeholder="Enter Your Patner LastName"
+                                placeholder="Enter Patner LastName"
                                 value={this.state.p_lastname}
                                 onChange={this.changeHandler}
                               />
@@ -340,20 +319,19 @@ class UserRequestForm extends React.Component {
 
                           <Col md="4">
                             <div class="form-group mtb-10">
-                              <label> Partner Date of Birth</label>
+                              <Label> Partner Date of Birth</Label>
                               <input
                                 type="date"
                                 name="p_dob"
                                 value={this.state.p_dob}
                                 onChange={this.changeHandler}
-                                placeholder="Enter Your Number"
                               />
                             </div>
                           </Col>
 
                           <Col md="4">
                             <div class="form-group mtb-10">
-                              <label> Partner Time of Birth</label>
+                              <Label> Partner Time of Birth</Label>
                               <input
                                 type="time"
                                 name="p_date_of_time"
@@ -365,20 +343,20 @@ class UserRequestForm extends React.Component {
 
                           <Col md="4">
                             <div class="form-group mtb-10">
-                              <label> Partner Birth Place</label>
+                              <Label> Partner Birth Place</Label>
                               <input
                                 type="text"
                                 name="p_birthPlace"
                                 value={this.state.p_birthPlace}
                                 onChange={this.changeHandler}
-                                placeholder="Enter Your  Birth Place"
+                                placeholder="Enter Partner  Birth Place"
                               />
                             </div>
                           </Col>
                         </>
                       ) : null}
                       <Col lg="4" md="4" sm="6" className="mt-2">
-                        <label>Country</label>
+                        <Label>Country</Label>
                         <Select
                           options={Country.getAllCountries()}
                           getOptionLabel={options => {
@@ -407,7 +385,7 @@ class UserRequestForm extends React.Component {
                       </Col>
 
                       <Col lg="4" md="4" sm="6" className="mt-2">
-                        <label>State</label>
+                        <Label>State</Label>
                         <Select
                           options={State?.getStatesOfCountry(
                             this.state.selectedCountry?.isoCode
@@ -426,7 +404,7 @@ class UserRequestForm extends React.Component {
                       </Col>
 
                       <Col lg="4" md="4" sm="6" className="mt-2">
-                        <label>City</label>
+                        <Label>City</Label>
                         <Select
                           options={City.getCitiesOfState(
                             this.state.selectedState?.countryCode,
@@ -446,7 +424,7 @@ class UserRequestForm extends React.Component {
                       </Col>
 
                       <Col lg="4" md="4" sm="6" className="my-2 ">
-                        <label>Gender*</label>
+                        <Label>Gender*</Label>
                         <Input
                           id="exampleSelect"
                           type="select"
@@ -454,15 +432,18 @@ class UserRequestForm extends React.Component {
                           required
                           value={this.state.data.gender}
                           onChange={this.changeHandler}
+                          defaultValue=""
                         >
-                          <option>Select Gender</option>
-                          <option>Male</option>
-                          <option>Female</option>
+                          <option value="" disabled>
+                            Select Gender
+                          </option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
                         </Input>
                       </Col>
 
                       <Col lg="4" md="4" sm="6" className="my-2 ">
-                        <label>Marital Status*</label>
+                        <Label>Marital Status*</Label>
                         <Input
                           type="select"
                           name="marital_status"
@@ -470,7 +451,9 @@ class UserRequestForm extends React.Component {
                           value={this.state.marital_status}
                           onChange={this.changeHandler}
                         >
-                          <option>Select Marital Status</option>
+                          <option value="" disabled>
+                            Select Marital Status
+                          </option>
                           <option>Single</option>
                           <option>Married</option>
                           <option>Divorced</option>
@@ -480,72 +463,96 @@ class UserRequestForm extends React.Component {
                       </Col>
                       <Col lg="4" md="4" sm="6">
                         <div class="form-group mtb-10">
-                          <label>Occupation*</label>
+                          <Label>Occupation*</Label>
                           <Input
                             type="select"
                             required
                             name="occupation"
                             value={this.state.data.occupation}
                             onChange={this.changeHandler}
+                            defaultValue=""
                           >
-                            <option>Select Employed in</option>
-                            <option>Private Sector</option>
-                            <option>Govt Sector</option>
-                            <option>Business/Self Employed</option>
-                            <option>Civil Services</option>
-                            <option>Defence</option>
-                            <option>Not Working</option>
-                            <option>Student</option>
+                            <option value="" disabled>
+                              Select Employed in
+                            </option>
+                            <option value="Private Sector">
+                              Private Sector
+                            </option>
+                            <option value="Govt Sector">Govt Sector</option>
+                            <option value="Business/Self Employed">
+                              Business/Self Employed
+                            </option>
+                            <option value="Civil Services">
+                              Civil Services
+                            </option>
+                            <option value="Defence">Defence</option>
+                            <option value="Not Working">Not Working</option>
+                            <option value="Student">Student</option>
                           </Input>
                         </div>
                       </Col>
                       <Col lg="4" md="4" sm="6">
                         <div class="form-group mtb-10">
-                          <label>Topic of concern*</label>
+                          <Label>Topic of concern*</Label>
                           <Input
                             type="select"
                             name="topic_of_cnsrn"
                             required
                             value={this.state.data.topic_of_cnsrn}
                             onChange={this.changeHandler}
+                            defaultValue=""
                           >
-                            <option>Select Topic</option>
-                            <option>Career and Business</option>
-                            <option>Marriage</option>
-                            <option>Love and Relationship</option>
-                            <option>Wealth and Property</option>
-                            <option>Education</option>
-                            <option>Legal Matters</option>
-                            <option>Child Name Consultation</option>
-                            <option>Business Name Consultation</option>
-                            <option>Gem Stone Consultation</option>
-                            <option>Commodity trading consultation</option>
-                            <option>Match making</option>
-                            <option>Birth Time Rectification</option>
-                            <option>Name Correction Consultation</option>
-                            <option>Travel Abroad Consulation</option>
-                            <option>Remedy Consultation</option>
-                            <option>Health Consultation</option>
-                            <option>Others</option>
+                            <option value="" disabled>
+                              Select Topic
+                            </option>
+                            <option value="Career and Business">
+                              Career and Business
+                            </option>
+                            <option value="Marriage">Marriage</option>
+                            <option value="Love and Relationship">
+                              Love and Relationship
+                            </option>
+                            <option value="Wealth and Property">
+                              Wealth and Property
+                            </option>
+                            <option value="Education">Education</option>
+                            <option value="Legal Matters">Legal Matters</option>
+                            <option value="Child Name Consultation">
+                              Child Name Consultation
+                            </option>
+                            <option value="Business Name Consultation">
+                              Business Name Consultation
+                            </option>
+                            <option value="Gem Stone Consultation">
+                              Gem Stone Consultation
+                            </option>
+                            <option value="Commodity trading consultation">
+                              Commodity trading consultation
+                            </option>
+                            <option value="Match Making">Match making</option>
+                            <option value="Birth Time Rectification">
+                              Birth Time Rectification
+                            </option>
+                            <option value="Name Correction Consultation">
+                              Name Correction Consultation
+                            </option>
+                            <option value="Travel Abroad Consulation">
+                              Travel Abroad Consulation
+                            </option>
+                            <option value="Remedy Consultation">
+                              Remedy Consultation
+                            </option>
+                            <option value=" Health Consultation">
+                              Health Consultation
+                            </option>
+                            <option value="Others">Others</option>
                           </Input>
                         </div>
                       </Col>
-                      {/* <Col md="4">
-                        <div class="form-group mtb-10">
-                          <label>Enter topic of concern:</label>
-                          <input
-                            type="text"
-                            name="entertopic_of_cnsrn"
-                            required
-                            placeholder="Enter Topic Of Concern "
-                            value={this.state.entertopic_of_cnsrn}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col> */}
+
                       <Col md="12" className="mt-3">
                         <Button className="btn btn-warning">
-                          Start chat with {localStorage.getItem("astroname")}
+                          Start Chat with {localStorage.getItem("astroname")}
                         </Button>
                       </Col>
                     </Row>

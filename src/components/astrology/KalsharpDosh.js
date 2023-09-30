@@ -97,36 +97,30 @@ class KalsharpDosh extends React.Component {
     let payload = {
       country_code: this.state.country_code,
     };
-    console.log("shgdjhg", payload);
+
     axiosConfig
       .post(`/user/time_zone`, payload)
       .then(response => {
         this.setState({ data: response.data });
-        console.log("country_code", response.data.timezone);
         swal("Success!", "Submitted SuccessFull!", "success");
       })
       .catch(error => {
         swal("Error!", "You clicked the button!", "error");
-        console.log(error);
       });
   };
   submitPlaceHandler = e => {
     e.preventDefault();
     let payload = {
-      // data: this.state.data
       place: this.state.place,
     };
-    console.log("shgdjhg", payload);
     axiosConfig
       .post(`/user/geo_detail`, payload)
       .then(response => {
         this.setState({ data: response.data });
-        console.log("place", response.data.geonames?.place_name);
         swal("Success!", "Submitted SuccessFull!", "success");
       })
       .catch(error => {
         swal("Error!", "You clicked the button!", "error");
-        console.log(error);
       });
   };
   submitHandler = e => {
@@ -145,12 +139,11 @@ class KalsharpDosh extends React.Component {
     axiosConfig
       .post(`/user/kalsharpDosh`, payload)
       .then(response => {
-        this.setState({ data1: true })
+        this.setState({ data1: true });
         console.log("data1", response.data.data);
         this.setState({
           kalsharpDosh: response.data.data,
         });
-        console.log("data11", response.data.data);
         swal("Success!", "Submitted SuccessFull!", "success");
         // this.props.history.push("/kalsharpDoshDetail");
       })
@@ -162,20 +155,16 @@ class KalsharpDosh extends React.Component {
 
   render() {
     const { kalsharpDosh } = this.state;
-    console.log("Respose", kalsharpDosh)
+    console.log("Respose", kalsharpDosh);
 
     if (this.state.data1 === true) {
-      console.log("first", this.state.data1)
+      console.log("first", this.state.data1);
       return (
         <LayoutOne headerTop="visible">
           <section className="pt-0 pb-0">
             <div
               className=""
               style={{
-                // backgroundColor: "#ffcc01",
-                // width: "100%",
-                // padding: "70px 0px",
-                // backgroundSize: "cover",
                 float: "left",
                 width: "100%",
                 backgroundColor: "#272727",
@@ -195,7 +184,6 @@ class KalsharpDosh extends React.Component {
                   <Col md="12">
                     <div className="leftcont text-left">
                       <h1>KALSHARP DOSH</h1>
-                      {/* <h3>Get instant & accurate, Janam Kundli</h3> */}
                     </div>
                   </Col>
                 </Row>
@@ -206,34 +194,47 @@ class KalsharpDosh extends React.Component {
             <Row>
               <Col md="12">
                 <Card className="mb-50 pt-d">
-                  <h3>
-                    KALSHARP DOSH Online
-                  </h3>
+                  <h3>KALSHARP DOSH Online</h3>
                   <p>
-                    Kalasarpa Dosha, also known as Kalsharp Dosh, is a condition in Vedic astrology that is believed
-                    to occur when all the seven planets in an individual's birth chart are situated between the two
-                    lunar nodes, Rahu and Ketu. The term "Kalasarpa" means "serpent of time," and it is believed
-                    that this condition can cause various negative effects on an individual's life
+                    Kalasarpa Dosha, also known as Kalsharp Dosh, is a condition
+                    in Vedic astrology that is believed to occur when all the
+                    seven planets in an individual's birth chart are situated
+                    between the two lunar nodes, Rahu and Ketu. The term
+                    "Kalasarpa" means "serpent of time," and it is believed that
+                    this condition can cause various negative effects on an
+                    individual's life
                   </p>
                   <p>
-                    According to Vedic astrology, the presence of Kalasarpa Dosha in an individual's birth chart can
-                    cause delays and obstacles in various aspects of life, such as career, education, health, marriage,
-                    and financial stability. It is also believed to create mental stress, fear, and anxiety in individuals.
+                    According to Vedic astrology, the presence of Kalasarpa
+                    Dosha in an individual's birth chart can cause delays and
+                    obstacles in various aspects of life, such as career,
+                    education, health, marriage, and financial stability. It is
+                    also believed to create mental stress, fear, and anxiety in
+                    individuals.
                   </p>
                   <h3>KALSHARP DOSH </h3>
                   <div className="match-bx bg-white">
                     <Row>
-                      {kalsharpDosh?.present === true ? (<>
-                        <h3>Present</h3>
-                        <span>Yes</span>
-                      </>) : null}
-
-                      {kalsharpDosh?.type?.length > 0 ? (<>   <h3>Type</h3>
-                        <p>{kalsharpDosh?.type}</p></>
+                      {kalsharpDosh?.present === true ? (
+                        <>
+                          <h3>Present</h3>
+                          <span>Yes</span>
+                        </>
                       ) : null}
 
-                      {kalsharpDosh?.name?.length > 0 ? (<><h3>Name</h3>
-                        <p>{kalsharpDosh?.name}</p></>
+                      {kalsharpDosh?.type?.length > 0 ? (
+                        <>
+                          {" "}
+                          <h3>Type</h3>
+                          <p>{kalsharpDosh?.type}</p>
+                        </>
+                      ) : null}
+
+                      {kalsharpDosh?.name?.length > 0 ? (
+                        <>
+                          <h3>Name</h3>
+                          <p>{kalsharpDosh?.name}</p>
+                        </>
                       ) : null}
 
                       <h3>Details</h3>
@@ -272,7 +273,6 @@ class KalsharpDosh extends React.Component {
                   <Col md="12">
                     <div className="leftcont text-left">
                       <h1>KALSHARP DOSH</h1>
-                      {/* <h3>Get instant & accurate, Janam Kundli</h3> */}
                     </div>
                   </Col>
                 </Row>
@@ -283,19 +283,23 @@ class KalsharpDosh extends React.Component {
             <Row>
               <Col md="12">
                 <Card className="mb-50 pt-d">
-                  <h3>
-                    KALSHARP DOSH
-                  </h3>
+                  <h3>KALSHARP DOSH</h3>
                   <p>
-                    Kalasarpa Dosha, also known as Kalsharp Dosh, is a condition in Vedic astrology that is believed
-                    to occur when all the seven planets in an individual's birth chart are situated between the two
-                    lunar nodes, Rahu and Ketu. The term "Kalasarpa" means "serpent of time," and it is believed
-                    that this condition can cause various negative effects on an individual's life
+                    Kalasarpa Dosha, also known as Kalsharp Dosh, is a condition
+                    in Vedic astrology that is believed to occur when all the
+                    seven planets in an individual's birth chart are situated
+                    between the two lunar nodes, Rahu and Ketu. The term
+                    "Kalasarpa" means "serpent of time," and it is believed that
+                    this condition can cause various negative effects on an
+                    individual's life
                   </p>
                   <p>
-                    According to Vedic astrology, the presence of Kalasarpa Dosha in an individual's birth chart can
-                    cause delays and obstacles in various aspects of life, such as career, education, health, marriage,
-                    and financial stability. It is also believed to create mental stress, fear, and anxiety in individuals.
+                    According to Vedic astrology, the presence of Kalasarpa
+                    Dosha in an individual's birth chart can cause delays and
+                    obstacles in various aspects of life, such as career,
+                    education, health, marriage, and financial stability. It is
+                    also believed to create mental stress, fear, and anxiety in
+                    individuals.
                   </p>
                   <div className="match-bx">
                     <Row>
@@ -313,7 +317,7 @@ class KalsharpDosh extends React.Component {
                                   value={this.state.day}
                                   onChange={this.changeHandler}
                                 >
-                                  <option>--Select--</option>
+                                  <option value="">--Select--</option>
                                   <option>0</option>
                                   <option>1</option>
                                   <option>2</option>
@@ -356,7 +360,7 @@ class KalsharpDosh extends React.Component {
                                   value={this.state.month}
                                   onChange={this.changeHandler}
                                 >
-                                  <option>--Select--</option>
+                                  <option value="">--Select--</option>
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -380,7 +384,7 @@ class KalsharpDosh extends React.Component {
                                   value={this.state.year}
                                   onChange={this.changeHandler}
                                 >
-                                  <option>--Select--</option>
+                                  <option value="">--Select--</option>
                                   <option value="1942">1942</option>
                                   <option value="1943">1943</option>
                                   <option value="1944">1944</option>
@@ -482,7 +486,7 @@ class KalsharpDosh extends React.Component {
                                   value={this.state.hour}
                                   onChange={this.changeHandler}
                                 >
-                                  <option>--Select--</option>
+                                  <option value="">--Select--</option>
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -518,7 +522,7 @@ class KalsharpDosh extends React.Component {
                                   value={this.state.min}
                                   onChange={this.changeHandler}
                                 >
-                                  <option>--Select--</option>
+                                  <option value="">--Select--</option>
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -585,7 +589,6 @@ class KalsharpDosh extends React.Component {
                               <Col md="4">
                                 <label>Country</label>
                                 <Select
-
                                   options={Country.getAllCountries()}
                                   getOptionLabel={options => {
                                     return options["name"];
@@ -742,6 +745,5 @@ class KalsharpDosh extends React.Component {
       );
     }
   }
-
 }
 export default KalsharpDosh;

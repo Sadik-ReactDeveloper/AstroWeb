@@ -12,7 +12,6 @@ import axiosConfig from "../../axiosConfig";
 
 const IconGroup = ({
   currency,
-
   cartData,
   wishlistData,
   compareData,
@@ -103,9 +102,7 @@ const IconGroup = ({
       .then(response => {
         setCustomer(response.data.data);
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   };
   useEffect(() => {
     let data = localStorage.getItem("token");
@@ -117,19 +114,6 @@ const IconGroup = ({
     <div
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
     >
-      {/* <div className="same-style header-search d-none d-lg-block">
-        <button className="search-active" onClick={(e) => handleClick(e)}>
-          <i className="pe-7s-search" />
-        </button>
-        <div className="search-content">
-          <form action="#">
-            <input type="text" placeholder="Search" />
-            <button className="button-search">
-              <i className="pe-7s-search" />
-            </button>
-          </form>
-        </div>
-      </div> */}
       <div className="same-style account-setting  d-lg-block">
         <button
           className="account-setting-active"
@@ -175,13 +159,11 @@ const IconGroup = ({
                     Login/Register
                   </Link>
                 </li>
-                {/* <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                    Register
-                  </Link>
-                </li> */}
+
                 <li>
-                  <a href="http://3.6.219.3/#/pages/login">Astrologer login</a>
+                  <a href="https://astrologer.astrogyata.in/pages/login">
+                    Astrologer login
+                  </a>
                 </li>
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/astrologersignup"}>
@@ -230,9 +212,6 @@ const IconGroup = ({
                         <>{customer?.amount}</>
                       )}
                     </span>
-                    {/* <span className="ml-2">
-                      ₹ <FetchUserBalance />
-                    </span> */}
                   </Link>
                 </li>
                 <li>
@@ -246,20 +225,21 @@ const IconGroup = ({
                   </Link>
                 </li>
                 <li>
+                  <Link to={process.env.PUBLIC_URL + "/userChatHistory"}>
+                    ChatHistory List
+                  </Link>
+                </li>
+                <li>
                   <Link to={process.env.PUBLIC_URL + "/userCallHistrory"}>
                     Call History
                   </Link>
                 </li>
                 <li>
-                  <Link to={process.env.PUBLIC_URL + "/userChatHistory"}>
-                    Chat /Video Call List
+                  <Link to={process.env.PUBLIC_URL + "/useVideoCallHistory"}>
+                    VideoCall History
                   </Link>
                 </li>
-                {/* <li>
-                  <Link to={process.env.PUBLIC_URL + "/userCallHistrory"}>
-                    Video Call History
-                  </Link>
-                </li> */}
+
                 <li>
                   <Link to={process.env.PUBLIC_URL + "/customersupport"}>
                     Customer Support Chat
@@ -269,13 +249,7 @@ const IconGroup = ({
                 <li>
                   <Link
                     to={process.env.PUBLIC_URL + "/"}
-                    // onClick={(e) =>{(
-                    //   window.localStorage.clear()
-
-                    //   //localStorage.removeItem("auth-token","userInfo")
-                    // )}
                     onClick={e => handleLogout()}
-                    //}
                   >
                     Logout
                   </Link>
@@ -285,45 +259,6 @@ const IconGroup = ({
           </ul>
         </div>
       </div>
-      {/* <div className="same-style header-compare">
-        <Link to={process.env.PUBLIC_URL + "/compare"}>
-          <i className="pe-7s-shuffle" />
-          <span className="count-style">
-            {compareData && compareData.length ? compareData.length : 0}
-          </span>
-        </Link>
-      </div> */}
-      {/* <div className="same-style header-wishlist">
-        <Link to={process.env.PUBLIC_URL + '/wishlist'}>
-          <i className="pe-7s-like" />
-          <span className="count-style">
-            {wish && wish.length ? wish.length : 0}
-          </span>
-        </Link>
-      </div> */}
-
-      {/* <div className="same-style cart-wrap d-none d-lg-block">
-        <button className="icon-cart" onClick={(e) => handleClick(e)}>
-          <i className="pe-7s-shopbag" />
-          <span className="count-style">
-            {carts && carts.length ? carts.length : 0}
-          </span>
-        </button>
-       
-        <MenuCart
-          carts={carts}
-          currency={currency}
-          deleteFromCart={deleteFromCart}
-        />
-      </div>
-      <div className="same-style cart-wrap d-block d-lg-none">
-        <Link className="icon-cart" to={process.env.PUBLIC_URL + '/cart'}>
-          <i className="pe-7s-shopbag" />
-          <span className="count-style">
-            {carts && carts.length ? carts.length : 0}
-          </span>
-        </Link>
-      </div> */}
 
       <div className="same-style mobile-off-canvas d-block d-lg-none">
         <button
@@ -352,7 +287,6 @@ export const Fetchuserdetail = async () => {
     .get(`/user/viewoneuser/${user_id}`)
     .then(response => {
       sessionStorage.setItem("userBalance", response.data.data.amount);
-
       return response.data.data;
     })
     .catch(error => {
