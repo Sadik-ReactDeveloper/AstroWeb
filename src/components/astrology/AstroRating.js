@@ -24,16 +24,6 @@ class AstroRating extends React.Component {
     this.setState({ rating: nextValue });
   }
 
-  // onStarClickCustomIcon(nextValue, prevValue, name) {
-  //   console.log(
-  //     "name: %s, nextValue: %s, prevValue: %s",
-  //     name,
-  //     nextValue,
-  //     prevValue
-  //   );
-  //   this.setState({ rating_custom_icon: nextValue });
-  // }
-
   onStarClickHalfStar(nextValue, prevValue, name, e) {
     const xPos =
       (e.pageX - e.currentTarget.getBoundingClientRect().left) /
@@ -49,7 +39,6 @@ class AstroRating extends React.Component {
       nextValue,
       prevValue
     );
-    // console.log(e);
     this.setState({ rating_half_star: nextValue });
   }
 
@@ -81,8 +70,9 @@ class AstroRating extends React.Component {
           comment: "",
           rating: "1",
         });
-        // this.props.history.push("/");
+
         swal("Success!", "Thank You For Your Valuable FeedBack", "success");
+        this.props.history.push("/");
       })
 
       .catch(error => {

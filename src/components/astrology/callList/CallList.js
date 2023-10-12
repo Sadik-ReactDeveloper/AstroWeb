@@ -75,7 +75,6 @@ class CallList extends React.Component {
     axiosConfig
       .get(`/admin/getoneAstro/${astroid}`)
       .then(response => {
-        // console.log("AstroViewOne", response.data?.data);
         localStorage.setItem("astroname", response?.data?.data?.fullname);
         localStorage.setItem("channelName", response?.data?.data?.channelName);
         this.setState({
@@ -114,7 +113,6 @@ class CallList extends React.Component {
       .get(`/admin/intekListByUser/${userId}`)
       .then(response => {
         if (response.data.status === true) {
-          console.log("userId>>>>>>[[[ListData]]", response.data.data);
           this.setState({ allUserList: response.data.data });
           this.setState({ allminrechargeList: response.data.data });
         }
@@ -143,7 +141,7 @@ class CallList extends React.Component {
             .then(response => {
               this.setState({ callingId: callerId });
               // console.log("Calling", response.data);
-              swal("Call Connected", "SuccessFully");
+              swal("Call Connecting ", "SuccessFully");
             })
 
             .catch(error => {
@@ -246,7 +244,10 @@ class CallList extends React.Component {
                                   <span>{list.firstname}</span>
                                   <div
                                     className="delete"
-                                    style={{ float: "right" }}
+                                    style={{
+                                      float: "right",
+                                      cursor: "pointer",
+                                    }}
                                     onClick={() =>
                                       this.handleDeleteList(list._id)
                                     }
@@ -257,10 +258,6 @@ class CallList extends React.Component {
                                     ></i>
                                   </div>
                                 </li>
-                                {/* <li>
-                                  LastName:
-                                  <span>{list.lastname}</span>
-                                </li> */}
                                 <li>
                                   BirthPlace:
                                   <span>{list.birthPlace}</span>
@@ -314,7 +311,9 @@ class CallList extends React.Component {
                                   </li>
                                 ) : null}
 
-                                <div style={{ float: "right" }}>
+                                <div
+                                  style={{ float: "right", cursor: "pointer" }}
+                                >
                                   <button
                                     className="btn btn-denger wr"
                                     onClick={() => this.handleCalling(list._id)}

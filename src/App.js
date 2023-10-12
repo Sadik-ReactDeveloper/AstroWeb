@@ -298,7 +298,9 @@ const ServiceList = lazy(() => import("./components/astrology/ServiceList"));
 const AllAstrologerList = lazy(() =>
   import("./components/astrology/allastrologerlist")
 );
-const WaitingPage = lazy(() => import("./components/WaitingPage/Waitingpage"));
+const WaitingPageCall = lazy(() =>
+  import("./components/WaitingPage/Waitingpage")
+);
 const WaitingPagechat = lazy(() =>
   import("./components/WaitingPage/WaitingPageChat")
 );
@@ -905,8 +907,9 @@ const App = props => {
                     component={AllAstrochatList}
                   />
                   <Route
-                    path={process.env.PUBLIC_URL + "/waitingpage"}
-                    component={WaitingPage}
+                    path={process.env.PUBLIC_URL + "/WaitingPageCall"}
+                    // path={process.env.PUBLIC_URL + "/waitingpage"}
+                    component={WaitingPageCall}
                   />
                   <Route
                     path={process.env.PUBLIC_URL + "/waitingpagechat"}

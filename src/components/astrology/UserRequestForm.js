@@ -79,12 +79,7 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-    const Year = new Date(this.state.dob).getFullYear();
-    const Month = new Date(this.state.dob).getMonth();
-    const Day = new Date(this.state.dob).getDay();
-    const arr = this.state.date_of_time.split(":");
-    const hour = parseInt(arr[0]);
-    const min = parseInt(arr[1]);
+
     const data = new FormData();
     data.append("userid", userId);
     data.append("astroid", astroId);
@@ -103,30 +98,42 @@ class UserRequestForm extends React.Component {
     data.append("occupation", this.state.occupation);
     data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
     data.append("type", "Chat");
+    console.log(data.values);
+    // const Year = new Date(this.state.dob).getFullYear();
+    // const Month = new Date(this.state.dob).getMonth();
+    // const Day = new Date(this.state.dob).getDay();
+    // const arr = this.state.date_of_time.split(":");
+    // const hour = parseInt(arr[0]);
+    // const min = parseInt(arr[1]);
 
-    const birthDetails = {
-      userid: userId,
-      astroid: astroId,
-      day: Day,
-      month: Month,
-      year: Year,
-      hour: hour,
-      min: min,
-      lat: this.state.latitude,
-      lon: this.state.longitude,
-      tzone: 5.5,
-    };
+    // const birthDetails = {
+    //   userid: userId,
+    //   astroid: astroId,
+    //   day: Day,
+    //   month: Month,
+    //   year: Year,
+    //   hour: hour,
+    //   min: min,
+    //   lat: this.state.latitude,
+    //   lon: this.state.longitude,
+    //   tzone: 5.5,
+    // };
 
-    axiosConfig
-      .post(`/user/birth_details`, birthDetails)
-      .then(response => {})
-      .catch(error => {
-        swal("Error!", "You clicked the button!", "error");
-      });
+    // axiosConfig
+    //   .post(`/user/birth_details`, birthDetails)
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     swal("Error!", "You clicked the button!", "error");
+    //   });
+    debugger;
+
     if (userId !== "" && userId !== null) {
       axiosConfig
         .post(`/user/add_chat_intake`, data)
         .then(response => {
+          console.log(response.data.data);
           const data = {
             userid: userId,
             astroid: astroId,
@@ -147,11 +154,6 @@ class UserRequestForm extends React.Component {
             .catch(err => {
               console.log(err);
             });
-          // swal("Success!", "Submitted SuccessFull!", "success");
-          // this.props.history.push({
-          //   pathname: "/waitingpagechat",
-          //   state: response.data,
-          // });
         })
         .catch(error => {
           swal("Error!", "Error Occurred!", "error");

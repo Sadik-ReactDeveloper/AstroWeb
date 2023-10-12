@@ -300,8 +300,6 @@ export default class LoginRegister extends Component {
                                       type="password"
                                       name="password"
                                       maxLength="12"
-                                      // valid={true}
-                                      // invalid={false}
                                       required
                                       placeholder="Enter Your password"
                                       value={this.state.password}
@@ -313,8 +311,6 @@ export default class LoginRegister extends Component {
                                     <Input
                                       type="password"
                                       name="cnfmPassword"
-                                      // valid={true}
-                                      // invalid={true}
                                       maxLength="12"
                                       required
                                       placeholder="Enter Your Confirm Password"

@@ -72,11 +72,9 @@ class UserRequestForm extends React.Component {
     console.log("cdcd", event.target.files[0]);
   };
   changeHandler = e => {
-    console.log(e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
   submitHandler = e => {
-    debugger;
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
@@ -86,7 +84,6 @@ class UserRequestForm extends React.Component {
     data.append("astroid", astroId);
     data.append("mobile", parseInt(this.state.mobile));
     data.append("firstname", this.state.firstname);
-    // data.append("lastname", "nk");
     data.append("dob", this.state.dob);
     data.append("p_firstname", this.state.p_firstname);
     data.append("p_lastname", this.state.p_lastname);
@@ -99,7 +96,6 @@ class UserRequestForm extends React.Component {
     data.append("occupation", this.state.occupation);
     data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
     data.append("type", "Call");
-    // data.append("entertopic_of_cnsrn", this.state.entertopic_of_cnsrn);
 
     if (this.state.selectedFile !== null) {
       if (this.state.selectedFile !== null) {
@@ -113,16 +109,14 @@ class UserRequestForm extends React.Component {
       .post(`/user/add_chat_intake`, data)
       .then(response => {
         console.log(response);
-        swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push({
-          pathname: "/waitingpagevideo",
+          pathname: "/WaitingPageCall",
           state: response.data,
         });
       })
 
       .catch(error => {
-        console.log(error);
-        // swal("Error!", "You clicked the button!", "error");
+        console.log(error.data);
       });
   };
   render() {
@@ -312,6 +306,7 @@ class UserRequestForm extends React.Component {
                             name="occupation"
                             value={this.state.data.occupation}
                             onChange={this.changeHandler}
+                            defaultValue=""
                           >
                             <option value="" disabled>
                               Select Employed in
@@ -334,6 +329,7 @@ class UserRequestForm extends React.Component {
                             name="topic_of_cnsrn"
                             value={this.state.data.topic_of_cnsrn}
                             onChange={this.changeHandler}
+                            defaultValue=""
                           >
                             <option value="" disabled>
                               Select Topic

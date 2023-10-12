@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 import axiosConfig from "../../axiosConfig";
-
+import Menu from "../Menu";
 const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
   const [category, setCategoryList] = useState([]);
 
@@ -102,6 +102,9 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
               Astromall
             </Link>
           </li>
+          {/* <li>
+            <Link onclick={Menu()}>Menu</Link>
+          </li> */}
         </ul>
       </nav>
     </div>

@@ -196,7 +196,10 @@ class ChatList extends React.Component {
                                   <span>{list.firstname}</span>
                                   <div
                                     className="delete"
-                                    style={{ float: "right" }}
+                                    style={{
+                                      float: "right",
+                                      cursor: "pointer",
+                                    }}
                                     onClick={() =>
                                       this.handleDeleteList(list._id)
                                     }
