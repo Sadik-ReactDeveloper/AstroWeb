@@ -74,7 +74,7 @@ export default class LoginRegister extends Component {
   };
   loginHandler = e => {
     e.preventDefault();
-    console.log("Login");
+    console.log(this.state.mobile);
     if (this.state.mobile !== "") {
       let obj = { mobile: parseInt(this.state.mobile) };
       axiosConfig
@@ -90,8 +90,8 @@ export default class LoginRegister extends Component {
           }
         })
         .catch(error => {
-          console.log(error.response);
-          swal("Error!", "User doesn't Exist", "error");
+          console.log(error.response.data.msg);
+          swal("Error!", `${error.response.data.msg}`, "error");
         });
     } else {
       this.setState({ mobileError: "Please enter mobile number" });
@@ -324,7 +324,6 @@ export default class LoginRegister extends Component {
                                       type="date"
                                       name="dob"
                                       required
-                                      placeholder="Date of birth"
                                       value={this.state.dob}
                                       onChange={this.changeHandler}
                                       className="form-controller"

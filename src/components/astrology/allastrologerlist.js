@@ -12,7 +12,6 @@ import {
   FormGroup,
   Input,
 } from "reactstrap";
-// import Nav from "react-bootstrap/Nav";
 import {
   AstroSkills,
   AstroStatus,

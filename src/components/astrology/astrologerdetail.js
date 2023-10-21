@@ -66,13 +66,9 @@ class AstrologerDetail extends React.Component {
 
   handleStartChat = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
-
     // latest code
     if (userId !== "" && userId !== null) {
-      if (
-        this.state.astroData?.waiting_tym === 0 &&
-        this.state.astroData?.callingStatus === "Available"
-      ) {
+      if (this.state.astroData?.status === "Online") {
         let astrocharge = this.state.astroData?.callCharge * 5;
         let useramount = this.state.useramount;
         if (useramount > astrocharge) {
@@ -80,7 +76,7 @@ class AstrologerDetail extends React.Component {
         } else
           swal(
             "Recharge Now",
-            "You Donot have Enough balance to Make This Call",
+            "You Donot have Enough balance to Make This Chat",
             {
               buttons: {
                 cancel: "Recharge Now",
@@ -96,43 +92,41 @@ class AstrologerDetail extends React.Component {
             }
           });
       } else {
-        let astrocharge = this.state.astroData?.callCharge * 5;
+        let requireBalance = this.state.astroData?.callCharge * 5;
         let useramount = this.state.useramount;
-        console.log(useramount, astrocharge);
-        if (useramount > astrocharge) {
-          swal(
-            `Astrologer is Busy`,
-            "Do You Want to Be in queue ",
+        if (useramount > requireBalance) {
+          this.props.history.push("/ChatListData");
+          // swal(
+          //   `Astrologer is Busy`,
+          //   "Do You Want to Be in queue ",
 
-            {
-              buttons: {
-                cancel: "Be in queue",
-                catch: { text: "Cancel ", value: "catch" },
-              },
-            }
-          ).then(value => {
-            switch (value) {
-              case "catch":
-                break;
-              default:
-                let astroid = localStorage.getItem("astroId");
-                let userId = JSON.parse(localStorage.getItem("user_id"));
+          //   {
+          //     buttons: {
+          //       cancel: "Be in queue",
+          //       catch: { text: "Cancel ", value: "catch" },
+          //     },
+          //   }
+          // ).then(value => {
+          //   switch (value) {
+          //     case "catch":
+          //       break;
+          //     default:
+          //       let astroid = localStorage.getItem("astroId");
+          //       let userId = JSON.parse(localStorage.getItem("user_id"));
 
-                const payload = {
-                  userId: userId,
-                  callType: "Chat",
-                };
+          //       const payload = {
+          //         userId: userId,
+          //         callType: "Chat",
+          //       };
 
-                axiosConfig
-                  .post(`/user/make_another_call/${astroid}`, payload)
-                  .then(res => {
-                    console.log("testttttt", res.data);
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
-            }
-          });
+          //       axiosConfig
+          //         .post(`/user/make_another_call/${astroid}`, payload)
+          //         .then(res => {})
+          //         .catch(err => {
+          //           console.log(err);
+          //         });
+          //   }
+          // });
         } else
           swal(
             "Recharge Now",
@@ -157,16 +151,12 @@ class AstrologerDetail extends React.Component {
   };
 
   handleStartCall = () => {
-    let recharge = this.state.astroData?.callCharge * 5;
-    console.log("recharge", recharge);
+    // let recharge = this.state.astroData?.callCharge * 5;
+    console.log("Callinggggg", this.state.astroData.status);
     let userId = JSON.parse(localStorage.getItem("user_id"));
     if (userId !== "" && userId !== null) {
-      if (
-        this.state.astroData?.waiting_tym === 0 &&
-        this.state.astroData?.callingStatus === "Available"
-      ) {
+      if (this.state.astroData?.status === "Online") {
         let astrocharge = this.state.astroData?.callCharge * 5;
-        console.log("astrocharge", astrocharge);
         let useramount = this.state.useramount;
         if (useramount > astrocharge) {
           this.props.history.push("/CallListData");
@@ -183,7 +173,6 @@ class AstrologerDetail extends React.Component {
           ).then(value => {
             switch (value) {
               case "catch":
-                // swal("Sure Want to cancel it");
                 break;
               default:
                 this.props.history.push("/walletmoney");
@@ -192,7 +181,6 @@ class AstrologerDetail extends React.Component {
       } else {
         let astrocharge = this.state.astroData?.callCharge * 5;
         let useramount = this.state.useramount;
-        console.log(useramount, astrocharge);
         if (useramount > astrocharge) {
           swal(
             `Astrologer is Busy`,
@@ -210,7 +198,7 @@ class AstrologerDetail extends React.Component {
                 break;
               default:
                 let astroid = localStorage.getItem("astroId");
-                let userId = JSON.parse(localStorage.getItem("user_id"));
+                // let userId = JSON.parse(localStorage.getItem("user_id"));
                 let payload = {
                   userId: this.state.UserId,
                   callType: "VoiceCall",
@@ -273,7 +261,6 @@ class AstrologerDetail extends React.Component {
       .get(`/user/getone_followers/${userId}/${id}`)
       .then(resl => {
         this.setState({ follow: resl.data.data.follow });
-        // console.log("followOne", resl.data.data);
       })
       .catch(err => {
         console.log("eeeeeee", err.response.data.status);
@@ -328,7 +315,6 @@ class AstrologerDetail extends React.Component {
           .post(`/user/addAstroFollowers`, followData)
           .then(resp => {
             this.setState({ follow: resp.data.data.follow });
-            console.log("ressss", resp.data.data.follow);
           })
           .catch(error => {
             console.log("Error", error);
@@ -337,7 +323,6 @@ class AstrologerDetail extends React.Component {
         axiosConfig
           .get(`/user/unfollow_astrologer/${userId}/${id}`)
           .then(result => {
-            console.log(result);
             this.setState({ follow: result });
           })
           .catch(error => {
@@ -467,20 +452,12 @@ class AstrologerDetail extends React.Component {
                             Specility: <span> {this.state.all_skills}</span>
                           </li>
                           <li>
-                            Experience:{" "}
+                            Experience:
                             <span>{this.state.exp_in_years}year</span>
                           </li>
                           <li>
                             Call Rate: <span>{this.state.callCharge}/Min</span>
                           </li>
-                          {/* <li>
-                            Availability :
-                            <span style={{ color: "green" }}>
-                              {" "}
-                              <b> {this.state.astroData?.status}</b> */}
-                          {/* <b> {this.state.astroData?.callingStatus} </b> */}
-                          {/* </span>
-                          </li> */}
                           {this.state.astroData?.waiting_tym > 0 ? (
                             <li>
                               Waiting Time :
@@ -501,8 +478,7 @@ class AstrologerDetail extends React.Component {
                             ) : (
                               <>
                                 <span style={{ color: "red" }} className="">
-                                  {/* <b> {this.state.astroData?.status}</b> */}
-                                  <b> {this.state.astroData?.callingStatus} </b>
+                                  <b> {this.state.astroData?.status}</b>
                                 </span>
                               </>
                             )}
@@ -512,19 +488,16 @@ class AstrologerDetail extends React.Component {
 
                       <Row>
                         <Col md="3" className="mt-30">
-                          {/* <Button className="btn-as st" onClick={this.toggle}> */}
                           <Button
                             disabled={
-                              this.state.astroData?.status === "Offline"
-                                ? true
-                                : false
+                              this.state.status === "Online" ? false : true
                             }
-                            style={{
-                              backgroundColor:
-                                this.state.status === "Offline"
-                                  ? "#9f8211"
-                                  : "primary",
-                            }}
+                            // style={{
+                            //   backgroundColor:
+                            //     this.state.status === "offline"
+                            //       ? "#9f8211"
+                            //       : "primary",
+                            // }}
                             className="btn-as st"
                             onClick={this.handleStartChat}
                           >
@@ -539,16 +512,14 @@ class AstrologerDetail extends React.Component {
                         <Col md="3" className="mt-30">
                           <Button
                             disabled={
-                              this.state.astroData?.status === "Offline"
-                                ? true
-                                : false
+                              this.state.status === "offline" ? true : false
                             }
-                            style={{
-                              backgroundColor:
-                                this.state.status === "Offline"
-                                  ? "#9f8211"
-                                  : "primary",
-                            }}
+                            // style={{
+                            //   backgroundColor:
+                            //     this.state.status === "offline"
+                            //       ? "#9f8211"
+                            //       : "primary",
+                            // }}
                             className="btn-as st"
                             onClick={() => this.handleStartCall()}
                           >
@@ -559,16 +530,14 @@ class AstrologerDetail extends React.Component {
                         <Col md="3" className="mt-30">
                           <Button
                             disabled={
-                              this.state.astroData?.status === "Offline"
-                                ? true
-                                : false
+                              this.state.status === "offline" ? true : false
                             }
-                            style={{
-                              backgroundColor:
-                                this.state.status === "Offline"
-                                  ? "#9f8211"
-                                  : "primary",
-                            }}
+                            // style={{
+                            //   backgroundColor:
+                            //     this.state.status === "offline"
+                            //       ? "#9f8211"
+                            //       : "primary",
+                            // }}
                             className="btn-as st"
                             onClick={() => this.handleVideocall()}
                           >
