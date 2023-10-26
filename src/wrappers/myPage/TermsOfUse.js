@@ -40,15 +40,15 @@ export default class TermsOfUse extends Component {
           <Container>
             <Row>
               <ListGroup>
-                <h3 style={{ fontWeight: "500" }}>UPDATION</h3>
+                {/* <h3 style={{ fontWeight: "500" }}>UPDATION</h3> */}
                 {this.state.termlist &&
                   this.state.termlist?.map((all, index) => {
                     return <p key={index}> {ReactHtmlParser(all.desc)}</p>;
                   })}
 
-                <br></br>
+                {/* <br></br> */}
 
-                <h3 style={{ fontWeight: "500" }}>USER CONSENT</h3>
+                {/* <h3 style={{ fontWeight: "500" }}>USER CONSENT</h3>
                 <p>
                   By accessing the Website and using it, you (“Member”, “You”,
                   “Your”) indicate that you understand the terms and
@@ -62,12 +62,12 @@ export default class TermsOfUse extends Component {
                   made from time to time) shall signify your acceptance of the
                   terms of usage and your agreement to be legally bound by the
                   same.
-                </p>
+                </p> */}
 
-                <br></br>
+                {/* <br></br> */}
 
-                <h3 style={{ fontWeight: "500" }}>GENERAL DESCRIPTION</h3>
-                <p>
+                {/* <h3 style={{ fontWeight: "500" }}>GENERAL DESCRIPTION</h3> */}
+                {/* <p>
                   The Website is an internet-based portal having its existence
                   on World Wide Web, Application and other electronic medium and
                   provides astrological content, reports, data, telephone, video
@@ -79,14 +79,14 @@ export default class TermsOfUse extends Component {
                   receive additional Content and get access to Paid Services,
                   You are required to register as a member on the portal. By
                   registering for Paid Services, a Member agrees to:
-                </p>
+                </p> */}
 
-                <p>
+                {/* <p>
                   Our prices do not vary according to the market needs,
                   competitor pricing etc.
                 </p>
                 <br></br>
-                <br></br>
+                <br></br> */}
               </ListGroup>
             </Row>
           </Container>
