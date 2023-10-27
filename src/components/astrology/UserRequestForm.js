@@ -28,7 +28,6 @@ class UserRequestForm extends React.Component {
       marital_status: "",
       occupation: "",
       topic_of_cnsrn: "",
-      // entertopic_of_cnsrn: "",
       data: [],
       state: [],
       city: [],
@@ -42,21 +41,22 @@ class UserRequestForm extends React.Component {
   }
   changeCity = item => {
     this.setState({
-      submitPlaceHandler: item,
+      selectedCity: item,
     });
-    axiosConfig
-      .post(`/user/geo_detail`, {
-        place: item?.name,
-      })
-      .then(response => {
-        this.setState({
-          latitude: response?.data?.data?.geonames[0].latitude,
-          longitude: response?.data?.data?.geonames[0].longitude,
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    console.log(this.state.selectedCity);
+    // axiosConfig
+    //   .post(`/user/geo_detail`, {
+    //     place: item?.name,
+    //   })
+    //   .then(response => {
+    //     this.setState({
+    //       latitude: response?.data?.data?.geonames[0].latitude,
+    //       longitude: response?.data?.data?.geonames[0].longitude,
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   componentDidMount() {
@@ -72,6 +72,7 @@ class UserRequestForm extends React.Component {
       });
   }
   changeHandler = e => {
+    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -79,7 +80,7 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-
+    debugger;
     const data = new FormData();
     data.append("userid", userId);
     data.append("astroid", astroId);
@@ -97,8 +98,11 @@ class UserRequestForm extends React.Component {
     data.append("marital_status", this.state.marital_status);
     data.append("occupation", this.state.occupation);
     data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
+    data.append("country", this.state.selectedCountry.name);
+    data.append("state", this.state.selectedState.name);
+    data.append("city", this.state.selectedCity.name);
     data.append("type", "Chat");
-    console.log(data.values);
+
     // const Year = new Date(this.state.dob).getFullYear();
     // const Month = new Date(this.state.dob).getMonth();
     // const Day = new Date(this.state.dob).getDay();
@@ -127,7 +131,6 @@ class UserRequestForm extends React.Component {
     //   .catch(error => {
     //     swal("Error!", "You clicked the button!", "error");
     //   });
-    debugger;
 
     if (userId !== "" && userId !== null) {
       axiosConfig
@@ -157,7 +160,7 @@ class UserRequestForm extends React.Component {
         })
         .catch(error => {
           swal("Error!", "Error Occurred!", "error");
-          console.log(error);
+          console.log(error.response);
         });
     } else {
       swal("Need to Login first");
@@ -370,18 +373,18 @@ class UserRequestForm extends React.Component {
                           value={this.state.selectedCountry}
                           onChange={item => {
                             this.setState({ selectedCountry: item });
-                            axiosConfig
-                              .post(`/user/time_zone`, {
-                                country_code: item?.timezones[0].zoneName,
-                              })
-                              .then(response => {
-                                this.setState({
-                                  timezone: response?.data?.data?.timezone,
-                                });
-                              })
-                              .catch(error => {
-                                console.log(error);
-                              });
+                            // axiosConfig
+                            //   .post(`/user/time_zone`, {
+                            //     country_code: item?.timezones[0].zoneName,
+                            //   })
+                            //   .then(response => {
+                            //     this.setState({
+                            //       timezone: response?.data?.data?.timezone,
+                            //     });
+                            //   })
+                            //   .catch(error => {
+                            //     console.log(error);
+                            //   });
                           }}
                         />
                       </Col>
@@ -418,7 +421,7 @@ class UserRequestForm extends React.Component {
                           getOptionValue={options => {
                             return options["name"];
                           }}
-                          value={this.state.submitPlaceHandler}
+                          value={this.state.selectedCity}
                           onChange={item => {
                             this.changeCity(item);
                           }}

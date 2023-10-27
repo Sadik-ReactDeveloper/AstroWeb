@@ -12,9 +12,6 @@ export default class TermsOfUse extends Component {
     this.state = {
       termlist: [],
     };
-
-    // this.toggle = this.toggle.bind(this);
-    // this.toggleone = this.toggleone.bind(this);
   }
   componentDidMount() {
     axiosConfig

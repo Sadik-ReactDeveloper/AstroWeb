@@ -248,9 +248,6 @@ const PoojaDetail = lazy(() => import("./components/astrology/poojadetail"));
 const HeroscopesAll = lazy(() =>
   import("./components/astrology/heroscopesall")
 );
-// const HeroscopesDataList = lazy(() =>
-//   import("./components/astrology/heroscope/HeroscopeData")
-// );
 
 const HeroscopesTwo = lazy(() =>
   import("./components/astrology/heroscopestwo")
