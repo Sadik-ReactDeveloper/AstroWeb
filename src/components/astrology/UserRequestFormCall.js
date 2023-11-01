@@ -3,8 +3,9 @@ import { Container, Row, Col, Button, Input, Label } from "reactstrap";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosConfig from "../../axiosConfig";
 import swal from "sweetalert";
+import Select from "react-select";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-
+import { Country, State, City } from "country-state-city";
 class UserRequestForm extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,13 @@ class UserRequestForm extends React.Component {
       topic_of_cnsrn: "",
       // entertopic_of_cnsrn: "",
       data: [],
-      selectedFile: {},
+      state: [],
+      city: [],
+      country: [],
+      selectedCountry: null,
+      selectedState: null,
+      selectedCity: null,
+      selectedFile: null,
       selectedName: "",
       type: "Call",
       showpartner: false,
@@ -36,21 +43,8 @@ class UserRequestForm extends React.Component {
   }
   changeCity = item => {
     this.setState({
-      submitPlaceHandler: item,
+      selectedCity: item,
     });
-    axiosConfig
-      .post(`/user/geo_detail`, {
-        place: item?.name,
-      })
-      .then(response => {
-        this.setState({
-          latitude: response?.data?.data?.geonames[0].latitude,
-          longitude: response?.data?.data?.geonames[0].longitude,
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
   componentDidMount() {
     let userId = JSON.parse(localStorage.getItem("user_id"));
@@ -95,16 +89,16 @@ class UserRequestForm extends React.Component {
     data.append("marital_status", this.state.marital_status);
     data.append("occupation", this.state.occupation);
     data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
+    data.append("country", this.state.selectedCountry.name);
+    data.append("state", this.state.selectedState.name);
+    data.append("city", this.state.selectedCity.name);
     data.append("type", "Call");
 
     if (this.state.selectedFile !== null) {
-      if (this.state.selectedFile !== null) {
-        data.append("file", this.state.selectedFile);
-      } else {
-        data.append("file", null);
-      }
+      data.append("file", this.state.selectedFile);
+    } else {
+      data.append("file", null);
     }
-
     axiosConfig
       .post(`/user/add_chat_intake`, data)
       .then(response => {
@@ -208,19 +202,6 @@ class UserRequestForm extends React.Component {
                           />
                         </div>
                       </Col>
-                      {/* <Col md="4">
-                        <div class="form-group mtb-10">
-                          <Label> Last Name*</Label>
-                          <Input
-                            required
-                            type="text"
-                            name="lastname"
-                            placeholder="Enter   Lastname"
-                            value={this.state.lastname}
-                            onChange={this.changeHandler}
-                          />
-                        </div>
-                      </Col> */}
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <Label>Date of Birth*</Label>
@@ -276,6 +257,61 @@ class UserRequestForm extends React.Component {
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                         </Input>
+                      </Col>
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>Country</Label>
+                        <Select
+                          options={Country.getAllCountries()}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedCountry}
+                          onChange={item => {
+                            this.setState({ selectedCountry: item });
+                          }}
+                        />
+                      </Col>
+
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>State</Label>
+                        <Select
+                          options={State?.getStatesOfCountry(
+                            this.state.selectedCountry?.isoCode
+                          )}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedState}
+                          onChange={item => {
+                            this.setState({ selectedState: item });
+                          }}
+                        />
+                      </Col>
+
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>City</Label>
+                        <Select
+                          options={City.getCitiesOfState(
+                            this.state.selectedState?.countryCode,
+                            this.state.selectedState?.isoCode
+                          )}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedCity}
+                          onChange={item => {
+                            this.changeCity(item);
+                          }}
+                        />
                       </Col>
                       <Col md="4">
                         <div class="form-group ">

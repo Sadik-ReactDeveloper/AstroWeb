@@ -1,10 +1,11 @@
 import React from "react";
-import { Container, Row, Col, Button, Input } from "reactstrap";
+import { Container, Row, Col, Button, Input, Label } from "reactstrap";
 import LayoutOne from "../../layouts/LayoutOne";
 import axiosConfig from "../../axiosConfig";
 import swal from "sweetalert";
+import Select from "react-select";
 import astrologinbg from "../../assets/img/astrologin-bg.jpg";
-
+import { Country, State, City } from "country-state-city";
 class UserRequestForm extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +29,12 @@ class UserRequestForm extends React.Component {
       topic_of_cnsrn: "",
       entertopic_of_cnsrn: "",
       data: [],
+      state: [],
+      city: [],
+      country: [],
+      selectedCountry: null,
+      selectedState: null,
+      selectedCity: null,
       showpartner: false,
     };
   }
@@ -43,6 +50,11 @@ class UserRequestForm extends React.Component {
         console.log(error);
       });
   }
+  changeCity = item => {
+    this.setState({
+      selectedCity: item,
+    });
+  };
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -50,29 +62,51 @@ class UserRequestForm extends React.Component {
     e.preventDefault();
     let userId = JSON.parse(localStorage.getItem("user_id"));
     let astroId = localStorage.getItem("astroId");
-    let obj = {
-      userid: userId,
-      astroid: astroId,
-      mobile: parseInt(this.state.mobile),
-      firstname: this.state.firstname,
-      p_firstname: this.state.p_firstname,
-      // lastname: this.state.lastname,
-      p_lastname: this.state.p_lastname,
-      dob: this.state.dob,
-      p_dob: this.state.p_dob,
-      birthPlace: this.state.birthPlace,
-      p_birthPlace: this.state.p_birthPlace,
-      date_of_time: this.state.date_of_time,
-      p_date_of_time: this.state.p_date_of_time,
-      gender: this.state.gender,
-      marital_status: this.state.marital_status,
-      occupation: this.state.occupation,
-      topic_of_cnsrn: this.state.topic_of_cnsrn,
-      entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
-      type: "Video",
-    };
+    // let obj = {
+    //   // userid: userId,
+    //   // astroid: astroId,
+    //   // mobile: parseInt(this.state.mobile),
+    //   firstname: this.state.firstname,
+    //   p_firstname: this.state.p_firstname,
+    //   // lastname: this.state.lastname,
+    //   p_lastname: this.state.p_lastname,
+    //   dob: this.state.dob,
+    //   p_dob: this.state.p_dob,
+    //   birthPlace: this.state.birthPlace,
+    //   p_birthPlace: this.state.p_birthPlace,
+    //   date_of_time: this.state.date_of_time,
+    //   p_date_of_time: this.state.p_date_of_time,
+    //   gender: this.state.gender,
+    //   marital_status: this.state.marital_status,
+    //   occupation: this.state.occupation,
+    //   topic_of_cnsrn: this.state.topic_of_cnsrn,
+    //   entertopic_of_cnsrn: this.state.entertopic_of_cnsrn,
+    //   type: "Video",
+    // };
+
+    const data = new FormData();
+    data.append("userid", userId);
+    data.append("astroid", astroId);
+    data.append("mobile", parseInt(this.state.mobile));
+    data.append("firstname", this.state.firstname);
+    data.append("dob", this.state.dob);
+    data.append("p_firstname", this.state.p_firstname);
+    data.append("p_lastname", this.state.p_lastname);
+    data.append("birthPlace", this.state.birthPlace);
+    data.append("p_birthPlace", this.state.p_birthPlace);
+    data.append("date_of_time", this.state.date_of_time);
+    data.append("p_date_of_time", this.state.p_date_of_time);
+    data.append("gender", this.state.gender);
+    data.append("marital_status", this.state.marital_status);
+    data.append("occupation", this.state.occupation);
+    data.append("topic_of_cnsrn", this.state.topic_of_cnsrn);
+    data.append("country", this.state.selectedCountry.name);
+    data.append("state", this.state.selectedState.name);
+    data.append("city", this.state.selectedCity.name);
+    data.append("type", "Video");
+
     axiosConfig
-      .post(`/user/add_chat_intake`, obj)
+      .post(`/user/add_chat_intake`, data)
       .then(response => {
         console.log(response.data.data);
         this.props.history.push({
@@ -334,7 +368,61 @@ class UserRequestForm extends React.Component {
                           <option>Female</option>
                         </Input>
                       </Col>
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>Country</Label>
+                        <Select
+                          options={Country.getAllCountries()}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedCountry}
+                          onChange={item => {
+                            this.setState({ selectedCountry: item });
+                          }}
+                        />
+                      </Col>
 
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>State</Label>
+                        <Select
+                          options={State?.getStatesOfCountry(
+                            this.state.selectedCountry?.isoCode
+                          )}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedState}
+                          onChange={item => {
+                            this.setState({ selectedState: item });
+                          }}
+                        />
+                      </Col>
+
+                      <Col lg="4" md="4" sm="6" className="mt-2">
+                        <Label>City</Label>
+                        <Select
+                          options={City.getCitiesOfState(
+                            this.state.selectedState?.countryCode,
+                            this.state.selectedState?.isoCode
+                          )}
+                          getOptionLabel={options => {
+                            return options["name"];
+                          }}
+                          getOptionValue={options => {
+                            return options["name"];
+                          }}
+                          value={this.state.selectedCity}
+                          onChange={item => {
+                            this.changeCity(item);
+                          }}
+                        />
+                      </Col>
                       <Col md="4">
                         <div class="form-group mtb-10">
                           <label>Marital Status*</label>
