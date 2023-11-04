@@ -29,7 +29,6 @@ import swal from "sweetalert";
 class AllAstrologerList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fullname: "",
       email: "",
@@ -58,7 +57,6 @@ class AllAstrologerList extends React.Component {
       astroSpecialzation: "",
       Skilldata: "",
     };
-
     this.toggle = this.toggle.bind(this);
     this.toggleone = this.toggleone.bind(this);
   }
@@ -77,7 +75,6 @@ class AllAstrologerList extends React.Component {
       this.state.astroSpecialzation
     );
     this.toggle();
-    // this.handlestartInterval();
     let skil = this.state.Skilldata;
     let status = this.state.AstroStatus;
     let Astrolangua = this.state.Astrolanguage;
@@ -200,7 +197,7 @@ class AllAstrologerList extends React.Component {
     //   To: mobileNo, //user id
     // };
     if (userId !== "" && userId !== null) {
-      this.props.history.push("/CallListData");
+      this.props.history.push(`/astrologerdetail/${astroid}`);
       // const data = {
       //   userid: userId,
       //   astroid: astroId,
@@ -476,27 +473,17 @@ class AllAstrologerList extends React.Component {
                                           onClick={e =>
                                             this.submitHandler(
                                               e,
-                                              astrologer?._id,
+                                              astrologer._id,
                                               astrologer?.mobile,
                                               astrologer,
                                               index
                                             )
                                           }
                                         >
-                                          {/* {
-                                          this.state.indexnow === index &&
-                                          this.state.callingmode !== true ? (
-                                            <div className="btn btn-success btn-sm sc">
-                                              <i class="fa fa-phone"></i>
-                                              -Calling
-                                            </div>
-                                          ) :
-                                            ( */}
                                           <div className="btn btn-primary btn-sm sc">
                                             <i class="fa fa-phone"></i>
                                             -Call
                                           </div>
-                                          {/* )} */}
                                         </span>
                                       </>
                                     ) : (

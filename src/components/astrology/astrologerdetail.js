@@ -69,7 +69,6 @@ class AstrologerDetail extends React.Component {
     // latest code
     if (userId !== "" && userId !== null) {
       if (this.state.astroData?.status === "Online") {
-        debugger;
         let astrocharge = this.state.astroData?.callCharge * 5;
         let useramount = this.state.useramount;
         if (useramount > astrocharge) {
@@ -238,10 +237,6 @@ class AstrologerDetail extends React.Component {
     localStorage.setItem("astroId", id);
     localStorage.setItem("videoCallAstro_id", id);
     this.handleStartViewOneAstro();
-
-    // const astroId = localStorage.getItem("videoCallAstro_id");
-    //  const { id } = this.props.match.params;
-    //  const userId = JSON.parse(localStorage.getItem("user_id"));
     axiosConfig
       .get(`/user/viewoneuser/${userId}`)
       .then(res => {
@@ -299,6 +294,14 @@ class AstrologerDetail extends React.Component {
         console.log(error);
       });
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.status) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   handleFollow = () => {
     let userId = JSON.parse(localStorage.getItem("user_id"));
@@ -403,7 +406,6 @@ class AstrologerDetail extends React.Component {
                 <Col md="12">
                   <div className="leftcont text-left">
                     <h1>Astrologer Detail</h1>
-                    <p></p>
                   </div>
                 </Col>
               </Row>
@@ -470,16 +472,16 @@ class AstrologerDetail extends React.Component {
 
                           <li>
                             Availability:
-                            {this.state.status === "Online" ? (
+                            {this.state.status == "Online" ? (
                               <>
-                                <span style={{ color: "green" }} className="">
-                                  <b> {this.state.astroData?.status}</b>
+                                <span style={{ color: "green" }}>
+                                  <b> {this.state.status}</b>
                                 </span>
                               </>
                             ) : (
                               <>
                                 <span style={{ color: "red" }} className="">
-                                  <b> {this.state.astroData?.status}</b>
+                                  <b> {this.state.status}</b>
                                 </span>
                               </>
                             )}
@@ -493,12 +495,6 @@ class AstrologerDetail extends React.Component {
                             disabled={
                               this.state.status === "Online" ? false : true
                             }
-                            // style={{
-                            //   backgroundColor:
-                            //     this.state.status === "offline"
-                            //       ? "#9f8211"
-                            //       : "primary",
-                            // }}
                             className="btn-as st"
                             onClick={this.handleStartChat}
                           >
@@ -513,14 +509,8 @@ class AstrologerDetail extends React.Component {
                         <Col md="3" className="mt-30">
                           <Button
                             disabled={
-                              this.state.status === "offline" ? true : false
+                              this.state.status === "Online" ? false : true
                             }
-                            // style={{
-                            //   backgroundColor:
-                            //     this.state.status === "offline"
-                            //       ? "#9f8211"
-                            //       : "primary",
-                            // }}
                             className="btn-as st"
                             onClick={() => this.handleStartCall()}
                           >
@@ -531,14 +521,8 @@ class AstrologerDetail extends React.Component {
                         <Col md="3" className="mt-30">
                           <Button
                             disabled={
-                              this.state.status === "offline" ? true : false
+                              this.state.status === "Online" ? false : true
                             }
-                            // style={{
-                            //   backgroundColor:
-                            //     this.state.status === "offline"
-                            //       ? "#9f8211"
-                            //       : "primary",
-                            // }}
                             className="btn-as st"
                             onClick={() => this.handleVideocall()}
                           >
@@ -546,7 +530,6 @@ class AstrologerDetail extends React.Component {
                               class="fa fa-video-camera"
                               aria-hidden="true"
                             ></i>
-
                             <span className="m-1"> Start Video</span>
                           </Button>
                         </Col>
@@ -587,7 +570,6 @@ class AstrologerDetail extends React.Component {
                             <>
                               {this.state.GtRating?.map(value => (
                                 <div key={value?._id} className="single-review">
-                                  {" "}
                                   <div className="review-img">
                                     <img
                                       src={value?.userid?.userimg[0]}
